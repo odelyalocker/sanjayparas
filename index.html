@@ -28,21 +28,24 @@
             width: 100%;
             background: linear-gradient(135deg, #d32f2f, #b71c1c);
             color: white;
-            padding: 15px 20px;
+            padding: 35px 20px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            align-items: flex-start;
+            box-shadow: none;
             z-index: 1000;
+			min-height: 90px;
         }
         
         .logo {
-            font-size: 28px;
+            font-size: 35px;
             font-weight: bold;
-            color: #2196F3;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            color: #FFFFFF;
+            text-shadow: none;
             text-align: center;
             flex-grow: 1;
+			margin-top: -5px;
+			line-height: 0.3;
         }
         
         /* Hamburger Menu */
@@ -55,6 +58,7 @@
             padding: 5px 10px;
             border-radius: 4px;
             transition: background-color 0.3s;
+			margin-top: 0;
         }
         
         .hamburger:hover {
@@ -74,7 +78,7 @@
             top: 100%;
             background-color: white;
             min-width: 160px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            box-shadow: none;
             border-radius: 4px;
             overflow: hidden;
             z-index: 1001;
@@ -100,10 +104,10 @@
         /* Main Content Area */
         .main-content {
             flex: 1;
-            margin-top: 80px;
-            margin-bottom: 60px;
+            margin-top: 90px;
+            margin-bottom: 10px;
             background-color: white;
-            padding: 40px 20px;
+            padding: 30px 20px;
             text-align: center;
             color: #555;
         }
@@ -132,7 +136,7 @@
             background: linear-gradient(135deg, #d32f2f, #b71c1c);
             color: white;
             text-align: center;
-            padding: 20px;
+            padding: 10px;
             margin-top: auto;
         }
         
@@ -159,7 +163,7 @@
             }
             
             .main-content {
-                margin-top: 70px;
+                margin-top: 90px;
                 padding: 30px 15px;
             }
             
@@ -170,23 +174,26 @@
         
         @media (max-width: 480px) {
             header {
-                padding: 12px 15px;
+                padding: 18px 15px;
             }
             
             .logo {
-                font-size: 20px;
+                font-size: 24px;
             }
             
             .hamburger {
                 font-size: 20px;
             }
+			.main-content {
+			margin-top: 80px;
+    }
         }
     </style>
 </head>
 <body>
     <!-- Fixed Header -->
     <header>
-        <div class="logo">Sanjay Paras</div>
+        <div class="logo">Sanjay Paras Medical Equipment</div>
         
         <!-- Hamburger Menu with Dropdown -->
         <div class="dropdown">
