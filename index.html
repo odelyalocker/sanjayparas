@@ -73,9 +73,8 @@
     font-size: 24px;
     margin-top: 2px;
 }
-        
-          
-        /* Center content */
+
+/* Center content */
         .header-center {
             flex-grow: 1;
             display: flex;
@@ -390,7 +389,83 @@
             font-size: 14px;
             color: #FFFFFF;
         }
-        
+
+		.result-item {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px solid #000000;
+    margin-bottom: 15px;
+}
+
+.result-content {
+    display: flex;
+    gap: 20px;
+}
+
+.result-image {
+    flex: 0 0 150px;
+}
+
+.result-image img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.result-details {
+    flex: 1;
+}
+
+.price-section {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.current-price {
+    color: #d32f2f;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.original-price {
+    color: #888;
+    text-decoration: line-through;
+    font-size: 16px;
+}
+
+.discount {
+    background: #ff4444;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.warranty {
+    margin: 10px 0;
+    color: #333;
+}
+
+.description-section, .specs-section {
+    margin: 10px 0;
+}
+
+.description-section ul, .specs-section ul {
+    margin: 5px 0 5px 20px;
+    color: #555;
+}
+
+.description-section li, .specs-section li {
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+		
         /* Responsive Design - UPDATED */
         @media (max-width: 768px) {
             header {
@@ -495,7 +570,27 @@
                 margin-top: 200px;
                 padding: 30px 15px;
             }
-        }
+        @media (max-width: 768px) {
+    .result-content {
+        flex-direction: column;
+    }
+    
+    .result-image {
+        flex: 0 0 auto;
+        text-align: center;
+    }
+    
+    .result-image img {
+        width: 200px;
+        height: 150px;
+    }
+    
+    .price-section {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+		
+		}
         
         @media (max-width: 480px) {
             header {
@@ -682,17 +777,53 @@ function searchItems() {
         if (matchedItems.length > 0) {
             resultsTitle.textContent = `Found ${matchedItems.length} item(s) for "${searchTerm}"`;
             
-            matchedItems.forEach(item => {
-                const resultItem = document.createElement('div');
-                resultItem.className = 'result-item';
-                resultItem.innerHTML = `
-                    <h4>${item.name}</h4>
-                    <span class="category">${item.category}</span>
-                    <div class="price">${item.price}</div>
-                    <p class="description">${item.description}</p>
-                `;
-                resultsList.appendChild(resultItem);
-            });
+            // Inside searchItems() function, replace the result creation part:
+matchedItems.forEach(item => {
+    const resultItem = document.createElement('div');
+    resultItem.className = 'result-item';
+    
+    // Create description HTML as bullet points
+    const descriptionHTML = item.description.map(point => 
+        `<li>${point}</li>`
+    ).join('');
+    
+    // Create specifications HTML as bullet points
+    const specsHTML = item.specifications ? item.specifications.map(spec => 
+        `<li>${spec}</li>`
+    ).join('') : '';
+    
+    resultItem.innerHTML = `
+        <div class="result-content">
+            <div class="result-image">
+                <img src="${item.image}" alt="${item.name}" onerror="this.src='placeholder.jpg'">
+            </div>
+            <div class="result-details">
+                <h4>${item.name}</h4>
+                <div class="category">${item.category}</div>
+                
+                <div class="price-section">
+                    <span class="current-price">${item.price}</span>
+                    <span class="original-price">${item.originalPrice}</span>
+                    <span class="discount">${item.discount}</span>
+                </div>
+                
+                <div class="warranty"><strong>Warranty:</strong> ${item.warranty}</div>
+                
+                <div class="description-section">
+                    <strong>Description:</strong>
+                    <ul>${descriptionHTML}</ul>
+                </div>
+                
+                ${specsHTML ? `
+                <div class="specs-section">
+                    <strong>Specifications:</strong>
+                    <ul>${specsHTML}</ul>
+                </div>` : ''}
+            </div>
+        </div>
+    `;
+    resultsList.appendChild(resultItem);
+});
             
             searchResults.style.display = 'block';
         } else {
@@ -767,5 +898,6 @@ window.addEventListener('DOMContentLoaded', loadJSONFiles);
 </script>
 </body>
 </html>
+
 
 
