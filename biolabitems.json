@@ -2,17 +2,47 @@
   {
     "id": 1,
     "name": "Compound Microscope",
-    "category": "Biology",
-    "price": "₹12,500",
-    "description": "Professional compound microscope with 1000x magnification",
-    "keywords": ["microscope", "biology", "lab", "magnification", "compound"]
+    "category": "Biology Lab",
+    "image": "/sanjayparas/bioimg/micro1.jpg",
+    "price": "₹15,500",
+    "originalPrice": "₹17,000",
+    "discount": "-9%",
+    "warranty": "2 Years Manufacturer Warranty",
+    "description": [
+      "Professional compound microscope with 1000x magnification",
+      "Built-in LED illumination with adjustable intensity",
+      "Includes 10x, 40x, and 100x oil immersion objectives",
+      "Mechanical stage with coaxial controls"
+    ],
+    "specifications": [
+      "Magnification: 40x to 1000x",
+      "Light Source: LED 3W",
+      "Eyepiece: WF10x/18mm",
+      "Objectives: Achromatic 4x, 10x, 40x(s), 100x(s) oil"
+    ],
+    "keywords": ["microscope", "biology", "compound", "magnification", "lab equipment"]
   },
   {
     "id": 2,
-    "name": "Centrifuge Machine",
-    "category": "Biology",
-    "price": "₹28,000",
-    "description": "Digital centrifuge with speed control",
-    "keywords": ["centrifuge", "spin", "biology", "separator"]
+    "name": "Digital Centrifuge Machine",
+    "category": "Biology Lab",
+    "image": "/sanjayparas/bioimg/centrifuge1.jpg",
+    "price": "₹28,500",
+    "originalPrice": "₹32,000",
+    "discount": "-11%",
+    "warranty": "3 Years Service Warranty",
+    "description": [
+      "Digital display centrifuge with precise speed control",
+      "Maximum speed: 6000 RPM, Capacity: 6 x 15ml tubes",
+      "Stainless steel rotor with automatic imbalance detection",
+      "Timer function with memory storage"
+    ],
+    "specifications": [
+      "Max Speed: 6000 RPM",
+      "Capacity: 6 x 15ml tubes",
+      "Timer: 1-99 minutes",
+      "Power: 220V, 50Hz"
+    ],
+    "keywords": ["centrifuge", "digital", "biology", "lab machine", "separator"]
   }
 ]
