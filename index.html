@@ -375,22 +375,71 @@
     gap: 30px;
 	align-items: flex-start;
 }
-
+.result-left {
+    flex: 0 0 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 .result-image {
-    flex: 0 0 180px;
+    flex: 0 0 220px;
 }
 
 .result-image img {
     width: 100%;
-    height: 180px;
+    height: 220px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 8px;
     border: 1px solid #ddd;
 }
 
 .result-details {
     flex: 1;
 	min-width: 0;
+}
+.price-info {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.mrp-price {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #ccc;
+}
+
+.mrp-label {
+    color: #666;
+    font-size: 14px;
+}
+
+.mrp-value {
+    color: #888;
+    text-decoration: line-through;
+    font-size: 16px;
+}
+
+.best-buy {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.best-buy-label {
+    color: #d32f2f;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.best-buy-price {
+    color: #d32f2f;
+    font-size: 22px;
+    font-weight: bold;
 }
 
 .price-section {
@@ -420,7 +469,16 @@
     font-size: 14px;
     font-weight: bold;
 }
-
+.discount-badge {
+    background: #ff4444;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+}
 .warranty {
     margin: 10px 0;
     color: #333;
@@ -439,9 +497,54 @@
     margin-bottom: 5px;
     line-height: 1.4;
 }
+.result-right {
+    flex: 1;
+    min-width: 0;
+}
+
+.item-name {
+    color: #1565c0;
+    font-size: 24px; /* Double the size (was ~12px) */
+    font-weight: 800;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+.result-description {
+    flex: 0 0 300px;
+    min-width: 0;
+}
+.category {
+    display: none !important;
+}
 		
         /* Responsive Design - UPDATED */
-        @media (max-width: 768px) {
+/* Responsive */
+@media (max-width: 1024px) {
+    .result-content {
+        flex-wrap: wrap;
+    }
+    
+    .result-left {
+        flex: 0 0 100%;
+        flex-direction: row;
+        gap: 20px;
+    }
+    
+    .result-image {
+        flex: 0 0 200px;
+    }
+    
+    .price-info {
+        flex: 1;
+    }
+    
+    .result-right,
+    .result-description {
+        flex: 0 0 100%;
+    }
+}
+		
+		@media (max-width: 768px) {
             header {
                 padding: 12px 15px;
                 min-height: 100px;
@@ -785,35 +888,43 @@ matchedItems.forEach(item => {
     ).join('') : '';
     
     resultItem.innerHTML = `
-        <div class="result-content">
+    <div class="result-content">
+        <div class="result-left">
             <div class="result-image">
                 <img src="${item.image}" alt="${item.name}" onerror="this.src='placeholder.jpg'">
             </div>
-            <div class="result-details">
-                <h4>${item.name}</h4>
-                <div class="category">${item.category}</div>
-                
-                <div class="price-section">
-                    <span class="current-price">${item.price}</span>
-                    <span class="original-price">${item.originalPrice}</span>
-                    <span class="discount">${item.discount}</span>
+            <div class="price-info">
+                <div class="mrp-price">
+                    <span class="mrp-label">M.R.P.</span>
+                    <span class="mrp-value">${item.mrpPrice}</span>
                 </div>
-                
-                <div class="warranty"><strong>Warranty:</strong> ${item.warranty}</div>
-                
-                <div class="description-section">
-                    <strong>Description:</strong>
-                    <ul>${descriptionHTML}</ul>
+                <div class="best-buy">
+                    <span class="best-buy-label">Best Buy</span>
+                    <span class="best-buy-price">${item.bestBuyPrice}</span>
                 </div>
-                
-                ${specsHTML ? `
-                <div class="specs-section">
-                    <strong>Specifications:</strong>
-                    <ul>${specsHTML}</ul>
-                </div>` : ''}
+                <div class="discount-badge">${item.discount}</div>
             </div>
         </div>
-    `;
+        
+        <div class="result-right">
+            <h4 class="item-name">${item.name}</h4>
+            
+            <div class="specs-section">
+                <strong>Specifications:</strong>
+                <ul>${specsHTML}</ul>
+            </div>
+            
+            <div class="warranty"><strong>Warranty:</strong> ${item.warranty}</div>
+        </div>
+        
+        <div class="result-description">
+            <div class="description-section">
+                <strong>Descriptions:</strong>
+                <ul>${descriptionHTML}</ul>
+            </div>
+        </div>
+    </div>
+`;
     resultsList.appendChild(resultItem);
 });
             
@@ -890,4 +1001,5 @@ window.addEventListener('DOMContentLoaded', loadJSONFiles);
 </script>
 </body>
 </html>
+
 
