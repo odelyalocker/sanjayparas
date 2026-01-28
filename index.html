@@ -28,17 +28,22 @@
             width: 100%;
             background: linear-gradient(135deg, #d32f2f, #b71c1c);
             color: white;
-            padding: 7px 20px;
+            padding: 10px 20px;
             display: flex;
             align-items: center;
             box-shadow: none;
             z-index: 1000;
-            min-height: 50px;
+            min-height: 80px;
         }
         
-        /* Company Name on the left */
-        .company-name {
+        /* Left section with company name and new tagline */
+        .left-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
             margin-right: 20px;
+            min-width: 200px;
         }
         
         .company-name h1 {
@@ -52,20 +57,31 @@
             white-space: nowrap;
         }
         
+        /* New tagline on the left */
+        .left-tagline {
+            font-size: 14px;
+            color: #FFFFFF;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-top: 3px;
+            text-align: left;
+            white-space: nowrap;
+        }
+        
         /* Center content - MODIFIED */
-        .header-content {
+        .header-center {
             flex-grow: 1;
-            text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
             padding: 0 20px;
         }
         
-        /* Search Box - NEW */
+        /* Search Box - MODIFIED */
         .search-container {
             width: 70%;
-            margin: 0 auto 5px auto; /* Added margin-bottom to push tagline down */
+            margin: 0 auto;
         }
         
         .search-box {
@@ -94,12 +110,14 @@
             border-color: #bbb;
         }
         
-        .tagline {
+        /* Center tagline */
+        .center-tagline {
             font-size: 16px;
             color: #FFFFFF;
-            margin-top: 5px; /* Increased margin-top to push it down */
+            margin-top: 5px;
             font-weight: 500;
             letter-spacing: 0.5px;
+            text-align: center;
         }
         
         /* Cart Button */
@@ -118,7 +136,7 @@
             transition: all 0.3s ease;
             text-decoration: none;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            margin-left: auto;
+            margin-left: 20px;
         }
         
         .cart-button:hover {
@@ -138,20 +156,14 @@
             font-weight: bold;
         }
         
-        /* Increase header height */
-        header {
-            min-height: 80px; /* Increased from 50px */
-            padding: 10px 20px; /* Increased padding */
-        }
-        
         /* Adjust black-header position */
         .black-header {
-            top: 90px; /* Increased from 75px to match new header height */
+            top: 90px;
         }
         
         /* Adjust main content position */
         .main-content {
-            margin-top: 120px; /* Increased from 100px */
+            margin-top: 120px;
         }
         
         /* Black Header Section */
@@ -247,30 +259,40 @@
         @media (max-width: 768px) {
             header {
                 padding: 15px 15px;
-                min-height: 110px; /* Increased for mobile */
+                min-height: 110px;
                 flex-wrap: wrap;
             }
             
-            .company-name {
-                margin-right: 15px;
+            .left-section {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 10px;
+                align-items: center;
+                order: 1;
             }
             
             .company-name h1 {
                 font-size: 28px;
-                text-align: left;
+                text-align: center;
                 white-space: normal;
                 line-height: 1.2;
             }
             
-            .header-content {
-                padding: 0 10px;
-                order: 3;
+            .left-tagline {
+                text-align: center;
+                font-size: 13px;
+                white-space: normal;
+            }
+            
+            .header-center {
                 width: 100%;
+                order: 3;
+                padding: 0;
                 margin-top: 10px;
             }
             
             .search-container {
-                width: 90%; /* Wider on mobile */
+                width: 90%;
                 margin-bottom: 8px;
             }
             
@@ -279,10 +301,11 @@
                 font-size: 14px;
             }
             
-            .tagline {
+            .center-tagline {
                 font-size: 12px;
-                margin-top: 8px; /* Adjusted for mobile */
+                margin-top: 8px;
                 color: #FFFFFF;
+                white-space: normal;
             }
             
             .cart-button {
@@ -290,6 +313,7 @@
                 font-size: 14px;
                 order: 2;
                 margin-left: auto;
+                margin-bottom: 10px;
             }
             
             .cart-button i {
@@ -297,7 +321,7 @@
             }
             
             .black-header {
-                top: 120px; /* Adjusted for mobile */
+                top: 120px;
                 padding: 10px 15px;
                 min-height: 45px;
             }
@@ -312,7 +336,7 @@
             }
             
             .main-content {
-                margin-top: 165px; /* Adjusted for mobile */
+                margin-top: 165px;
                 padding: 30px 15px;
             }
         }
@@ -320,7 +344,7 @@
         @media (max-width: 480px) {
             header {
                 padding: 12px 12px;
-                min-height: 100px; /* Adjusted for small mobile */
+                min-height: 100px;
             }
             
             .company-name h1 {
@@ -328,7 +352,11 @@
                 line-height: 1.1;
             }
             
-            .header-content {
+            .left-tagline {
+                font-size: 11px;
+            }
+            
+            .header-center {
                 padding: 0 5px;
             }
             
@@ -336,7 +364,7 @@
                 width: 95%;
             }
             
-            .tagline {
+            .center-tagline {
                 font-size: 11px;
                 letter-spacing: 0.3px;
                 margin-top: 6px;
@@ -354,7 +382,7 @@
             }
             
             .black-header {
-                top: 110px; /* Adjusted for small mobile */
+                top: 110px;
                 padding: 8px 12px;
                 min-height: 40px;
             }
@@ -370,7 +398,7 @@
             }
             
             .main-content {
-                margin-top: 150px; /* Adjusted for small mobile */
+                margin-top: 150px;
             }
         }
     </style>
@@ -378,13 +406,16 @@
 <body>
     <!-- Fixed Header -->
     <header>
-        <!-- Company Name on the left -->
-        <div class="company-name">
-            <h1>Sanjay Paras</h1>
+        <!-- Left section with company name and left tagline -->
+        <div class="left-section">
+            <div class="company-name">
+                <h1>Sanjay Paras</h1>
+            </div>
+            <div class="left-tagline">Most Trusted in Kolkata</div>
         </div>
         
-        <!-- Center content with search box and tagline -->
-        <div class="header-content">
+        <!-- Center content with search box and centered tagline -->
+        <div class="header-center">
             <!-- Search Box -->
             <div class="search-container">
                 <input type="text" 
@@ -393,8 +424,8 @@
                        aria-label="Search products">
             </div>
             
-            <!-- Tagline (now pushed down) -->
-            <div class="tagline">Physics, Chemistry and Biology Laboratory Equipment Retail Supplier in Kolkata</div>
+            <!-- Center Tagline -->
+            <div class="center-tagline">Physics, Chemistry and Biology Laboratory Equipment Retail Supplier in Kolkata</div>
         </div>
         
         <!-- Cart Button -->
