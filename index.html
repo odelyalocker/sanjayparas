@@ -766,12 +766,17 @@ function searchItems() {
         }
         
         // Filter items
-        const matchedItems = allItems.filter(item => {
-            return item.name.toLowerCase().includes(searchTerm) ||
-                   item.description.join(' ').toLowerCase().includes(searchTerm) ||
-                   item.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm)) ||
-                   item.category.toLowerCase().includes(searchTerm);
-        });
+const matchedItems = allItems.filter(item => {
+    // Check if description is array or string
+    const descriptionText = Array.isArray(item.description) 
+        ? item.description.join(' ') 
+        : item.description;
+    
+    return item.name.toLowerCase().includes(searchTerm) ||
+           descriptionText.toLowerCase().includes(searchTerm) ||
+           item.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm)) ||
+           item.category.toLowerCase().includes(searchTerm);
+});
         
         // Display results
         if (matchedItems.length > 0) {
@@ -898,6 +903,7 @@ window.addEventListener('DOMContentLoaded', loadJSONFiles);
 </script>
 </body>
 </html>
+
 
 
 
