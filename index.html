@@ -882,7 +882,16 @@ async function loadJSONFiles() {
         
         // Combine all items
         allItems = [...biolab, ...physlab, ...chemlab, ...scientific];
-        
+   // Clean up discount values (remove % sign)
+        allItems = allItems.map(item => {
+            if (item.discount) {
+                // Remove % sign if present
+                item.discount = item.discount.toString().replace('%', '');
+            }
+            return item;
+        });
+
+	
         console.log('✅ JSON files loaded successfully');
         console.log(`📊 Total items loaded: ${allItems.length}`);
         
@@ -967,7 +976,7 @@ function searchItems() {
                                 <div class="bestbuy-line">
     <span class="bestbuy-label">Buy</span>
     <span class="bestbuy-price" style="font-size: 17px;">INR ${item.bestBuyPrice || '0'}/-</span>
-    <span class="discount-badge">${item.discount || '0%'}</span>
+    <span class="discount-badge">(-${item.discount || '0'}%)</span>
 </div>
                             </div>
                         </div>
@@ -1049,6 +1058,3 @@ window.addEventListener('DOMContentLoaded', loadJSONFiles);
 
 </body>
 </html>
-
-
-
