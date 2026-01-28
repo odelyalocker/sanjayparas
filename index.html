@@ -439,15 +439,6 @@
             font-weight: bold;
         }
 
-        .discount-badge {
-            background: #ff4444;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
         /* Center Column: Name + Specifications + Warranty */
         .result-center {
             flex: 1;
@@ -968,16 +959,7 @@ function searchItems() {
                             <div class="result-image">
                                 <img src="${item.image || 'placeholder.jpg'}" alt="${item.name}" onerror="this.src='placeholder.jpg'">
                             </div>
-                            <div class="price-box">
-                                <div class="mrp-line">
-                                    <span class="mrp-label">M.R.P.</span>
-                                    <span class="mrp-price">INR ${item.mrpPrice || '0'}/-</span>
-                                </div>
-                                <div class="bestbuy-line">
-    <span class="bestbuy-label">Buy</span>
-    <span class="bestbuy-price" style="font-size: 17px;">INR ${item.bestBuyPrice || '0'}/-</span>
-    <span class="discount-badge">(-${item.discount || '0'}%)</span>
-</div>
+                            
                             </div>
                         </div>
                         
@@ -1058,3 +1040,4 @@ window.addEventListener('DOMContentLoaded', loadJSONFiles);
 
 </body>
 </html>
+
