@@ -4,24 +4,24 @@
     "name": "Compound Microscope",
     "category": "Biology Lab",
     "image": "/sanjayparas/bioimg/micro1.jpg",
-    "price": "₹15,500",
-    "originalPrice": "₹17,000",
-    "discount": "-9%",
+    "bestBuyPrice": "19,000",
+    "mrpPrice": "20,000",
+    "discount": "-5%",
     "warranty": "2 Years Manufacturer Warranty",
-    "description": [
-      "Professional compound microscope with 1000x magnification",
-      "Built-in LED illumination with adjustable intensity",
-      "Includes 10x, 40x, and 100x oil immersion objectives",
-      "Mechanical stage with coaxial controls"
-    ],
     "specifications": [
       "Magnification: 40x to 1000x",
       "Light Source: LED 3W",
       "Eyepiece: WF10x/18mm",
       "Objectives: Achromatic 4x, 10x, 40x(s), 100x(s) oil"
     ],
+    "description": [
+      "Professional compound microscope with 1000x magnification",
+      "Built-in LED illumination with adjustable intensity",
+      "Includes 10x, 40x, and 100x oil immersion objectives",
+      "Mechanical stage with coaxial controls"
+    ],
     "keywords": ["microscope", "biology", "compound", "magnification", "lab equipment"]
-  },
+}
   {
     "id": 2,
     "name": "Digital Centrifuge Machine",
