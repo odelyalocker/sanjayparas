@@ -20,7 +20,7 @@
             background-color: #f5f5f5;
         }
         
-        /* Header Styles - MODIFIED */
+        /* Header Styles */
         header {
             position: fixed;
             top: 0;
@@ -33,21 +33,13 @@
             align-items: center;
             box-shadow: none;
             z-index: 1000;
-            min-height: 90px;
+            min-height: 85px;
         }
         
         /* Left section with company name and new tagline */
-        .left-section {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            margin-right: 20px;
-            min-width: 200px;
-        }
-        
+       
         .company-name h1 {
-            font-size: 35px;
+            font-size: 40px;
             font-weight: bold;
             color: #FFFFFF;
             text-shadow: none;
@@ -58,17 +50,8 @@
         }
         
         /* New tagline on the left */
-        .left-tagline {
-            font-size: 14px;
-            color: #FFFFFF;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            margin-top: 3px;
-            text-align: left;
-            white-space: nowrap;
-        }
         
-        /* Center content - MODIFIED */
+        /* Center content */
         .header-center {
             flex-grow: 1;
             display: flex;
@@ -78,48 +61,27 @@
             padding: 0 20px;
         }
         
-        /* Search Box - MODIFIED */
-        .search-container {
-            width: 70%;
-            margin: 0 auto;
-        }
-        
-        .search-box {
-            width: 100%;
-            padding: 8px 15px;
-            font-size: 16px;
-            border: 2px solid #ddd;
-            border-radius: 25px;
-            outline: none;
-            transition: all 0.3s ease;
-            background-color: white;
-            color: #333;
-        }
-        
-        .search-box::placeholder {
-            color: #888;
-            font-style: italic;
-        }
-        
-        .search-box:focus {
-            border-color: #d32f2f;
-            box-shadow: 0 0 8px rgba(211, 47, 47, 0.3);
-        }
-        
-        .search-box:hover {
-            border-color: #bbb;
-        }
-        
         /* Center tagline */
         .center-tagline {
             font-size: 16px;
             color: #FFFFFF;
-            margin-top: 5px;
             font-weight: 500;
             letter-spacing: 0.5px;
             text-align: center;
+            line-height: 1.3;
         }
         
+		/* Second tagline */
+.trusted-tagline {
+    font-size: 16px;
+    color: #FFFFFF;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-align: center;
+    line-height: 1.3;
+    margin-top: 5px;
+}
+		
         /* Cart Button */
         .cart-button {
             background-color: #FFFFFF;
@@ -158,46 +120,102 @@
         
         /* Adjust black-header position */
         .black-header {
-            top: 90px;
+            top: 85px;
         }
         
         /* Adjust main content position */
         .main-content {
-            margin-top: 120px;
+            margin-top: 140px;
         }
         
-        /* Black Header Section */
+        /* Black Header Section - MODIFIED */
         .black-header {
             position: fixed;
             left: 0;
             width: 100%;
             background-color: #000000;
             color: white;
-            padding: 7px 20px;
+            padding: 10px 20px;
             display: flex;
-            justify-content: center;
             align-items: center;
             z-index: 999;
-            min-height: 50px;
+            min-height: 70px;
         }
         
-        .black-header-left {
+        /* Home button on left */
+        .home-button {
+            margin-right: 20px;
+        }
+        
+        .home-button a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: color 0.3s;
+            white-space: nowrap;
+        }
+        
+        .home-button a:hover {
+            color: #FFFFFF;
+        }
+        
+        /* Search box in center - NEW */
+        .black-header-search {
             flex-grow: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 30px;
+            padding: 0 20px;
         }
         
-        .black-header-link {
+        .search-container {
+            width: 70%;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 2px solid #444;
+            border-radius: 25px;
+            outline: none;
+            transition: all 0.3s ease;
+            background-color: #fff;
+            color: #333;
+        }
+        
+        .search-box::placeholder {
+            color: #888;
+            font-style: italic;
+        }
+        
+        .search-box:focus {
+            border-color: #d32f2f;
+            background-color: #fff;
+            box-shadow: 0 0 8px rgba(211, 47, 47, 0.5);
+        }
+        
+        .search-box:hover {
+            border-color: #999;
+            background-color: #fff;
+        }
+        
+        /* Contact button on right */
+        .contact-button {
+            margin-left: 20px;
+        }
+        
+        .contact-button a {
             color: #FFFFFF;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 500;
             transition: color 0.3s;
+            white-space: nowrap;
         }
         
-        .black-header-link:hover {
+        .contact-button a:hover {
             color: #FFFFFF;
         }
         
@@ -258,17 +276,9 @@
         /* Responsive Design - UPDATED */
         @media (max-width: 768px) {
             header {
-                padding: 15px 15px;
-                min-height: 110px;
+                padding: 12px 15px;
+                min-height: 100px;
                 flex-wrap: wrap;
-            }
-            
-            .left-section {
-                width: 100%;
-                margin-right: 0;
-                margin-bottom: 10px;
-                align-items: center;
-                order: 1;
             }
             
             .company-name h1 {
@@ -277,35 +287,22 @@
                 white-space: normal;
                 line-height: 1.2;
             }
-            
-            .left-tagline {
-                text-align: center;
-                font-size: 13px;
-                white-space: normal;
-            }
-            
+            .trusted-tagline {
+				font-size: 14px;
+				margin-top: 3px;
+			}
+			
             .header-center {
                 width: 100%;
                 order: 3;
                 padding: 0;
-                margin-top: 10px;
-            }
-            
-            .search-container {
-                width: 90%;
-                margin-bottom: 8px;
-            }
-            
-            .search-box {
-                padding: 6px 12px;
-                font-size: 14px;
             }
             
             .center-tagline {
-                font-size: 12px;
-                margin-top: 8px;
+                font-size: 14px;
                 color: #FFFFFF;
                 white-space: normal;
+                line-height: 1.2;
             }
             
             .cart-button {
@@ -313,7 +310,6 @@
                 font-size: 14px;
                 order: 2;
                 margin-left: auto;
-                margin-bottom: 10px;
             }
             
             .cart-button i {
@@ -321,54 +317,74 @@
             }
             
             .black-header {
-                top: 120px;
+                top: 110px;
                 padding: 10px 15px;
-                min-height: 45px;
+                min-height: 70px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
-            .black-header-left {
-                gap: 15px;
+            .home-button {
+                margin-right: 10px;
+                order: 1;
+                width: auto;
             }
             
-            .black-header-link {
+            .black-header-search {
+                order: 3;
+                width: 100%;
+                padding: 10px 0;
+                margin-top: 10px;
+            }
+            
+            .search-container {
+                width: 100%;
+            }
+            
+            .contact-button {
+                margin-left: 10px;
+                order: 2;
+                width: auto;
+            }
+            
+            .home-button a,
+            .contact-button a {
+                font-size: 16px;
+            }
+            
+            .search-box {
+                padding: 8px 15px;
                 font-size: 14px;
-                color: #FFFFFF;
             }
             
             .main-content {
-                margin-top: 165px;
+                margin-top: 200px;
                 padding: 30px 15px;
             }
         }
         
         @media (max-width: 480px) {
             header {
-                padding: 12px 12px;
-                min-height: 100px;
+                padding: 10px 12px;
+                min-height: 90px;
             }
             
             .company-name h1 {
                 font-size: 24px;
                 line-height: 1.1;
             }
-            
-            .left-tagline {
-                font-size: 11px;
-            }
-            
+            .trusted-tagline {
+				font-size: 12px;
+			}
             .header-center {
                 padding: 0 5px;
             }
             
-            .search-container {
-                width: 95%;
-            }
-            
             .center-tagline {
-                font-size: 11px;
+                font-size: 12px;
                 letter-spacing: 0.3px;
-                margin-top: 6px;
                 color: #FFFFFF;
+                line-height: 1.1;
             }
             
             .cart-button {
@@ -382,23 +398,23 @@
             }
             
             .black-header {
-                top: 110px;
+                top: 100px;
                 padding: 8px 12px;
-                min-height: 40px;
+                min-height: 70px;
             }
             
-            .black-header-left {
-                gap: 10px;
-                justify-content: space-around;
+            .home-button a,
+            .contact-button a {
+                font-size: 14px;
             }
             
-            .black-header-link {
+            .search-box {
+                padding: 6px 12px;
                 font-size: 12px;
-                color: #FFFFFF;
             }
             
             .main-content {
-                margin-top: 150px;
+                margin-top: 190px;
             }
         }
     </style>
@@ -407,26 +423,17 @@
     <!-- Fixed Header -->
     <header>
         <!-- Left section with company name and left tagline -->
-        <div class="left-section">
-            <div class="company-name">
-                <h1>Sanjay Paras</h1>
-            </div>
-            <div class="left-tagline">Trusted Lab Equipments in Kolkata</div>
-        </div>
+        <div class="company-name">
+			<h1>Sanjay Paras</h1>
+		</div>
         
-        <!-- Center content with search box and centered tagline -->
+        <!-- Center content with centered tagline -->
         <div class="header-center">
-            <!-- Search Box -->
-            <div class="search-container">
-                <input type="text" 
-                       class="search-box" 
-                       placeholder="type your product name ..."
-                       aria-label="Search products">
-            </div>
-            
-            <!-- Center Tagline -->
-            <div class="center-tagline">Physics, Chemistry and Biology Laboratory Equipment Retail Supplier in Kolkata</div>
-        </div>
+			<!-- First Tagline -->
+			<div class="center-tagline">Physics, Chemistry, Biology and all Scientific Laboratory Equipments Retailer in West Bengal</div>
+			<!-- Second Tagline -->
+			<div class="trusted-tagline">Buy Genuine Trusted Laboratory Equipment at Retail Price</div>
+		</div>
         
         <!-- Cart Button -->
         <a href="cart.html" class="cart-button">
@@ -435,15 +442,26 @@
         </a>
     </header>
     
-    <!-- Black Header Section -->
+    <!-- Black Header Section - MODIFIED -->
     <div class="black-header">
-        <div class="black-header-left">
-            <a href="index.html" class="black-header-link">Home</a>
-            <a href="biolab.html" class="black-header-link">Bio Lab</a>
-            <a href="physlab.html" class="black-header-link">Phys Lab</a>
-            <a href="chemlab.html" class="black-header-link">Chem Lab</a>
-            <a href="contact.html" class="black-header-link">Contact</a>
-            <a href="about.html" class="black-header-link">About</a>
+        <!-- Home button on left -->
+        <div class="home-button">
+            <a href="index.html">Home</a>
+        </div>
+        
+        <!-- Search box in center -->
+        <div class="black-header-search">
+            <div class="search-container">
+                <input type="text" 
+                       class="search-box" 
+                       placeholder="Type your items here ..."
+                       aria-label="Search products">
+            </div>
+        </div>
+        
+        <!-- Contact button on right -->
+        <div class="contact-button">
+            <a href="contact.html">Contact</a>
         </div>
     </div>
     
@@ -467,6 +485,3 @@
 
 </body>
 </html>
-
-
-
