@@ -483,19 +483,6 @@
             line-height: 1.4;
         }
 
-        .warranty {
-            color: #333;
-            font-size: 15px;
-            padding: 10px;
-            background: #f0f7ff;
-            border-radius: 6px;
-            border-left: 4px solid #1565c0;
-        }
-
-        .warranty strong {
-            color: #1565c0;
-        }
-
         /* Right Column: Description */
         .result-right {
             flex: 0 0 280px;
@@ -989,15 +976,13 @@ function searchItems() {
                         <div class="result-center">
                             <h4 class="item-name">${item.name}</h4>
                             
-                            ${specsHTML ? `
                             <div class="specs-section">
-                                <strong>Specifications:</strong>
-                                <ul>${specsHTML}</ul>
-                            </div>` : ''}
-                            
-                            <div class="warranty">
-                                <strong>Warranty:</strong> ${item.warranty || 'Not specified'}
-                            </div>
+    ${specsHTML ? `
+    <strong>Specifications:</strong>
+    <ul>${specsHTML}</ul>` : ''}
+    
+    <strong>Warranty:</strong> ${item.warranty || 'Not specified'}
+</div>
                         </div>
                         
                         <!-- Right: Description -->
@@ -1064,4 +1049,5 @@ window.addEventListener('DOMContentLoaded', loadJSONFiles);
 
 </body>
 </html>
+
 
