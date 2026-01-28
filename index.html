@@ -648,8 +648,9 @@
 
 <script>
 
-
-
+let allItems = []; // This will hold all items from JSON files
+let searchTimeout;
+	
 // Search function
 function searchItems() {
     clearTimeout(searchTimeout);
@@ -738,9 +739,6 @@ document.querySelector('.search-box').addEventListener('keydown', function(event
     }
 });
 
-let allItems = []; // This will hold all items from JSON files
-let searchTimeout;
-	
 // Function to load JSON files
 async function loadJSONFiles() {
     try {
@@ -769,4 +767,5 @@ window.addEventListener('DOMContentLoaded', loadJSONFiles);
 </script>
 </body>
 </html>
+
 
