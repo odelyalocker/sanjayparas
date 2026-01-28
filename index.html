@@ -35,22 +35,46 @@
             z-index: 1000;
             min-height: 85px;
         }
+               
+/* Company name container with white background */
+.company-name-container {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 7px 25px;
+    margin-right: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%; 
+    min-height: 56px;
+}
+
+/* Company name in two lines */
+.company-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.company-name h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #1565c0;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.company-name .international {
+    color: #1565c0;
+    font-size: 24px;
+    margin-top: 2px;
+}
         
-        /* Left section with company name and new tagline */
-       
-        .company-name h1 {
-            font-size: 40px;
-            font-weight: bold;
-            color: #FFFFFF;
-            text-shadow: none;
-            line-height: 1.1;
-            margin: 0;
-            padding: 0;
-            white-space: nowrap;
-        }
-        
-        /* New tagline on the left */
-        
+          
         /* Center content */
         .header-center {
             flex-grow: 1;
@@ -109,12 +133,12 @@
         
         .cart-button i {
             font-size: 18px;
-            color: #d32f2f;
+            color: #000000;
             font-weight: bold;
         }
         
         .cart-button span {
-            color: #d32f2f;
+            color: #000000;
             font-weight: bold;
         }
         
@@ -280,13 +304,20 @@
                 min-height: 100px;
                 flex-wrap: wrap;
             }
-            
+            .company-name-container {
+				margin-right: 15px;
+				padding: 10px 15px;
+				min-height: 48px;
+}
             .company-name h1 {
-                font-size: 28px;
+                font-size: 22px;
                 text-align: center;
                 white-space: normal;
                 line-height: 1.2;
             }
+			.company-name .international {
+				font-size: 20px;
+			}
             .trusted-tagline {
 				font-size: 14px;
 				margin-top: 3px;
@@ -368,11 +399,18 @@
                 padding: 10px 12px;
                 min-height: 90px;
             }
-            
+            .company-name-container {
+				margin-right: 10px;
+				padding: 8px 12px;
+				min-height: 40px;
+			}
             .company-name h1 {
-                font-size: 24px;
+                font-size: 18px;
                 line-height: 1.1;
             }
+			.company-name .international {
+				font-size: 16px;
+			}
             .trusted-tagline {
 				font-size: 12px;
 			}
@@ -423,8 +461,11 @@
     <!-- Fixed Header -->
     <header>
         <!-- Left section with company name and left tagline -->
-        <div class="company-name">
-			<h1>Sanjay Paras</h1>
+        <div class="company-name-container">
+			<div class="company-name">
+				<h1>Paras</h1>
+				<h1 class="international">Nternational</h1>
+			</div>
 		</div>
         
         <!-- Center content with centered tagline -->
@@ -455,7 +496,8 @@
                 <input type="text" 
                        class="search-box" 
                        placeholder="Type your items here ..."
-                       aria-label="Search products">
+                       aria-label="Search products"
+					   maxlength="30">
             </div>
         </div>
         
