@@ -371,20 +371,19 @@
             width: 100%;
         }
 
-   .result-content {
-    display: grid;
-    grid-template-columns: 1fr 2fr; 
+        .result-content {
+            display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 30px;
     align-items: start;
-}
+        }
 
-/* Left Column: Image + Price */
-.result-left {
-    grid-column: 1; /* First column */
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
+        /* Left Column: Image + Price */
+        grid-column: 1; /* First column */
+    	display: flex;
+    	flex-direction: column;
+    	gap: 15px;
+        }
 
         .result-image {
             margin-bottom: 15px;
@@ -480,8 +479,9 @@
 
         /* Right Column: Description */
         .result-right {
-    display: none;
-}
+            grid-column: 3;
+            min-width: 0;
+        }
 
         .description-section {
             margin-top: 0;
@@ -522,13 +522,13 @@
 }
         /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 1024px) {
-   .result-content {
-        grid-template-columns: 1fr; /* Single column on tablet */
+            .result-content {
+        grid-template-columns: 1fr 1fr; /* Two columns on tablet */
         gap: 20px;
     }
     
     .result-left {
-        grid-column: 1;
+        grid-column: 1 / span 2; /* Span full width */
         display: flex;
         gap: 20px;
     }
@@ -543,7 +543,12 @@
     
     .result-center {
         grid-column: 1;
-    }           
+    }
+    
+    .result-right {
+        grid-column: 2;
+    }
+           
         }
 
         @media (max-width: 768px) {
@@ -991,23 +996,26 @@ function searchItems() {
                             </div>
                         </div>
                         
-<!-- Center: Name + Specs + Warranty + Description -->
-<div class="result-center">
-    <h4 class="item-name">${item.name}</h4>
+                        <!-- Center: Name + Specs + Warranty -->
+                        <div class="result-center">
+                            <h4 class="item-name">${item.name}</h4>
+                            
+                            <div class="specs-section">
+    ${specsHTML ? `
+    <strong>Specifications:</strong>
+    <ul>${specsHTML}</ul>` : ''}
     
-    <div class="specs-section">
-        ${specsHTML ? `
-        <strong>Specifications:</strong>
-        <ul>${specsHTML}</ul>` : ''}
-        
-        <strong>Warranty:</strong> ${item.warranty || 'Not specified'}
-    </div>
-    
-    <div class="description-section">
-        <strong>Descriptions:</strong>
-        <ul>${descriptionHTML}</ul>
-    </div>
+    <strong>Warranty:</strong> ${item.warranty || 'Not specified'}
 </div>
+                        </div>
+                        
+                        <!-- Right: Description -->
+                        <div class="result-right">
+                            <div class="description-section">
+                                <strong>Descriptions:</strong>
+                                <ul>${descriptionHTML}</ul>
+                            </div>
+                        </div>
                     </div>
                 `;
                 resultsList.appendChild(resultItem);
@@ -1065,7 +1073,3 @@ window.addEventListener('DOMContentLoaded', loadJSONFiles);
 
 </body>
 </html>
-
-
-
-
