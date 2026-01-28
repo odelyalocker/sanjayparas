@@ -848,272 +848,65 @@
         </div>
     </footer>
 
-<script>
-
-let allItems = []; // This will hold all items from JSON files
-let searchTimeout;
-	
-// Search function
-function searchItems() {
-    clearTimeout(searchTimeout);
-    
-    searchTimeout = setTimeout(() => {
-        const searchTerm = document.querySelector('.search-box').value.toLowerCase().trim();
-        const resultsList = document.getElementById('resultsList');
-        const searchResults = document.getElementById('searchResults');
-        const resultsTitle = document.getElementById('resultsTitle');
-        
-        // Clear previous results
-        resultsList.innerHTML = '';
-        
-        // Hide results if search term is too short
-        if (searchTerm.length < 2) {
-            searchResults.style.display = 'none';
-            return;
-        }
-        
-        // Filter items
-        const matchedItems = allItems.filter(item => {
-            // Check if description is array or string
-            const descriptionText = Array.isArray(item.description) 
-                ? item.description.join(' ') 
-                : item.description;
-            
-            const specsText = item.specifications && Array.isArray(item.specifications)
-                ? item.specifications.join(' ')
-                : '';
-            
-            return item.name.toLowerCase().includes(searchTerm) ||
-                   descriptionText.toLowerCase().includes(searchTerm) ||
-                   specsText.toLowerCase().includes(searchTerm) ||
-                   item.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm));
-                   // Note: category is NOT used in search as per your request
-        });
-        
-        // Display results
-        if (matchedItems.length > 0) {
-            resultsTitle.textContent = `Found ${matchedItems.length} item(s) for "${searchTerm}"`;
-            
-            matchedItems.forEach(item => {
-                const resultItem = document.createElement('div');
-                resultItem.className = 'result-item';
-                
-                // Create description HTML as bullet points
-                const descriptionHTML = Array.isArray(item.description) 
-                    ? item.description.map(point => `<li>${point}</li>`).join('')
-                    : `<li>${item.description}</li>`;
-                
-                // Create specifications HTML as bullet points
-                const specsHTML = item.specifications && Array.isArray(item.specifications)
-                    ? item.specifications.map(spec => `<li>${spec}</li>`).join('')
-                    : '';
-                
-                resultItem.innerHTML = `
-                    <div class="result-content">
-                        <!-- Left: Image + Price -->
-                        <div class="result-left">
-                            <div class="result-image">
-                                <img src="${item.image}" alt="${item.name}" onerror="this.src='placeholder.jpg'">
-                            </div>
-                            <div class="price-box">
-                                <div class="mrp-line">
-                                    <span class="mrp-label">M.R.P.</span>
-                                    <span class="mrp-price">INR ${item.mrpPrice}/-</span>
-                                </div>
-                                <div class="bestbuy-line">
-                                    <span class="bestbuy-label">Best Buy</span>
-                                    <span class="bestbuy-price">INR ${item.bestBuyPrice}/-</span>
-                                    <span class="discount-badge">${item.discount}</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Center: Name + Specs + Warranty -->
-                        <div class="result-center">
-                            <h4 class="item-name">${item.name}</h4>
-                            
-                            ${specsHTML ? `
-                            <div class="specs-section">
-                                <strong>Specifications:</strong>
-                                <ul>${specsHTML}</ul>
-                            </div>` : ''}
-                            
-                            <div class="warranty">
-                                <strong>Warranty:</strong> ${item.warranty}
-                            </div>
-                        </div>
-                        
-                        <!-- Right: Description -->
-                        <div class="result-right">
-                            <div class="description-section">
-                                <strong>Descriptions:</strong>
-                                <ul>${descriptionHTML}</ul>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                resultsList.appendChild(resultItem);
-            });
-            
-            searchResults.style.display = 'block';
-        } else {
-            resultsTitle.textContent = `No results found for "${searchTerm}"`;
-            resultsList.innerHTML = '<div class="no-results">Try different keywords like "microscope", "bunsen", "test tube" etc.</div>';
-            searchResults.style.display = 'block';
-        }
-    }, 300); // 300ms delay for better UX
-}
-
-// Close results function
-document.getElementById('closeResults').addEventListener('click', function() {
-    document.getElementById('searchResults').style.display = 'none';
-    document.querySelector('.search-box').value = '';
-});
-
-// Close results when clicking outside
-document.addEventListener('click', function(event) {
-    const searchResults = document.getElementById('searchResults');
-    const searchBox = document.querySelector('.search-box');
-    
-    if (searchResults.style.display === 'block' && 
-        !searchResults.contains(event.target) && 
-        !searchBox.contains(event.target)) {
-        searchResults.style.display = 'none';
-    }
-});
-
-// Add event listener to search box
-document.querySelector('.search-box').addEventListener('input', searchItems);
-
-// Keyboard navigation
-document.querySelector('.search-box').addEventListener('keydown', function(event) {
-    const searchResults = document.getElementById('searchResults');
-    
-    // Escape key closes results
-    if (event.key === 'Escape' && searchResults.style.display === 'block') {
-        searchResults.style.display = 'none';
-    }
-    
-    // Enter key performs search (already handled by input event)
-    if (event.key === 'Enter') {
-        searchItems();
-    }
-});
-
-// Function to load JSON files - UPDATED FOR YOUR FORMAT
+// Function to load JSON files - NO FALLBACK DATA
 async function loadJSONFiles() {
     console.log('Starting JSON file loading...');
     
-    try {
-        // List of JSON files to load
-        const jsonFiles = [
-            'biolabitems.json',
-            'physlabitems.json', 
-            'chemlabitems.json',
-            'scientificlabitems.json'
-        ];
-        
-        // Load each file
-        const loadPromises = jsonFiles.map(async (fileName) => {
-            try {
-                console.log(`Loading: ${fileName}`);
-                const response = await fetch(fileName);
-                
-                if (!response.ok) {
-                    console.warn(`⚠️ File not found: ${fileName}`);
-                    return []; // Return empty array if file not found
-                }
-                
-                const data = await response.json();
-                console.log(`✅ Loaded: ${fileName} (${data.length} items)`);
-                return data;
-                
-            } catch (fileError) {
-                console.warn(`⚠️ Error loading ${fileName}:`, fileError.message);
-                return []; // Return empty array on error
+    // List of JSON files to load
+    const jsonFiles = [
+        'biolabitems.json',
+        'physlabitems.json', 
+        'chemlabitems.json',
+        'scientificlabitems.json'
+    ];
+    
+    // Load each file
+    const loadPromises = jsonFiles.map(async (fileName) => {
+        try {
+            console.log(`Loading: ${fileName}`);
+            const response = await fetch(fileName);
+            
+            if (!response.ok) {
+                console.warn(`⚠️ File not found: ${fileName}`);
+                return []; // Return empty array if file not found
             }
+            
+            const data = await response.json();
+            console.log(`✅ Loaded: ${fileName} (${data.length} items)`);
+            return data;
+            
+        } catch (fileError) {
+            console.warn(`⚠️ Error loading ${fileName}:`, fileError.message);
+            return []; // Return empty array on error
+        }
+    });
+    
+    // Wait for all files to load
+    const [biolab, physlab, chemlab, scientific] = await Promise.all(loadPromises);
+    
+    // Combine all items (filter out null/undefined)
+    allItems = []
+        .concat(biolab || [])
+        .concat(physlab || [])
+        .concat(chemlab || [])
+        .concat(scientific || []);
+    
+    console.log('✅ All JSON files processed');
+    console.log(`📊 Total items loaded: ${allItems.length}`);
+    
+    // Show sample of first item to verify format
+    if (allItems.length > 0) {
+        console.log('📝 Sample item structure:', {
+            name: allItems[0].name,
+            bestBuyPrice: allItems[0].bestBuyPrice,
+            mrpPrice: allItems[0].mrpPrice,
+            discount: allItems[0].discount,
+            hasSpecifications: Array.isArray(allItems[0].specifications),
+            hasDescription: Array.isArray(allItems[0].description)
         });
-        
-        // Wait for all files to load
-        const [biolab, physlab, chemlab, scientific] = await Promise.all(loadPromises);
-        
-        // Combine all items (filter out null/undefined)
-        allItems = []
-            .concat(biolab || [])
-            .concat(physlab || [])
-            .concat(chemlab || [])
-            .concat(scientific || []);
-        
-        console.log('✅ All JSON files processed');
-        console.log(`📊 Total items loaded: ${allItems.length}`);
-        
-        // Show sample of first item to verify format
-        if (allItems.length > 0) {
-            console.log('📝 Sample item structure:', {
-                name: allItems[0].name,
-                bestBuyPrice: allItems[0].bestBuyPrice,
-                mrpPrice: allItems[0].mrpPrice,
-                discount: allItems[0].discount,
-                hasSpecifications: Array.isArray(allItems[0].specifications),
-                hasDescription: Array.isArray(allItems[0].description)
-            });
-        }
-        
-        // If no items loaded, use sample data
-        if (allItems.length === 0) {
-            console.log('📦 No JSON files found. Loading sample data...');
-            allItems = [{
-                id: 1,
-                name: "Compound Microscope",
-                category: "Biology Lab",
-                image: "placeholder.jpg",
-                bestBuyPrice: "19,000",
-                mrpPrice: "20,000", 
-                discount: "-5%",
-                warranty: "2 Years Manufacturer Warranty",
-                specifications: [
-                    "Magnification: 40x to 1000x",
-                    "Light Source: LED 3W",
-                    "Eyepiece: WF10x/18mm"
-                ],
-                description: [
-                    "Professional compound microscope with 1000x magnification",
-                    "Built-in LED illumination with adjustable intensity"
-                ],
-                keywords: ["microscope", "biology", "compound"]
-            }];
-            console.log('✅ Sample data loaded successfully');
-        }
-        
-    } catch (error) {
-        console.error('❌ Critical error loading JSON files:', error);
-        
-        // Fallback to sample data
-        allItems = [{
-            id: 1,
-            name: "Emergency Sample Item",
-            category: "Test",
-            image: "",
-            bestBuyPrice: "10,000",
-            mrpPrice: "12,000",
-            discount: "-17%",
-            warranty: "1 Year Warranty",
-            specifications: ["Test specification 1", "Test specification 2"],
-            description: ["Test description line 1", "Test description line 2"],
-            keywords: ["test", "sample"]
-        }];
-        
-        console.log('🆘 Using emergency fallback data');
     }
 }
-
-// Load JSON files when page loads
-window.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Page loaded, starting JSON file loading...');
-    loadJSONFiles();
-});
-
-</script>
 	
 </body>
 </html>
+
