@@ -243,6 +243,100 @@
             color: #FFFFFF;
         }
         
+        /* Search Results Section - NEW */
+        .search-results {
+            position: fixed;
+            top: 155px; /* Below black header */
+            left: 0;
+            width: 100%;
+            background: white;
+            z-index: 998;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            border-top: 2px solid #d32f2f;
+        }
+        
+        .results-container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .results-header h3 {
+            color: #333;
+            font-size: 18px;
+        }
+        
+        .close-results {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .results-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .result-item {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #1565c0;
+        }
+        
+        .result-item h4 {
+            color: #1565c0;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .result-item .category {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1565c0;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .result-item .price {
+            color: #d32f2f;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .result-item .description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-style: italic;
+        }
+        
         /* Main Content Area */
         .main-content {
             flex: 1;
@@ -388,6 +482,15 @@
                 font-size: 14px;
             }
             
+            .search-results {
+                top: 180px;
+                max-height: 300px;
+            }
+            
+            .results-list {
+                grid-template-columns: 1fr;
+            }
+            
             .main-content {
                 margin-top: 200px;
                 padding: 30px 15px;
@@ -451,6 +554,11 @@
                 font-size: 12px;
             }
             
+            .search-results {
+                top: 170px;
+                max-height: 250px;
+            }
+            
             .main-content {
                 margin-top: 190px;
             }
@@ -507,6 +615,19 @@
         </div>
     </div>
     
+    <!-- Search Results Section -->
+    <div class="search-results" id="searchResults">
+        <div class="results-container">
+            <div class="results-header">
+                <h3 id="resultsTitle">Search Results</h3>
+                <button class="close-results" id="closeResults">Close</button>
+            </div>
+            <div class="results-list" id="resultsList">
+                <!-- Results will appear here -->
+            </div>
+        </div>
+    </div>
+    
     <!-- Main Content Area -->
     <main class="main-content">
         <div class="content-placeholder">
@@ -525,5 +646,166 @@
         </div>
     </footer>
 
+<script>
+// Sample data - Replace this with actual JSON file loading
+const sampleItems = [
+    {
+        id: 1,
+        name: "Microscope",
+        category: "Biology",
+        price: "₹15,000",
+        description: "Compound microscope with 1000x magnification",
+        keywords: ["microscope", "magnification", "lab", "biology", "compound"]
+    },
+    {
+        id: 2,
+        name: "Centrifuge",
+        category: "Biology",
+        price: "₹25,000",
+        description: "High-speed centrifuge for lab use",
+        keywords: ["centrifuge", "spin", "separate", "biology", "high-speed"]
+    },
+    {
+        id: 3,
+        name: "Bunsen Burner",
+        category: "Chemistry",
+        price: "₹1,500",
+        description: "Laboratory Bunsen burner with adjustable flame",
+        keywords: ["bunsen", "burner", "flame", "chemistry", "heat"]
+    },
+    {
+        id: 4,
+        name: "Laser Kit",
+        category: "Physics",
+        price: "₹8,500",
+        description: "Complete laser experiment kit",
+        keywords: ["laser", "light", "optics", "physics", "experiment"]
+    },
+    {
+        id: 5,
+        name: "Test Tube Rack",
+        category: "Scientific",
+        price: "₹800",
+        description: "Plastic test tube rack holder",
+        keywords: ["test tube", "rack", "holder", "laboratory", "scientific"]
+    }
+];
+
+let allItems = sampleItems; // Will be replaced with loaded JSON data
+let searchTimeout;
+
+// Search function
+function searchItems() {
+    clearTimeout(searchTimeout);
+    
+    searchTimeout = setTimeout(() => {
+        const searchTerm = document.querySelector('.search-box').value.toLowerCase().trim();
+        const resultsList = document.getElementById('resultsList');
+        const searchResults = document.getElementById('searchResults');
+        const resultsTitle = document.getElementById('resultsTitle');
+        
+        // Clear previous results
+        resultsList.innerHTML = '';
+        
+        // Hide results if search term is too short
+        if (searchTerm.length < 2) {
+            searchResults.style.display = 'none';
+            return;
+        }
+        
+        // Filter items
+        const matchedItems = allItems.filter(item => {
+            return item.name.toLowerCase().includes(searchTerm) ||
+                   item.description.toLowerCase().includes(searchTerm) ||
+                   item.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm)) ||
+                   item.category.toLowerCase().includes(searchTerm);
+        });
+        
+        // Display results
+        if (matchedItems.length > 0) {
+            resultsTitle.textContent = `Found ${matchedItems.length} item(s) for "${searchTerm}"`;
+            
+            matchedItems.forEach(item => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                resultItem.innerHTML = `
+                    <h4>${item.name}</h4>
+                    <span class="category">${item.category}</span>
+                    <div class="price">${item.price}</div>
+                    <p class="description">${item.description}</p>
+                `;
+                resultsList.appendChild(resultItem);
+            });
+            
+            searchResults.style.display = 'block';
+        } else {
+            resultsTitle.textContent = `No results found for "${searchTerm}"`;
+            resultsList.innerHTML = '<div class="no-results">Try different keywords like "microscope", "bunsen", "test tube" etc.</div>';
+            searchResults.style.display = 'block';
+        }
+    }, 300); // 300ms delay for better UX
+}
+
+// Close results function
+document.getElementById('closeResults').addEventListener('click', function() {
+    document.getElementById('searchResults').style.display = 'none';
+    document.querySelector('.search-box').value = '';
+});
+
+// Close results when clicking outside
+document.addEventListener('click', function(event) {
+    const searchResults = document.getElementById('searchResults');
+    const searchBox = document.querySelector('.search-box');
+    
+    if (searchResults.style.display === 'block' && 
+        !searchResults.contains(event.target) && 
+        !searchBox.contains(event.target)) {
+        searchResults.style.display = 'none';
+    }
+});
+
+// Add event listener to search box
+document.querySelector('.search-box').addEventListener('input', searchItems);
+
+// Keyboard navigation
+document.querySelector('.search-box').addEventListener('keydown', function(event) {
+    const searchResults = document.getElementById('searchResults');
+    
+    // Escape key closes results
+    if (event.key === 'Escape' && searchResults.style.display === 'block') {
+        searchResults.style.display = 'none';
+    }
+    
+    // Enter key performs search (already handled by input event)
+    if (event.key === 'Enter') {
+        searchItems();
+    }
+});
+
+// Function to load JSON files (you'll need to implement this)
+async function loadJSONFiles() {
+    try {
+        // Example of loading JSON files
+        // const [biolab, physlab, chemlab, scientific] = await Promise.all([
+        //     fetch('biolabitems.json').then(r => r.json()),
+        //     fetch('physlabitems.json').then(r => r.json()),
+        //     fetch('chemlabitems.json').then(r => r.json()),
+        //     fetch('scientificlabitems.json').then(r => r.json())
+        // ]);
+        
+        // Combine all items
+        // allItems = [...biolab, ...physlab, ...chemlab, ...scientific];
+        
+        console.log('JSON files loaded successfully');
+    } catch (error) {
+        console.error('Error loading JSON files:', error);
+        // Keep using sample data if JSON files can't be loaded
+    }
+}
+
+// Load JSON files when page loads
+window.addEventListener('DOMContentLoaded', loadJSONFiles);
+
+</script>
 </body>
 </html>
