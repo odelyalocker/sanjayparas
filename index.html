@@ -78,11 +78,6 @@
             letter-spacing: 0.5px;
             text-align: center;
             line-height: 1.3;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
         }
         
         /* Second tagline */
@@ -94,11 +89,6 @@
             text-align: center;
             line-height: 1.3;
             margin-top: 5px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
         }
         
         /* Cart Image Container - IMPROVED */
@@ -719,46 +709,41 @@
             }
         }
 
-        /* MOBILE LAYOUT - COMPLETELY REDESIGNED */
+        /* MOBILE LAYOUT - FIXED PROPERLY */
         @media (max-width: 768px) {
             header {
-                padding: 8px 10px;
-                min-height: 90px;
-                flex-direction: column;
-                justify-content: center;
-                align-items: stretch;
-            }
-            
-            /* Mobile top row for logos */
-            .header-top-row {
-                display: flex;
-                justify-content: space-between;
+                padding: 10px 15px;
+                min-height: 110px;
+                flex-wrap: wrap;
                 align-items: center;
-                width: 100%;
-                margin-bottom: 8px;
+                justify-content: space-between;
             }
             
+            /* Keep the original structure but adjust sizes */
             .logo-container {
-                margin-right: 0;
-                height: 45px;
-                width: 45px;
+                margin-right: 15px;
+                height: 50px;
+                width: 50px;
                 order: 1;
+                flex-shrink: 0;
             }
             
             .cart-image-container {
-                margin-left: 0;
-                height: 45px;
-                width: 45px;
+                margin-left: 15px;
+                height: 50px;
+                width: 50px;
                 order: 3;
+                flex-shrink: 0;
             }
             
-            /* Mobile center container */
+            /* Center content takes available space */
             .header-center {
-                width: 100%;
+                width: calc(100% - 130px); /* Account for both logos */
                 order: 2;
-                padding: 0 5px;
+                padding: 0 10px;
                 margin: 0;
-                min-height: 40px;
+                min-height: auto;
+                flex-grow: 1;
             }
             
             .center-tagline {
@@ -766,39 +751,45 @@
                 color: #FFFFFF;
                 line-height: 1.2;
                 margin-bottom: 2px;
-                -webkit-line-clamp: 2;
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
+                white-space: normal;
                 overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
             }
             
             .trusted-tagline {
                 font-size: 11px;
                 margin-top: 2px;
-                -webkit-line-clamp: 2;
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
+                white-space: normal;
                 overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
             }
             
+            /* Adjust black header position */
             .black-header {
-                top: 90px;
-                padding: 8px 10px;
-                min-height: 60px;
+                top: 110px;
+                padding: 8px 15px;
+                min-height: 70px;
                 flex-wrap: wrap;
-                justify-content: center;
+                justify-content: space-between;
             }
             
             .home-button {
                 margin-right: 10px;
                 order: 1;
                 width: auto;
+                flex-shrink: 0;
             }
             
             .black-header-search {
-                order: 3;
-                width: 100%;
-                padding: 8px 0 0 0;
+                order: 2;
+                flex-grow: 1;
+                padding: 0 10px;
                 margin-top: 0;
             }
             
@@ -808,8 +799,9 @@
             
             .contact-button {
                 margin-left: 10px;
-                order: 2;
+                order: 3;
                 width: auto;
+                flex-shrink: 0;
             }
             
             .home-button a,
@@ -822,8 +814,9 @@
                 font-size: 14px;
             }
             
+            /* Adjust search results position */
             .search-results {
-                top: 150px;
+                top: 180px;
                 max-height: 300px;
             }
             
@@ -859,30 +852,33 @@
                 grid-column: 1;
             }
             
+            /* Adjust main content margin */
             .main-content {
-                margin-top: 160px;
+                margin-top: 190px;
             }
         }
         
         @media (max-width: 480px) {
             header {
-                padding: 6px 8px;
-                min-height: 85px;
+                padding: 8px 12px;
+                min-height: 100px;
             }
             
             .logo-container {
-                height: 40px;
-                width: 40px;
+                height: 45px;
+                width: 45px;
+                margin-right: 10px;
             }
             
             .cart-image-container {
-                height: 40px;
-                width: 40px;
+                height: 45px;
+                width: 45px;
+                margin-left: 10px;
             }
             
             .header-center {
-                padding: 0 3px;
-                min-height: 35px;
+                width: calc(100% - 110px); /* Adjusted for smaller logos */
+                padding: 0 8px;
             }
             
             .center-tagline {
@@ -896,28 +892,28 @@
             }
             
             .black-header {
-                top: 85px;
-                padding: 6px 8px;
-                min-height: 55px;
+                top: 100px;
+                padding: 6px 12px;
+                min-height: 65px;
             }
             
             .home-button a,
             .contact-button a {
-                font-size: 12px;
+                font-size: 13px;
             }
             
             .search-box {
                 padding: 5px 10px;
-                font-size: 12px;
+                font-size: 13px;
             }
             
             .search-results {
-                top: 145px;
+                top: 165px;
                 max-height: 250px;
             }
             
             .main-content {
-                margin-top: 155px;
+                margin-top: 175px;
             }
             
             .results-container {
@@ -926,8 +922,8 @@
             }
             
             .result-image img {
-                width: 225px;
-                height: 150px;
+                width: 250px;
+                height: 167px;
             }
             
             .item-name {
@@ -942,6 +938,20 @@
 
         /* For very small screens */
         @media (max-width: 360px) {
+            header {
+                min-height: 95px;
+            }
+            
+            .logo-container,
+            .cart-image-container {
+                height: 40px;
+                width: 40px;
+            }
+            
+            .header-center {
+                width: calc(100% - 100px);
+            }
+            
             .center-tagline {
                 font-size: 10px;
             }
@@ -950,15 +960,22 @@
                 font-size: 9px;
             }
             
-            .logo-container,
-            .cart-image-container {
-                height: 35px;
-                width: 35px;
+            .black-header {
+                top: 95px;
+                min-height: 60px;
             }
             
             .home-button a,
             .contact-button a {
-                font-size: 11px;
+                font-size: 12px;
+            }
+            
+            .main-content {
+                margin-top: 165px;
+            }
+            
+            .search-results {
+                top: 155px;
             }
         }
     </style>
@@ -966,19 +983,9 @@
 <body>
     <!-- Fixed Header -->
     <header>
-        <!-- Mobile Top Row -->
-        <div class="header-top-row">
-            <!-- Logo in top-left corner -->
-            <div class="logo-container">
-                <img src="/sanjayparas/images/pnlogo.jpg" alt="Paras International Logo" style="background: transparent;">
-            </div>
-            
-            <!-- Cart Image in top-right corner -->
-            <div class="cart-image-container">
-                <a href="cart.html">
-                    <img src="/sanjayparas/images/cart.jpg" alt="Shopping Cart" style="background: transparent;">
-                </a>
-            </div>
+        <!-- Logo in top-left corner -->
+        <div class="logo-container">
+            <img src="/sanjayparas/images/pnlogo.jpg" alt="Paras International Logo" style="background: transparent;">
         </div>
         
         <!-- Center content with centered tagline -->
@@ -987,6 +994,13 @@
             <div class="center-tagline">Physics, Chemistry, Biology and all Scientific Laboratory Equipments Retailer in West Bengal</div>
             <!-- Second Tagline -->
             <div class="trusted-tagline">Buy Genuine Trusted Laboratory Equipment at Retail Price</div>
+        </div>
+        
+        <!-- Cart Image in top-right corner -->
+        <div class="cart-image-container">
+            <a href="cart.html">
+                <img src="/sanjayparas/images/cart.jpg" alt="Shopping Cart" style="background: transparent;">
+            </a>
         </div>
     </header>
     
