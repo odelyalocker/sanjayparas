@@ -1276,118 +1276,120 @@
             }, 300);
         }
         
-        // Image zoom functionality
-        function initializeImageZoomForResults() {
-            const imageModal = document.getElementById('imageModal');
-            const modalImage = document.getElementById('modalImage');
-            const closeModal = document.getElementById('closeModal');
+// Image zoom functionality
+function initializeImageZoomForResults() {
+    const imageModal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const closeModal = document.getElementById('closeModal');
+    
+    // Check if device is mobile/tablet
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    let modalStatePushed = false;
+    
+    // Function to open modal
+    function openModal(imgSrc, altText) {
+        modalImage.src = imgSrc;
+        modalImage.alt = altText;
+        imageModal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+        
+        // Push state for back button on mobile
+        if (isMobile) {
+            history.pushState({ modalOpen: true }, '');
+            modalStatePushed = true;
+        }
+    }
+    
+    // Function to close modal
+    function closeModalFunc(fromBackButton = false) {
+        imageModal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+        
+        // Only go back if we pushed a state AND this isn't from a back button
+        if (isMobile && modalStatePushed && !fromBackButton) {
+            history.back();
+        }
+        modalStatePushed = false;
+    }
+    
+    // Close modal when clicking X
+    closeModal.addEventListener('click', function() {
+        closeModalFunc();
+    });
+    
+    // Close modal when clicking outside image
+    imageModal.addEventListener('click', function(e) {
+        if (e.target === imageModal || e.target.classList.contains('mobile-back-hint')) {
+            closeModalFunc();
+        }
+    });
+    
+    // Handle back button on mobile
+    window.addEventListener('popstate', function(e) {
+        if (imageModal.classList.contains('active')) {
+            // This is from a back button press
+            closeModalFunc(true);
+        }
+    });
+    
+    // Set up image click events
+    const resultImages = document.querySelectorAll('.result-image img');
+    
+    resultImages.forEach(img => {
+        // Remove any existing event listeners by cloning
+        const newImg = img.cloneNode(true);
+        img.parentNode.replaceChild(newImg, img);
+        
+        // Add click/tap event for all devices
+        newImg.addEventListener('click', function(e) {
+            e.stopPropagation();
+            openModal(this.src, this.alt);
+        });
+        
+        // Add hover effect for desktop
+        if (!isMobile) {
+            const resultImageDiv = newImg.closest('.result-image');
             
-            // Check if device is mobile/tablet
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            
-            // Function to open modal
-            function openModal(imgSrc, altText) {
-                modalImage.src = imgSrc;
-                modalImage.alt = altText;
-                imageModal.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Prevent scrolling
-                
-                // Push state for back button on mobile
-                if (isMobile) {
-                    history.pushState({ modalOpen: true }, '');
-                }
-            }
-            
-            // Function to close modal
-            function closeModalFunc() {
-                imageModal.classList.remove('active');
-                document.body.style.overflow = ''; // Restore scrolling
-            }
-            
-            // Close modal when clicking X
-            closeModal.addEventListener('click', closeModalFunc);
-            
-            // Close modal when clicking outside image
-            imageModal.addEventListener('click', function(e) {
-                if (e.target === imageModal || e.target.classList.contains('mobile-back-hint')) {
-                    closeModalFunc();
-                    if (isMobile && history.state && history.state.modalOpen) {
-                        history.back();
-                    }
-                }
+            resultImageDiv.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+                newImg.style.transform = 'scale(1.1)';
             });
             
-            // Handle back button on mobile
-            window.addEventListener('popstate', function(e) {
-                if (imageModal.classList.contains('active')) {
-                    closeModalFunc();
-                }
-            });
-            
-            // Set up image click events
-            const resultImages = document.querySelectorAll('.result-image img');
-            
-            resultImages.forEach(img => {
-                // Remove any existing event listeners by cloning
-                const newImg = img.cloneNode(true);
-                img.parentNode.replaceChild(newImg, img);
-                
-                // Add click/tap event for all devices
-                newImg.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    openModal(this.src, this.alt);
-                });
-                
-                // Add hover effect for desktop
-                if (!isMobile) {
-                    const resultImageDiv = newImg.closest('.result-image');
-                    
-                    resultImageDiv.addEventListener('mouseenter', function() {
-                        this.style.transform = 'scale(1.02)';
-                        newImg.style.transform = 'scale(1.1)';
-                    });
-                    
-                    resultImageDiv.addEventListener('mouseleave', function() {
-                        this.style.transform = 'scale(1)';
-                        newImg.style.transform = 'scale(1)';
-                    });
-                }
-            });
-            
-            // Set up keyboard shortcuts
-            document.addEventListener('keydown', function(e) {
-                if (imageModal.classList.contains('active')) {
-                    if (e.key === 'Escape' || e.key === 'Backspace') {
-                        closeModalFunc();
-                        if (isMobile && history.state && history.state.modalOpen) {
-                            history.back();
-                        }
-                    }
-                }
-            });
-            
-            // Close modal on swipe down (mobile)
-            let startY;
-            imageModal.addEventListener('touchstart', function(e) {
-                startY = e.touches[0].clientY;
-            });
-            
-            imageModal.addEventListener('touchmove', function(e) {
-                if (!startY) return;
-                
-                const currentY = e.touches[0].clientY;
-                const diffY = currentY - startY;
-                
-                // If swiping down more than 50px, close modal
-                if (diffY > 50) {
-                    closeModalFunc();
-                    if (isMobile && history.state && history.state.modalOpen) {
-                        history.back();
-                    }
-                    startY = null;
-                }
+            resultImageDiv.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                newImg.style.transform = 'scale(1)';
             });
         }
+    });
+    
+    // Set up keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        if (imageModal.classList.contains('active')) {
+            if (e.key === 'Escape') {
+                closeModalFunc();
+            }
+        }
+    });
+    
+    // Close modal on swipe down (mobile)
+    let startY;
+    imageModal.addEventListener('touchstart', function(e) {
+        startY = e.touches[0].clientY;
+    });
+    
+    imageModal.addEventListener('touchmove', function(e) {
+        if (!startY) return;
+        
+        const currentY = e.touches[0].clientY;
+        const diffY = currentY - startY;
+        
+        // If swiping down more than 50px, close modal
+        if (diffY > 50) {
+            closeModalFunc();
+            startY = null;
+        }
+    });
+}
         
         // Keep the existing event listeners
         document.querySelector('.search-box').addEventListener('input', searchItems);
@@ -1428,6 +1430,7 @@
     </script>
 </body>
 </html>
+
 
 
 
