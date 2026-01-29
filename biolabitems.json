@@ -22,6 +22,34 @@
     "keywords": ["microscope", "biology", "compound", "magnification", "lab equipment"]
 }
 
-
+{
+  "name": "Test",
+  "category": "Biology Lab",
+  "image": "sadsad",
+  "bestBuyPrice": "21321",
+  "mrpPrice": "121321",
+  "discount": "3",
+  "warranty": "adsfsadf",
+  "specifications": [
+    "dsfd",
+    "df",
+    "df",
+    "d",
+    "dsf"
+  ],
+  "description": [
+    "tyrt",
+    "try",
+    "rt",
+    "ytr",
+    "htr",
+    "htrh"
+  ],
+  "keywords": [
+    "dfd",
+    "wefwe",
+    "ewrewr"
+  ]
+}
   
 ]
