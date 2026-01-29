@@ -1244,28 +1244,36 @@
             }, 300);
         }
         
-// Simplified image zoom functionality
+// Fixed image zoom functionality
 function initializeImageZoomForResults() {
     const imageModal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modalImage');
+    
+    // Track if modal is open
+    let isModalOpen = false;
     
     // Function to open modal
     function openModal(imgSrc, altText) {
         modalImage.src = imgSrc;
         modalImage.alt = altText;
         imageModal.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
+        document.body.style.overflow = 'hidden';
+        isModalOpen = true;
     }
     
     // Function to close modal
     function closeModalFunc() {
         imageModal.classList.remove('active');
-        document.body.style.overflow = ''; // Restore scrolling
+        document.body.style.overflow = '';
+        isModalOpen = false;
     }
     
-    // Close modal when clicking anywhere
+    // Close modal when clicking on the overlay (dark background)
     imageModal.addEventListener('click', function(e) {
-        closeModalFunc();
+        // Only close if clicking directly on the modal overlay (not the image)
+        if (e.target === imageModal) {
+            closeModalFunc();
+        }
     });
     
     // Don't close when clicking the image itself
@@ -1273,21 +1281,21 @@ function initializeImageZoomForResults() {
         e.stopPropagation();
     });
     
-    // Set up image click events
+    // Set up image click events for search results
     const resultImages = document.querySelectorAll('.result-image img');
     
     resultImages.forEach(img => {
-        // Remove any existing event listeners by cloning
+        // Clone to remove old listeners
         const newImg = img.cloneNode(true);
         img.parentNode.replaceChild(newImg, img);
         
-        // Add click/tap event for all devices
         newImg.addEventListener('click', function(e) {
-            e.stopPropagation();
+            e.preventDefault();
+            e.stopPropagation(); // IMPORTANT: Stop event from bubbling up
             openModal(this.src, this.alt);
         });
         
-        // Add hover effect for desktop
+        // Desktop hover effects
         if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             const resultImageDiv = newImg.closest('.result-image');
             
@@ -1303,9 +1311,9 @@ function initializeImageZoomForResults() {
         }
     });
     
-    // Set up keyboard shortcuts - ESC closes modal
+    // ESC key closes modal
     document.addEventListener('keydown', function(e) {
-        if (imageModal.classList.contains('active') && e.key === 'Escape') {
+        if (isModalOpen && e.key === 'Escape') {
             closeModalFunc();
         }
     });
@@ -1314,7 +1322,6 @@ function initializeImageZoomForResults() {
     let startY;
     imageModal.addEventListener('touchstart', function(e) {
         startY = e.touches[0].clientY;
-        e.stopPropagation();
     });
     
     imageModal.addEventListener('touchmove', function(e) {
@@ -1323,12 +1330,10 @@ function initializeImageZoomForResults() {
         const currentY = e.touches[0].clientY;
         const diffY = currentY - startY;
         
-        // If swiping down more than 50px, close modal
         if (diffY > 50) {
             closeModalFunc();
             startY = null;
         }
-        e.stopPropagation();
     });
 }
         
@@ -1340,15 +1345,21 @@ function initializeImageZoomForResults() {
         });
         
         document.addEventListener('click', function(event) {
-            const searchResults = document.getElementById('searchResults');
-            const searchBox = document.querySelector('.search-box');
-            
-            if (searchResults.style.display === 'block' && 
-                !searchResults.contains(event.target) && 
-                !searchBox.contains(event.target)) {
-                searchResults.style.display = 'none';
-            }
-        });
+    const searchResults = document.getElementById('searchResults');
+    const searchBox = document.querySelector('.search-box');
+    const imageModal = document.getElementById('imageModal');
+    
+    // Skip if modal is active (visible)
+    if (imageModal.classList.contains('active')) {
+        return; // Don't hide search results when modal is open
+    }
+    
+    if (searchResults.style.display === 'block' && 
+        !searchResults.contains(event.target) && 
+        !searchBox.contains(event.target)) {
+        searchResults.style.display = 'none';
+    }
+});
         
         document.querySelector('.search-box').addEventListener('keydown', function(event) {
             const searchResults = document.getElementById('searchResults');
@@ -1371,6 +1382,7 @@ function initializeImageZoomForResults() {
     </script>
 </body>
 </html>
+
 
 
 
