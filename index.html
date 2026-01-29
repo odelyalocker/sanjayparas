@@ -1166,7 +1166,16 @@
                             });
                         }
                     });
-                    
+             
+// Inside your search results loop...
+filteredItems.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'result-item';
+    div.innerHTML = `... your existing HTML ...`;
+    
+    resultsList.appendChild(div); // First, add it to the page
+    setupZoom(div);               // Then, tell the zoom code to watch this specific item
+});       
                     return {
                         ...item,
                         relevanceScore: score
@@ -1511,4 +1520,5 @@
     </script>
 </body>
 </html>
+
 
