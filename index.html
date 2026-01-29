@@ -941,7 +941,7 @@ async function loadJSONFiles() {
     }
 }
 
-// Improved search function with relevance scoring
+// Simplified search function with only specified scoring
 function searchItems() {
     clearTimeout(searchTimeout);
     
@@ -962,82 +962,52 @@ function searchItems() {
             return;
         }
         
-        // Calculate relevance score for each item
+        // Calculate relevance score using ONLY the specified criteria
         const scoredItems = allItems.map(item => {
             let score = 0;
             
-            // Get text fields
+            // Get item name in lowercase
             const name = item.name.toLowerCase();
-            const descriptionText = Array.isArray(item.description) 
-                ? item.description.join(' ').toLowerCase()
-                : (item.description || '').toLowerCase();
-            const keywords = item.keywords ? 
-                item.keywords.map(k => k.toLowerCase()).join(' ') : '';
-            const category = item.category.toLowerCase();
             
-            // Exact name match (highest priority)
+            // 1. Exact name match: +100 points
             if (name === searchTerm) {
                 score += 100;
             }
             
-            // Name starts with search term
+            // 2. Name starts with term: +50 points
             if (name.startsWith(searchTerm)) {
                 score += 50;
             }
             
-            // Name contains search term
+            // 3. Name contains term: +30 points
             if (name.includes(searchTerm)) {
                 score += 30;
             }
             
-            // Word-by-word matching in name
-            const nameWords = name.split(/[\s\-_]+/);
-            const searchWords = searchTerm.split(/[\s\-_]+/);
+            // 4. Exact word match: +40 points
+            // Split both search term and name into words
+            const searchWords = searchTerm.split(/[\s\-_.,;]+/).filter(word => word.length > 0);
+            const nameWords = name.split(/[\s\-_.,;]+/).filter(word => word.length > 0);
             
-            // Count matching words in name
+            // Check for exact word matches
             searchWords.forEach(searchWord => {
                 nameWords.forEach(nameWord => {
-                    if (nameWord.includes(searchWord) && searchWord.length > 2) {
-                        score += 20;
-                    }
                     if (nameWord === searchWord) {
                         score += 40;
                     }
                 });
             });
             
-            // Keywords match
-            if (keywords.includes(searchTerm)) {
-                score += 25;
-            }
-            
-            // Category match
-            if (category.includes(searchTerm)) {
-                score += 10;
-            }
-            
-            // Description match (lower priority)
-            if (descriptionText.includes(searchTerm)) {
-                score += 5;
-            }
-            
-            // Partial word matching
-            if (searchTerm.length >= 3) {
-                // Check for partial matches in name
-                if (name.includes(searchTerm.substring(0, Math.floor(searchTerm.length * 0.7)))) {
-                    score += 15;
+            // 5. Partial word match: +20 points
+            searchWords.forEach(searchWord => {
+                if (searchWord.length >= 3) { // Only consider partial matches for words of length 3 or more
+                    nameWords.forEach(nameWord => {
+                        if (nameWord.includes(searchWord) && nameWord !== searchWord) {
+                            score += 20;
+                        }
+                    });
                 }
-                
-                // Check in keywords
-                if (keywords.includes(searchTerm.substring(0, Math.floor(searchTerm.length * 0.7)))) {
-                    score += 10;
-                }
-            }
-            
-            // Bonus for shorter names (more precise matches)
-            if (name.length < 50) {
-                score += 2;
-            }
+            });
             
             return {
                 ...item,
@@ -1056,7 +1026,7 @@ function searchItems() {
         if (matchedItems.length > 0) {
             resultsTitle.textContent = `Found ${matchedItems.length} relevant item(s) for "${searchTerm}"`;
             
-            matchedItems.forEach((item, index) => {
+            matchedItems.forEach((item) => {
                 const resultItem = document.createElement('div');
                 resultItem.className = 'result-item';
                 
@@ -1068,13 +1038,6 @@ function searchItems() {
                 // Create specifications HTML as bullet points
                 const specsHTML = item.specifications && Array.isArray(item.specifications)
                     ? item.specifications.map(spec => `<li>${spec}</li>`).join('')
-                    : '';
-                
-                // Create keywords display
-                const keywordsHTML = item.keywords && Array.isArray(item.keywords)
-                    ? `<div style="margin-top: 10px; color: #666; font-size: 14px;">
-                         <strong>Keywords:</strong> ${item.keywords.join(', ')}
-                       </div>`
                     : '';
                 
                 resultItem.innerHTML = `
@@ -1093,7 +1056,6 @@ function searchItems() {
                                     <span class="bestbuy-label">Buy</span>
                                     <span class="bestbuy-price" style="font-size: 17px;">INR ${item.bestBuyPrice || '0'}/-</span>
                                 </div>
-                                ${keywordsHTML}
                             </div>
                         </div>
                         
@@ -1126,113 +1088,42 @@ function searchItems() {
             resultsList.innerHTML = '<div class="no-results">Try different keywords or check spelling</div>';
             searchResults.style.display = 'block';
         }
+        
+        // Debug: Show top scores
+        if (matchedItems.length > 0) {
+            console.log('Top 5 matches:');
+            matchedItems.slice(0, 5).forEach((item, index) => {
+                console.log(`${index + 1}. ${item.name} - Score: ${item.relevanceScore}`);
+            });
+        }
     }, 300);
 }
 
-// Add enhanced search features
-document.querySelector('.search-box').addEventListener('input', function(e) {
-    searchItems();
-    
-    // Show search suggestions for long queries
-    const searchTerm = this.value.trim();
-    if (searchTerm.length >= 3) {
-        showSearchSuggestions(searchTerm);
-    } else {
-        hideSearchSuggestions();
-    }
-});
-
-// Search suggestions feature
-function showSearchSuggestions(searchTerm) {
-    // Remove existing suggestions if any
-    hideSearchSuggestions();
-    
-    if (!searchTerm || searchTerm.length < 2) return;
-    
-    // Find unique keywords from all items
-    const allKeywords = new Set();
-    allItems.forEach(item => {
-        if (item.keywords && Array.isArray(item.keywords)) {
-            item.keywords.forEach(keyword => {
-                if (keyword.toLowerCase().includes(searchTerm.toLowerCase())) {
-                    allKeywords.add(keyword);
-                }
-            });
-        }
-    });
-    
-    // Get top 5 suggestions
-    const suggestions = Array.from(allKeywords).slice(0, 5);
-    
-    if (suggestions.length > 0) {
-        const searchBox = document.querySelector('.search-box');
-        const suggestionsDiv = document.createElement('div');
-        suggestionsDiv.className = 'search-suggestions';
-        suggestionsDiv.style.cssText = `
-            position: absolute;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            z-index: 1001;
-            width: ${searchBox.offsetWidth}px;
-            margin-top: 5px;
-        `;
-        
-        suggestions.forEach(suggestion => {
-            const suggestionDiv = document.createElement('div');
-            suggestionDiv.textContent = suggestion;
-            suggestionDiv.style.cssText = `
-                padding: 8px 12px;
-                cursor: pointer;
-                border-bottom: 1px solid #eee;
-            `;
-            suggestionDiv.onmouseover = () => suggestionDiv.style.backgroundColor = '#f5f5f5';
-            suggestionDiv.onmouseout = () => suggestionDiv.style.backgroundColor = 'transparent';
-            suggestionDiv.onclick = () => {
-                document.querySelector('.search-box').value = suggestion;
-                searchItems();
-                hideSearchSuggestions();
-            };
-            suggestionsDiv.appendChild(suggestionDiv);
-        });
-        
-        // Position suggestions below search box
-        const searchBoxRect = searchBox.getBoundingClientRect();
-        suggestionsDiv.style.top = `${searchBoxRect.bottom + window.scrollY}px`;
-        suggestionsDiv.style.left = `${searchBoxRect.left + window.scrollX}px`;
-        
-        document.body.appendChild(suggestionsDiv);
-    }
-}
-
-function hideSearchSuggestions() {
-    const existingSuggestions = document.querySelector('.search-suggestions');
-    if (existingSuggestions) {
-        existingSuggestions.remove();
-    }
-}
-
-// Click outside to close suggestions
-document.addEventListener('click', function(event) {
-    if (!event.target.classList.contains('search-box')) {
-        hideSearchSuggestions();
-    }
-});
-
-// Add event listener to search box
+// Keep the existing event listeners
 document.querySelector('.search-box').addEventListener('input', searchItems);
+document.getElementById('closeResults').addEventListener('click', function() {
+    document.getElementById('searchResults').style.display = 'none';
+    document.querySelector('.search-box').value = '';
+});
 
-// Keyboard navigation
+document.addEventListener('click', function(event) {
+    const searchResults = document.getElementById('searchResults');
+    const searchBox = document.querySelector('.search-box');
+    
+    if (searchResults.style.display === 'block' && 
+        !searchResults.contains(event.target) && 
+        !searchBox.contains(event.target)) {
+        searchResults.style.display = 'none';
+    }
+});
+
 document.querySelector('.search-box').addEventListener('keydown', function(event) {
     const searchResults = document.getElementById('searchResults');
     
-    // Escape key closes results
     if (event.key === 'Escape' && searchResults.style.display === 'block') {
         searchResults.style.display = 'none';
     }
     
-    // Enter key performs search
     if (event.key === 'Enter') {
         searchItems();
     }
@@ -1245,7 +1136,3 @@ window.addEventListener('DOMContentLoaded', loadJSONFiles);
 
 </body>
 </html>
-
-
-
-
