@@ -733,9 +733,9 @@
     /* Adjust black header position */
     .black-header {
         top: 65px; 
-        padding: 6px 15px; 
-        min-height: 55px; 
-        flex-wrap: nowrap; /* KEEP as nowrap */
+        padding: 10px 15px; 
+        min-height: 65px; 
+        flex-wrap: nowrap;
         justify-content: space-between;
         align-items: center;
         position: fixed;
@@ -771,19 +771,21 @@
     
     .home-button a,
     .contact-button a {
-        font-size: 14px;
+        font-size: 16px;
+        padding: 8px 0;
     }
     
     .search-box {
-        padding: 5px 12px; /* Slightly reduced */
+        padding: 10px 15px;
         font-size: 16px;
-        min-width: 50px; /* ADDED: Prevents collapse */
+        min-width: 50px;
+        height: 45px;
     }
     
     /* Adjust search results position */
     .search-results {
-        top: 120px;
-        max-height: calc(100vh - 120px);
+        top: 130px;
+        max-height: calc(100vh - 130px);
     }
     
     .results-container {
@@ -821,7 +823,7 @@
     
     /* Adjust main content margin */
     .main-content {
-        margin-top: 120px;
+        margin-top: 130px;
     }
     
     /* Mobile zoom adjustments */
@@ -908,30 +910,32 @@
     
     .black-header {
         top: 60px;
-        padding: 5px 12px;
-        min-height: 50px;
-        flex-wrap: nowrap; /* ADDED: Prevents breaking */
+        padding: 8px 12px;
+        min-height: 60px;
+        flex-wrap: nowrap;
     }
     
     .home-button a,
     .contact-button a {
-        font-size: 13px;
-        white-space: nowrap; /* ADDED: Prevents text wrapping */
+        font-size: 15px;
+        white-space: nowrap;
+        padding: 6px 0;
     }
     
     .search-box {
-        padding: 4px 10px;
+        padding: 8px 12px;
         font-size: 15px;
-        min-width: 40px; /* ADDED: Prevents collapse */
+        min-width: 40px;
+        height: 40px;
     }
     
     .search-results {
-        top: 110px;
-        max-height: calc(100vh - 110px);
+        top: 120px;
+        max-height: calc(100vh - 120px);
     }
     
     .main-content {
-        margin-top: 110px;
+        margin-top: 120px;
     }
     
     .results-container {
@@ -985,32 +989,33 @@
     
     .black-header {
         top: 55px;
-        min-height: 45px;
-        padding: 4px 8px; /* CHANGED: 10px → 8px */
-        flex-wrap: nowrap; /* ADDED: Prevents breaking */
+        min-height: 55px;
+        padding: 6px 8px;
+        flex-wrap: nowrap;
     }
     
     .home-button a,
     .contact-button a {
-        font-size: 12px;
-        white-space: nowrap; /* ADDED: Prevents text wrapping */
-        padding: 2px 4px; /* ADDED: Small padding for better touch */
+        font-size: 14px;
+        white-space: nowrap;
+        padding: 4px 0;
     }
     
     .search-box {
-        padding: 3px 6px; /* CHANGED: 8px → 6px */
+        padding: 6px 10px;
         font-size: 14px;
-        min-width: 30px; /* ADDED: Prevents collapse */
-    }
-    
-    .main-content {
-        margin-top: 100px;
+        min-width: 30px;
+        height: 35px; 
     }
     
     .search-results {
-        top: 100px;
-        max-height: calc(100vh - 100px);
+        top: 110px;
+        max-height: calc(100vh - 110px);
     }
+    .main-content {
+        margin-top: 110px;
+    }
+    
 }
         
     </style>
@@ -1304,6 +1309,7 @@ container.addEventListener('touchcancel', () => {
 </script>
 </body>
 </html>
+
 
 
 
