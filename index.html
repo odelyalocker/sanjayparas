@@ -228,7 +228,7 @@
         
         /* Search Results Section - FIXED */
     .search-results {
-    position: fixed;
+    position: absolute;
     top: 140px; 
     left: 0;
     width: 100%;
@@ -237,9 +237,7 @@
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     display: none;
     border-top: 2px solid #d32f2f;
-    max-height: calc(100vh - 140px);
-    overflow-y: auto;
-        }
+    }
 
         .results-container {
             padding: 20px;
@@ -670,6 +668,7 @@
         justify-content: space-between;
         position: relative;
     }
+    
     /* Prevent browser from auto-hiding headers */
     header, .black-header {
         transform: translateZ(0);
@@ -791,8 +790,7 @@
     /* Adjust search results position */
     .search-results {
         top: 130px;
-        max-height: calc(100vh - 130px);
-        padding-bottom: 40px;
+        position: absolute; 
     }
     
     .results-container {
@@ -938,7 +936,7 @@
     
     .search-results {
         top: 120px;
-        max-height: calc(100vh - 120px);
+        position: absolute;
     }
     
     .main-content {
@@ -1017,7 +1015,7 @@
     
     .search-results {
         top: 110px;
-        max-height: calc(100vh - 110px);
+        position: absolute;
     }
     .main-content {
         margin-top: 110px;
@@ -1313,21 +1311,8 @@ container.addEventListener('touchcancel', () => {
     };
 
     window.addEventListener('DOMContentLoaded', loadJSONFiles);
-    // Prevent excessive scrolling past content
-let lastScrollTop = 0;
 
-window.addEventListener('scroll', function() {
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
-    if (scrollTop > lastScrollTop) {
-        // Scrolling down
-        if ((window.innerHeight + scrollTop) >= document.body.offsetHeight - 50) {
-            // Near bottom, prevent further scrolling
-            window.scrollTo(0, document.body.offsetHeight - window.innerHeight);
-        }
-    }
-    lastScrollTop = scrollTop;
-}, { passive: true });
 </script>
 </body>
 </html>
+
