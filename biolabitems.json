@@ -21,7 +21,8 @@
     ],
     "keywords": ["microscope", "biology", "compound", "magnification", "lab equipment"]
 }
-
+]
+[
 {
   "name": "Test",
   "category": "Biology Lab",
@@ -70,6 +71,5 @@
     "kolkata"
   ]
 }
-
-  
 ]
+
