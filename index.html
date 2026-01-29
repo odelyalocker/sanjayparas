@@ -134,7 +134,168 @@
             top: 85px;
         }
         
-        /* Adjust main content position - ADDED HIDDEN STATE */
+        /* Adjust main content position */
+        .main-content {
+            margin-top: 140px;
+        }
+        
+        /* Black Header Section - MODIFIED */
+        .black-header {
+            position: fixed;
+            left: 0;
+            width: 100%;
+            background-color: #000000;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            z-index: 999;
+            min-height: 70px;
+        }
+        
+        /* Home button on left */
+        .home-button {
+            margin-right: 20px;
+        }
+        
+        .home-button a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: color 0.3s;
+            white-space: nowrap;
+        }
+        
+        .home-button a:hover {
+            color: #FFFFFF;
+        }
+        
+        /* Search box in center - NEW */
+        .black-header-search {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .search-container {
+            width: 70%;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 2px solid #444;
+            border-radius: 25px;
+            outline: none;
+            transition: all 0.3s ease;
+            background-color: #fff;
+            color: #333;
+        }
+        
+        .search-box::placeholder {
+            color: #888;
+            font-style: italic;
+        }
+        
+        .search-box:focus {
+            border-color: #d32f2f;
+            background-color: #fff;
+            box-shadow: 0 0 8px rgba(211, 47, 47, 0.5);
+        }
+        
+        .search-box:hover {
+            border-color: #999;
+            background-color: #fff;
+        }
+        
+        /* Contact button on right */
+        .contact-button {
+            margin-left: 20px;
+        }
+        
+        .contact-button a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: color 0.3s;
+            white-space: nowrap;
+        }
+        
+        .contact-button a:hover {
+            color: #FFFFFF;
+        }
+        
+        /* Search Results Section - FIXED */
+        .search-results {
+            position: fixed;
+            top: 155px; 
+            left: 0;
+            width: 100%;
+            background: white;
+            z-index: 998;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: none;
+            border-top: 2px solid #d32f2f;
+            max-height: calc(100vh - 160px);
+            overflow-y: auto;
+        }
+
+        .results-container {
+            padding: 20px;
+            width: 95%;
+            margin: 0 auto;
+        }
+
+        /* Ensure results container doesn't add extra padding */
+        .search-results > .results-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 30px;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .results-header h3 {
+            color: #333;
+            font-size: 18px;
+        }
+        
+        .close-results {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .results-list {
+            display: block;
+            gap: 15px;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        /* Main Content Area */
         .main-content {
             flex: 1;
             margin-bottom: 10px;
@@ -142,13 +303,6 @@
             padding: 30px 20px;
             text-align: center;
             color: #555;
-            /* Default state - visible */
-            display: block;
-        }
-        
-        /* Hide main content when search results are shown */
-        .main-content.hidden {
-            display: none;
         }
         
         .content-placeholder {
@@ -284,71 +438,6 @@
             font-weight: bold;
         }
 
-        /* Search Results Section - FIXED */
-        .search-results {
-            position: fixed;
-            top: 155px; 
-            left: 0;
-            width: 100%;
-            background: white;
-            z-index: 998;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            display: none;
-            border-top: 2px solid #d32f2f;
-            max-height: calc(100vh - 160px);
-            overflow-y: auto;
-        }
-
-        .results-container {
-            padding: 20px;
-            width: 95%;
-            margin: 0 auto;
-        }
-
-        /* Ensure results container doesn't add extra padding */
-        .search-results > .results-container {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px 30px;
-        }
-        
-        .results-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .results-header h3 {
-            color: #333;
-            font-size: 18px;
-        }
-        
-        .close-results {
-            background: #d32f2f;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        
-        .results-list {
-            display: block;
-            gap: 15px;
-        }
-        
-        .no-results {
-            text-align: center;
-            padding: 30px;
-            color: #666;
-            font-style: italic;
-        }
-        
         /* Search Suggestions */
         .search-suggestions {
             max-height: 200px;
@@ -952,8 +1041,8 @@
         </div>
     </div>
     
-    <!-- Main Content Area - Will be hidden when search results are shown -->
-    <main class="main-content" id="mainContent">
+    <!-- Main Content Area -->
+    <main class="main-content">
         <div class="content-placeholder">
             <h2>Welcome to Sanjay Paras Website</h2>
             <p>This is a pure white content area ready for your content.</p>
@@ -1058,7 +1147,6 @@
                 const resultsList = document.getElementById('resultsList');
                 const searchResults = document.getElementById('searchResults');
                 const resultsTitle = document.getElementById('resultsTitle');
-                const mainContent = document.getElementById('mainContent');
                 
                 console.log('🔍 Searching for:', searchTerm);
                 
@@ -1068,7 +1156,6 @@
                 // Hide results if search term is too short
                 if (searchTerm.length < 2) {
                     searchResults.style.display = 'none';
-                    mainContent.classList.remove('hidden'); // Show main content
                     return;
                 }
                 
@@ -1193,15 +1280,12 @@
                     });
                     
                     searchResults.style.display = 'block';
-                    mainContent.classList.add('hidden'); // Hide main content
-                    
                     // Initialize image zoom for new results
                     setTimeout(initializeImageZoomForResults, 100);
                 } else {
                     resultsTitle.textContent = `No results found for "${searchTerm}"`;
                     resultsList.innerHTML = '<div class="no-results">Try different keywords or check spelling</div>';
                     searchResults.style.display = 'block';
-                    mainContent.classList.add('hidden'); // Hide main content
                 }
                 
                 // Debug: Show top scores
@@ -1329,33 +1413,27 @@
         
         // Keep the existing event listeners
         document.querySelector('.search-box').addEventListener('input', searchItems);
-        
         document.getElementById('closeResults').addEventListener('click', function() {
             document.getElementById('searchResults').style.display = 'none';
             document.querySelector('.search-box').value = '';
-            document.getElementById('mainContent').classList.remove('hidden'); // Show main content again
         });
         
         document.addEventListener('click', function(event) {
             const searchResults = document.getElementById('searchResults');
             const searchBox = document.querySelector('.search-box');
-            const mainContent = document.getElementById('mainContent');
             
             if (searchResults.style.display === 'block' && 
                 !searchResults.contains(event.target) && 
                 !searchBox.contains(event.target)) {
                 searchResults.style.display = 'none';
-                mainContent.classList.remove('hidden'); // Show main content again
             }
         });
         
         document.querySelector('.search-box').addEventListener('keydown', function(event) {
             const searchResults = document.getElementById('searchResults');
-            const mainContent = document.getElementById('mainContent');
             
             if (event.key === 'Escape' && searchResults.style.display === 'block') {
                 searchResults.style.display = 'none';
-                mainContent.classList.remove('hidden'); // Show main content again
             }
             
             if (event.key === 'Enter') {
