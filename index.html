@@ -784,8 +784,15 @@
     
     /* Adjust search results position */
     .search-results {
-        top: 130px;
-        max-height: calc(100vh - 130px);
+        position: relative !important; /* Forces it to push the footer down */
+        top: 0 !important;            /* Removes the 140px desktop gap */
+        max-height: none !important;   /* Let it grow as long as the list is */
+        overflow-y: visible !important;/* Let the whole page scroll */
+        margin-top: 0 !important;
+    }
+
+    .main-content.hide-main {
+        display: none !important;      /* Hides the "Welcome" text while searching */
     }
     
     .results-container {
@@ -1323,6 +1330,7 @@ container.addEventListener('touchcancel', () => {
 </script>
 </body>
 </html>
+
 
 
 
