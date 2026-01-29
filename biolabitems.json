@@ -51,5 +51,25 @@
     "ewrewr"
   ]
 }
+
+{
+  "name": "Bio Test",
+  "category": "Biology Lab",
+  "image": "gg/nb/100.jpg",
+  "bestBuyPrice": "200",
+  "mrpPrice": "1000",
+  "discount": "2%",
+  "warranty": "No",
+  "specifications": [
+    "Hi"
+  ],
+  "description": [
+    "Hello"
+  ],
+  "keywords": [
+    "kolkata"
+  ]
+}
+
   
 ]
