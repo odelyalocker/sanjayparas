@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Add Items (Offline)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .admin-header {
+            background: linear-gradient(135deg, #1565c0, #0d47a1);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+            border-bottom: 5px solid #d32f2f;
+        }
+        
+        .admin-header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+        
+        /* Image Upload */
+        .image-section {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .upload-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .browse-btn {
+            background: #1565c0;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .browse-btn:hover {
+            background: #0d47a1;
+            transform: translateY(-2px);
+        }
+        
+        .image-info {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .image-preview-container {
+            margin-top: 15px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .preview-img {
+            max-width: 300px;
+            max-height: 200px;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+            object-fit: contain;
+            background: white; /* White background for small images */
+        }
+        
+        .download-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .download-btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+        
+        .download-btn i {
+            font-size: 16px;
+        }
+        
+        /* Crop Modal */
+        .crop-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .crop-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow: auto;
+        }
+        
+        .crop-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .crop-header h3 {
+            color: #333;
+            font-size: 20px;
+        }
+        
+        .close-crop {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .crop-area {
+            width: 100%;
+            height: 400px;
+            background: #f0f0f0;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #cropImage {
+            max-width: 100%;
+            max-height: 100%;
+            position: absolute;
+            cursor: move;
+        }
+        
+        .crop-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 266px; /* 3:2 aspect ratio */
+            border: 2px dashed #1565c0;
+            background: rgba(21, 101, 192, 0.1);
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .crop-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .zoom-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .zoom-btn {
+            background: #1565c0;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .zoom-btn:hover {
+            background: #0d47a1;
+        }
+        
+        .crop-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .crop-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .cancel-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        /* Two Column Layout */
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+        }
+        
+        .form-column {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        
+        /* CHANGED: Increased height for Specifications */
+        #specifications {
+            min-height: 180px; /* 50% more than 120px */
+        }
+        
+        /* CHANGED: Increased height for Descriptions */
+        #descriptions {
+            min-height: 180px; /* 50% more than 120px */
+        }
+        
+        /* CHANGED: Increased height for Keywords */
+        #keywords {
+            min-height: 100px; /* Double the normal height */
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #1565c0;
+            outline: none;
+            box-shadow: 0 0 5px rgba(21, 101, 192, 0.3);
+        }
+        
+        /* Line Counter */
+        .line-counter {
+            text-align: right;
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .line-counter.error {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        /* Add Button */
+        .add-section {
+            padding: 20px 30px;
+            text-align: right;
+            border-top: 1px solid #e0e0e0;
+            background: #f8f9fa;
+        }
+        
+        .add-btn {
+            background: #4CAF50;
+            color: black;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 800;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .add-btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+        }
+        
+        .add-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* JSON Output */
+        .json-output {
+            padding: 20px 30px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            margin: 20px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .json-output h3 {
+            color: #569cd6;
+            margin-bottom: 15px;
+        }
+        
+        .json-code {
+            background: #252526;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .copy-btn {
+            background: #007acc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        
+        .save-txt-btn {
+            background: #9c27b0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        
+        .copy-btn:hover {
+            background: #0062a3;
+        }
+        
+        .save-txt-btn:hover {
+            background: #7b1fa2;
+        }
+        
+        /* Responsive */
+        @media (max-width: 900px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .crop-area {
+                height: 300px;
+            }
+            
+            .crop-overlay {
+                width: 300px;
+                height: 200px; /* 3:2 aspect ratio */
+            }
+            
+            .image-preview-container {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .admin-header {
+                padding: 20px;
+            }
+            
+            .admin-header h1 {
+                font-size: 26px;
+            }
+            
+            .upload-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .add-btn {
+                width: 100%;
+            }
+            
+            .crop-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .crop-area {
+                height: 250px;
+            }
+            
+            .crop-overlay {
+                width: 250px;
+                height: 166px; /* 3:2 aspect ratio */
+            }
+        }
+    </style>
+    <!-- Font Awesome for download icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>Admin - Add Items (Offline)</h1>
+        </div>
+        
+        <!-- Image Upload -->
+        <div class="image-section">
+            <div class="upload-container">
+                <button class="browse-btn" id="browseBtn">
+                    Browse Image
+                </button>
+                <div class="image-info">
+                    <div>Selected: <span id="fileName">No file selected</span></div>
+                    <div>Will be saved as: <span id="saveName">bio?.jpg</span></div>
+                </div>
+            </div>
+            <input type="file" id="imageInput" accept="image/*" style="display: none;">
+            <div class="image-preview-container">
+                <img id="previewImg" class="preview-img" style="display: none;">
+                <button class="download-btn" id="downloadBtn" style="display: none;">
+                    <i class="fas fa-download"></i> Download Image
+                </button>
+            </div>
+        </div>
+        
+        <!-- Two Column Form -->
+        <div class="two-columns">
+            <!-- Left Column -->
+            <div class="form-column">
+                <!-- CHANGED: Editable Image Path Field -->
+                <div class="form-group">
+                    <label for="imagePath">Image Path (exact path for JSON):</label>
+                    <input type="text" id="imagePath" placeholder="e.g., /sanjayparas/bioimg/bio3.jpg">
+                    <div style="font-size: 13px; color: #666; margin-top: 5px; font-style: italic;">
+                        Enter the exact path that will be saved in JSON
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <select id="category">
+                        <option value="">Select Category</option>
+                        <option value="Biology Lab">Biology Lab</option>
+                        <option value="Physics Lab">Physics Lab</option>
+                        <option value="Chemistry Lab">Chemistry Lab</option>
+                        <option value="Scientific Lab">Scientific Lab</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="itemName">Item Name:</label>
+                    <input type="text" id="itemName" placeholder="e.g., Compound Microscope">
+                </div>
+                
+                <!-- CHANGED: MRP Price moved up -->
+                <div class="form-group">
+                    <label for="mrpPrice">MRP Price (INR):</label>
+                    <input type="text" id="mrpPrice" placeholder="e.g., 20,000">
+                </div>
+                
+                <!-- CHANGED: Best Buy Price moved down -->
+                <div class="form-group">
+                    <label for="bestPrice">Best Buy Price (INR):</label>
+                    <input type="text" id="bestPrice" placeholder="e.g., 19,000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="discount">Discount:</label>
+                    <input type="text" id="discount" placeholder="e.g., -5%">
+                </div>
+                
+                <div class="form-group">
+                    <label for="warranty">Warranty (max 40 chars):</label>
+                    <input type="text" id="warranty" placeholder="e.g., 2 Years Manufacturer Warranty" maxlength="40">
+                    <div class="line-counter">
+                        <span id="warrantyCount">0</span>/40 characters
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column -->
+            <div class="form-column">
+                <!-- Specifications with increased height -->
+                <div class="form-group">
+                    <label for="specifications">Specifications (max 7 lines, 40 chars each):</label>
+                    <textarea id="specifications" placeholder="Enter each specification on a new line:
+Magnification: 40x to 1000x
+Light Source: LED 3W
+Eyepiece: WF10x/18mm" maxlength="280" oninput="limitSpecsLines(this)"></textarea>
+                    <div class="line-counter">
+                        <span id="specsLineCount">0</span>/7 lines | Max line: <span id="specsMaxChars">0</span>/40 chars
+                    </div>
+                </div>
+                
+                <!-- Descriptions with increased height -->
+                <div class="form-group">
+                    <label for="descriptions">Descriptions (max 9 lines, 40 chars each):</label>
+                    <textarea id="descriptions" placeholder="Enter each description on a new line:
+Professional compound microscope with 1000x magnification
+Built-in LED illumination with adjustable intensity" maxlength="360" oninput="limitDescLines(this)"></textarea>
+                    <div class="line-counter">
+                        <span id="descLineCount">0</span>/9 lines | Max line: <span id="descMaxChars">0</span>/40 chars
+                    </div>
+                </div>
+                
+                <!-- CHANGED: Keywords moved to right column with increased height -->
+                <div class="form-group">
+                    <label for="keywords">Keywords (comma separated, 6-8 recommended):</label>
+                    <textarea id="keywords" placeholder="e.g., microscope, compound microscope, biology lab, magnification, lab equipment, scientific instrument"></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Add Button -->
+        <div class="add-section">
+            <button class="add-btn" id="addBtn" disabled>ADD ITEM</button>
+        </div>
+        
+        <!-- JSON Output -->
+        <div class="json-output" id="jsonOutput">
+            <h3>✅ Item Created Successfully!</h3>
+            <p><strong>📁 Save image as:</strong> <span id="finalImageName">bio?.jpg</span></p>
+            <p><strong>📝 Copy this JSON and add to your file:</strong></p>
+            <div class="json-code" id="jsonCode"></div>
+            <div style="margin-top: 15px;">
+                <button class="copy-btn" id="copyBtn">Copy JSON to Clipboard</button>
+                <button class="save-txt-btn" id="saveTxtBtn">Save as TXT File</button>
+            </div>
+            <p style="margin-top: 15px; color: #888;">
+                <strong>Next steps:</strong><br>
+                1. Click "Download Image" button to save the cropped image<br>
+                2. Save it with the suggested name in correct folder<br>
+                3. Add this JSON to the end of your biolabitems.json file<br>
+                4. OR use "Save as TXT File" to save all items<br>
+                5. Upload files to GitHub repository
+            </p>
+        </div>
+    </div>
+    
+    <!-- Crop Modal -->
+    <div class="crop-modal" id="cropModal">
+        <div class="crop-container">
+            <div class="crop-header">
+                <h3>Crop Image (3:2 Aspect Ratio)</h3>
+                <button class="close-crop" id="closeCrop">× Close</button>
+            </div>
+            
+            <div class="crop-area" id="cropArea">
+                <img id="cropImage" src="" alt="Image to crop">
+                <div class="crop-overlay"></div>
+            </div>
+            
+            <div class="crop-controls">
+                <div class="zoom-controls">
+                    <button class="zoom-btn" id="zoomOut">-</button>
+                    <span id="zoomLevel">100%</span>
+                    <button class="zoom-btn" id="zoomIn">+</button>
+                </div>
+                
+                <div class="crop-actions">
+                    <button class="cancel-btn" id="cancelCrop">Cancel</button>
+                    <button class="crop-btn" id="applyCrop">Crop & Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const browseBtn = document.getElementById('browseBtn');
+        const imageInput = document.getElementById('imageInput');
+        const fileNameSpan = document.getElementById('fileName');
+        const saveNameSpan = document.getElementById('saveName');
+        const previewImg = document.getElementById('previewImg');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const imagePathInput = document.getElementById('imagePath');
+        const categorySelect = document.getElementById('category');
+        const itemNameInput = document.getElementById('itemName');
+        const bestPriceInput = document.getElementById('bestPrice');
+        const mrpPriceInput = document.getElementById('mrpPrice');
+        const discountInput = document.getElementById('discount');
+        const warrantyInput = document.getElementById('warranty');
+        const keywordsInput = document.getElementById('keywords');
+        const specificationsInput = document.getElementById('specifications');
+        const descriptionsInput = document.getElementById('descriptions');
+        const addBtn = document.getElementById('addBtn');
+        const jsonOutputDiv = document.getElementById('jsonOutput');
+        const jsonCodeDiv = document.getElementById('jsonCode');
+        const copyBtn = document.getElementById('copyBtn');
+        const saveTxtBtn = document.getElementById('saveTxtBtn'); // NEW
+        const finalImageNameSpan = document.getElementById('finalImageName');
+        
+        // Crop Modal Elements
+        const cropModal = document.getElementById('cropModal');
+        const cropImage = document.getElementById('cropImage');
+        const closeCropBtn = document.getElementById('closeCrop');
+        const cancelCropBtn = document.getElementById('cancelCrop');
+        const applyCropBtn = document.getElementById('applyCrop');
+        const zoomInBtn = document.getElementById('zoomIn');
+        const zoomOutBtn = document.getElementById('zoomOut');
+        const zoomLevelSpan = document.getElementById('zoomLevel');
+        
+        // Counters
+        const warrantyCount = document.getElementById('warrantyCount');
+        const specsLineCount = document.getElementById('specsLineCount');
+        const specsMaxChars = document.getElementById('specsMaxChars');
+        const descLineCount = document.getElementById('descLineCount');
+        const descMaxChars = document.getElementById('descMaxChars');
+        
+        let selectedFile = null;
+        let itemCounter = 0;
+        let originalImage = null;
+        let scale = 1;
+        let isDragging = false;
+        let startX, startY, initialX, initialY;
+        let croppedImageData = null;
+        let allCreatedItems = []; // NEW: Store all created items
+        
+        // Load existing items count on startup
+        window.addEventListener('DOMContentLoaded', () => {
+            try {
+                fetch('biolabitems.json')
+                    .then(response => response.json())
+                    .then(items => {
+                        if (Array.isArray(items)) {
+                            itemCounter = items.length + 1;
+                            updateSaveName();
+                            allCreatedItems = [...items]; // Load existing items
+                        }
+                    })
+                    .catch(() => {
+                        itemCounter = 1;
+                        updateSaveName();
+                    });
+            } catch (error) {
+                itemCounter = 1;
+                updateSaveName();
+            }
+        });
+        
+        // Event Listeners
+        browseBtn.addEventListener('click', () => imageInput.click());
+        imageInput.addEventListener('change', handleImageSelect);
+        categorySelect.addEventListener('change', updateImagePathHint);
+        warrantyInput.addEventListener('input', updateWarrantyCounter);
+        specificationsInput.addEventListener('input', updateSpecsCounter);
+        descriptionsInput.addEventListener('input', updateDescCounter);
+        addBtn.addEventListener('click', generateItem);
+        copyBtn.addEventListener('click', copyJSON);
+        saveTxtBtn.addEventListener('click', saveAsTxt); // NEW
+        downloadBtn.addEventListener('click', downloadImage);
+        
+        // Crop Modal Events
+        closeCropBtn.addEventListener('click', closeCropModal);
+        cancelCropBtn.addEventListener('click', closeCropModal);
+        applyCropBtn.addEventListener('click', applyCrop);
+        zoomInBtn.addEventListener('click', zoomIn);
+        zoomOutBtn.addEventListener('click', zoomOut);
+        
+        // Enable/Disable Add button based on required fields
+        const requiredFields = [itemNameInput, bestPriceInput, mrpPriceInput, imagePathInput];
+        requiredFields.forEach(field => {
+            field.addEventListener('input', validateForm);
+        });
+        categorySelect.addEventListener('change', validateForm);
+        
+        // NEW FUNCTION: Save all items as TXT file
+        function saveAsTxt() {
+            if (allCreatedItems.length === 0) {
+                alert('No items have been created yet. Please add items first.');
+                return;
+            }
+            
+            // Create filename with timestamp
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').split('T')[0];
+            const filename = `items_${timestamp}.txt`;
+            
+            // Create the text content
+            let txtContent = `// Items exported on: ${new Date().toLocaleString()}\n`;
+            txtContent += `// Total items: ${allCreatedItems.length}\n\n`;
+            
+            // Add each item as JSON
+            allCreatedItems.forEach((item, index) => {
+                txtContent += `// Item ${index + 1}: ${item.name}\n`;
+                txtContent += JSON.stringify(item, null, 2);
+                txtContent += '\n\n';
+            });
+            
+            // Create download link
+            const blob = new Blob([txtContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            alert(`Saved ${allCreatedItems.length} items to ${filename}`);
+        }
+        
+        // NEW FUNCTION: Update image path hint based on category
+        function updateImagePathHint() {
+            if (!categorySelect.value) {
+                imagePathInput.placeholder = "e.g., /sanjayparas/bioimg/bio3.jpg";
+                return;
+            }
+            
+            let folderPath = '';
+            let prefix = '';
+            
+            switch(categorySelect.value) {
+                case 'Biology Lab': 
+                    folderPath = '/sanjayparas/bioimg/';
+                    prefix = 'bio';
+                    break;
+                case 'Physics Lab': 
+                    folderPath = '/sanjayparas/physimg/';
+                    prefix = 'phys';
+                    break;
+                case 'Chemistry Lab': 
+                    folderPath = '/sanjayparas/chemimg/';
+                    prefix = 'chem';
+                    break;
+                case 'Scientific Lab': 
+                    folderPath = '/sanjayparas/scientificimg/';
+                    prefix = 'sci';
+                    break;
+            }
+            
+            const nextNum = itemCounter;
+            imagePathInput.placeholder = `e.g., ${folderPath}${prefix}${nextNum}.jpg`;
+        }
+        
+        // Functions
+        function handleImageSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                fileNameSpan.textContent = file.name;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    originalImage = new Image();
+                    originalImage.onload = function() {
+                        // Show crop modal with the image
+                        cropImage.src = e.target.result;
+                        showCropModal();
+                    };
+                    originalImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function showCropModal() {
+            cropModal.style.display = 'flex';
+            scale = 1;
+            updateZoomDisplay();
+            
+            // Center the image
+            setTimeout(() => {
+                const cropArea = document.getElementById('cropArea');
+                const imgWidth = cropImage.naturalWidth;
+                const imgHeight = cropImage.naturalHeight;
+                
+                // Set initial scale to fit
+                const containerWidth = cropArea.clientWidth;
+                const containerHeight = cropArea.clientHeight;
+                
+                // Calculate scale to fit image in container
+                const scaleX = containerWidth / imgWidth;
+                const scaleY = containerHeight / imgHeight;
+                scale = Math.min(scaleX, scaleY) * 0.8; // 80% of fit scale
+                
+                updateImageTransform();
+                
+                // Add drag event listeners
+                cropImage.addEventListener('mousedown', startDrag);
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('mouseup', stopDrag);
+                
+                cropImage.addEventListener('touchstart', startDragTouch);
+                document.addEventListener('touchmove', dragTouch);
+                document.addEventListener('touchend', stopDrag);
+            }, 100);
+        }
+        
+        function closeCropModal() {
+            cropModal.style.display = 'none';
+            // Remove event listeners
+            cropImage.removeEventListener('mousedown', startDrag);
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', stopDrag);
+            
+            cropImage.removeEventListener('touchstart', startDragTouch);
+            document.removeEventListener('touchmove', dragTouch);
+            document.removeEventListener('touchend', stopDrag);
+        }
+        
+        function startDrag(e) {
+            isDragging = true;
+            startX = e.clientX - cropImage.offsetLeft;
+            startY = e.clientY - cropImage.offsetTop;
+            initialX = cropImage.offsetLeft;
+            initialY = cropImage.offsetTop;
+        }
+        
+        function startDragTouch(e) {
+            if (e.touches.length === 1) {
+                isDragging = true;
+                const touch = e.touches[0];
+                startX = touch.clientX - cropImage.offsetLeft;
+                startY = touch.clientY - cropImage.offsetTop;
+                initialX = cropImage.offsetLeft;
+                initialY = cropImage.offsetTop;
+            }
+        }
+        
+        function drag(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+            
+            const x = e.clientX - startX;
+            const y = e.clientY - startY;
+            
+            cropImage.style.left = x + 'px';
+            cropImage.style.top = y + 'px';
+        }
+        
+        function dragTouch(e) {
+            if (!isDragging || e.touches.length !== 1) return;
+            e.preventDefault();
+            
+            const touch = e.touches[0];
+            const x = touch.clientX - startX;
+            const y = touch.clientY - startY;
+            
+            cropImage.style.left = x + 'px';
+            cropImage.style.top = y + 'px';
+        }
+        
+        function stopDrag() {
+            isDragging = false;
+        }
+        
+        function zoomIn() {
+            scale += 0.1;
+            updateImageTransform();
+            updateZoomDisplay();
+        }
+        
+        function zoomOut() {
+            if (scale > 0.2) {
+                scale -= 0.1;
+                updateImageTransform();
+                updateZoomDisplay();
+            }
+        }
+        
+        function updateImageTransform() {
+            const cropArea = document.getElementById('cropArea');
+            const imgWidth = cropImage.naturalWidth * scale;
+            const imgHeight = cropImage.naturalHeight * scale;
+            
+            cropImage.style.width = imgWidth + 'px';
+            cropImage.style.height = imgHeight + 'px';
+            
+            // Keep image within bounds
+            const currentLeft = parseInt(cropImage.style.left) || 0;
+            const currentTop = parseInt(cropImage.style.top) || 0;
+            
+            // Center if not positioned
+            if (!currentLeft && !currentTop) {
+                cropImage.style.left = (cropArea.clientWidth - imgWidth) / 2 + 'px';
+                cropImage.style.top = (cropArea.clientHeight - imgHeight) / 2 + 'px';
+            }
+        }
+        
+        function updateZoomDisplay() {
+            zoomLevelSpan.textContent = Math.round(scale * 100) + '%';
+        }
+        
+        function applyCrop() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas to 3:2 aspect ratio (600x400 for good quality)
+            const outputWidth = 600;
+            const outputHeight = 400;
+            canvas.width = outputWidth;
+            canvas.height = outputHeight;
+            
+            // Fill with white background first
+            ctx.fillStyle = '#FFFFFF'; // White background
+            ctx.fillRect(0, 0, outputWidth, outputHeight);
+            
+            const cropArea = document.getElementById('cropArea');
+            const overlay = document.querySelector('.crop-overlay');
+            
+            // Calculate crop coordinates
+            const overlayRect = overlay.getBoundingClientRect();
+            const cropAreaRect = cropArea.getBoundingClientRect();
+            const imgRect = cropImage.getBoundingClientRect();
+            
+            // Calculate relative positions
+            const cropX = (overlayRect.left - imgRect.left) / scale;
+            const cropY = (overlayRect.top - imgRect.top) / scale;
+            const cropWidth = overlayRect.width / scale;
+            const cropHeight = overlayRect.height / scale;
+            
+            // Draw cropped image to canvas
+            ctx.drawImage(
+                originalImage,
+                cropX, cropY, cropWidth, cropHeight, // Source rectangle
+                0, 0, outputWidth, outputHeight      // Destination rectangle
+            );
+            
+            // Convert to data URL with white background
+            croppedImageData = canvas.toDataURL('image/jpeg', 0.9);
+            
+            // Update preview
+            previewImg.src = croppedImageData;
+            previewImg.style.display = 'block';
+            
+            // Show download button
+            downloadBtn.style.display = 'flex';
+            
+            // Store as selected file
+            selectedFile = dataURLtoBlob(croppedImageData);
+            fileNameSpan.textContent = 'cropped-image.jpg';
+            
+            closeCropModal();
+            validateForm();
+        }
+        
+        function dataURLtoBlob(dataURL) {
+            const arr = dataURL.split(',');
+            const mime = arr[0].match(/:(.*?);/)[1];
+            const bstr = atob(arr[1]);
+            let n = bstr.length;
+            const u8arr = new Uint8Array(n);
+            
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            
+            return new Blob([u8arr], { type: mime });
+        }
+        
+        function downloadImage() {
+            if (!croppedImageData) {
+                alert('No cropped image available. Please crop an image first.');
+                return;
+            }
+            
+            // Get suggested image name
+            let prefix = '';
+            switch(categorySelect.value) {
+                case 'Biology Lab': prefix = 'bio'; break;
+                case 'Physics Lab': prefix = 'phys'; break;
+                case 'Chemistry Lab': prefix = 'chem'; break;
+                case 'Scientific Lab': prefix = 'sci'; break;
+                default: prefix = 'item';
+            }
+            
+            const nextNum = itemCounter;
+            const imageName = `${prefix}${nextNum}.jpg`;
+            
+            // Create download link
+            const link = document.createElement('a');
+            link.href = croppedImageData;
+            link.download = imageName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Update save name
+            saveNameSpan.textContent = imageName;
+            finalImageNameSpan.textContent = imageName;
+            
+            alert(`Image downloaded as ${imageName}. Save it to your image folder.`);
+        }
+        
+        function updateSaveName() {
+            if (!categorySelect.value) {
+                saveNameSpan.textContent = 'Select category first';
+                return;
+            }
+            
+            let prefix = '';
+            switch(categorySelect.value) {
+                case 'Biology Lab': prefix = 'bio'; break;
+                case 'Physics Lab': prefix = 'phys'; break;
+                case 'Chemistry Lab': prefix = 'chem'; break;
+                case 'Scientific Lab': prefix = 'sci'; break;
+                default: prefix = 'item';
+            }
+            
+            const nextNum = itemCounter;
+            const imageName = `${prefix}${nextNum}.jpg`;
+            
+            saveNameSpan.textContent = imageName;
+            finalImageNameSpan.textContent = imageName;
+        }
+        
+        // NEW FUNCTION: Limit Specifications to 7 lines
+        function limitSpecsLines(textarea) {
+            const lines = textarea.value.split('\n');
+            if (lines.length > 7) {
+                textarea.value = lines.slice(0, 7).join('\n');
+            }
+            updateSpecsCounter();
+            validateForm();
+        }
+        
+        // NEW FUNCTION: Limit Descriptions to 9 lines
+        function limitDescLines(textarea) {
+            const lines = textarea.value.split('\n');
+            if (lines.length > 9) {
+                textarea.value = lines.slice(0, 9).join('\n');
+            }
+            updateDescCounter();
+            validateForm();
+        }
+        
+        function updateWarrantyCounter() {
+            const count = warrantyInput.value.length;
+            warrantyCount.textContent = count;
+            
+            if (count > 40) {
+                warrantyCount.classList.add('error');
+            } else {
+                warrantyCount.classList.remove('error');
+            }
+            
+            validateForm();
+        }
+        
+        function updateSpecsCounter() {
+            const lines = specificationsInput.value.split('\n').filter(line => line.trim() !== '');
+            const lineCount = lines.length;
+            const maxLineLength = lines.length > 0 ? Math.max(...lines.map(line => line.length)) : 0;
+            
+            specsLineCount.textContent = lineCount;
+            specsMaxChars.textContent = maxLineLength;
+            
+            if (lineCount > 7 || maxLineLength > 40) {
+                specsLineCount.classList.add('error');
+                specsMaxChars.classList.add('error');
+            } else {
+                specsLineCount.classList.remove('error');
+                specsMaxChars.classList.remove('error');
+            }
+            
+            validateForm();
+        }
+        
+        function updateDescCounter() {
+            const lines = descriptionsInput.value.split('\n').filter(line => line.trim() !== '');
+            const lineCount = lines.length;
+            const maxLineLength = lines.length > 0 ? Math.max(...lines.map(line => line.length)) : 0;
+            
+            descLineCount.textContent = lineCount;
+            descMaxChars.textContent = maxLineLength;
+            
+            if (lineCount > 9 || maxLineLength > 40) {
+                descLineCount.classList.add('error');
+                descMaxChars.classList.add('error');
+            } else {
+                descLineCount.classList.remove('error');
+                descMaxChars.classList.remove('error');
+            }
+            
+            validateForm();
+        }
+        
+        function validateForm() {
+            const isCategorySelected = categorySelect.value !== '';
+            const isItemNameFilled = itemNameInput.value.trim() !== '';
+            const isBestPriceFilled = bestPriceInput.value.trim() !== '';
+            const isMrpPriceFilled = mrpPriceInput.value.trim() !== '';
+            const isImagePathFilled = imagePathInput.value.trim() !== '';
+            const hasImage = selectedFile !== null;
+            
+            const specsLines = specificationsInput.value.split('\n').filter(line => line.trim() !== '');
+            const descLines = descriptionsInput.value.split('\n').filter(line => line.trim() !== '');
+            
+            const specsValid = specsLines.length >= 1 && specsLines.length <= 7 && 
+                               specsLines.every(line => line.length <= 40);
+            const descValid = descLines.length >= 1 && descLines.length <= 9 && 
+                              descLines.every(line => line.length <= 40);
+            
+            const warrantyValid = warrantyInput.value.length <= 40;
+            
+            const isValid = isCategorySelected && isItemNameFilled && 
+                           isBestPriceFilled && isMrpPriceFilled && 
+                           isImagePathFilled && hasImage && specsValid && descValid && warrantyValid;
+            
+            addBtn.disabled = !isValid;
+            return isValid;
+        }
+        
+        function generateItem() {
+            if (!validateForm()) {
+                alert('Please fill all required fields correctly:\n' +
+                      '- Image Path: Enter the exact path for JSON\n' +
+                      '- Specifications: 1-7 lines, max 40 chars per line\n' +
+                      '- Descriptions: 1-9 lines, max 40 chars per line\n' +
+                      '- Warranty: max 40 characters');
+                return;
+            }
+            
+            // Use the manually entered image path
+            const imagePath = imagePathInput.value.trim();
+            
+            const newItem = {
+                name: itemNameInput.value.trim(),
+                category: categorySelect.value,
+                image: imagePath,
+                bestBuyPrice: bestPriceInput.value.trim(),
+                mrpPrice: mrpPriceInput.value.trim(),
+                discount: discountInput.value.trim(),
+                warranty: warrantyInput.value.trim(),
+                specifications: specificationsInput.value
+                    .split('\n')
+                    .map(line => line.trim())
+                    .filter(line => line !== ''),
+                description: descriptionsInput.value
+                    .split('\n')
+                    .map(line => line.trim())
+                    .filter(line => line !== ''),
+                keywords: keywordsInput.value
+                    .split(',')
+                    .map(keyword => keyword.trim().toLowerCase())
+                    .filter(keyword => keyword !== '')
+            };
+            
+            // Add to all items array
+            allCreatedItems.push(newItem);
+            
+            const jsonString = JSON.stringify(newItem, null, 2);
+            jsonCodeDiv.textContent = jsonString;
+            
+            // Extract just the filename for display
+            const pathParts = imagePath.split('/');
+            const fileName = pathParts[pathParts.length - 1];
+            finalImageNameSpan.textContent = fileName;
+            
+            jsonOutputDiv.style.display = 'block';
+            
+            jsonOutputDiv.scrollIntoView({ behavior: 'smooth' });
+            
+            itemCounter++;
+            updateSaveName();
+            updateImagePathHint();
+            
+            // Reset form for next item
+            resetForm();
+        }
+        
+        function resetForm() {
+            // Clear all inputs except category
+            itemNameInput.value = '';
+            bestPriceInput.value = '';
+            mrpPriceInput.value = '';
+            discountInput.value = '';
+            warrantyInput.value = '';
+            keywordsInput.value = '';
+            specificationsInput.value = '';
+            descriptionsInput.value = '';
+            imagePathInput.value = '';
+            
+            // Clear image
+            imageInput.value = '';
+            previewImg.style.display = 'none';
+            downloadBtn.style.display = 'none';
+            fileNameSpan.textContent = 'No file selected';
+            selectedFile = null;
+            croppedImageData = null;
+            
+            // Update counters
+            updateWarrantyCounter();
+            updateSpecsCounter();
+            updateDescCounter();
+            validateForm();
+        }
+        
+        function copyJSON() {
+            const jsonText = jsonCodeDiv.textContent;
+            navigator.clipboard.writeText(jsonText)
+                .then(() => {
+                    const originalText = copyBtn.textContent;
+                    copyBtn.textContent = '✅ Copied!';
+                    setTimeout(() => {
+                        copyBtn.textContent = originalText;
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                    alert('Failed to copy JSON. Please select and copy manually.');
+                });
+        }
+        
+        // Initialize image path hint
+        updateImagePathHint();
+    </script>
+</body>
+</html>
