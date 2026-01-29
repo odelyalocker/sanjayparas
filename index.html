@@ -1131,6 +1131,7 @@
         searchTimeout = setTimeout(() => {
             const searchTerm = document.querySelector('.search-box').value.toLowerCase().trim();
             const resultsList = document.getElementById('resultsList');
+            const mainContent = document.querySelector('.main-content');
             const searchResults = document.getElementById('searchResults');
             const resultsTitle = document.getElementById('resultsTitle');
 
@@ -1138,6 +1139,7 @@
 
             if (searchTerm.length < 2) {
                 searchResults.style.display = 'none';
+                mainContent.classList.remove('hide-main');
                 return;
             }
 
@@ -1208,6 +1210,7 @@
                     setupZoom(resultItem); 
                 });
                 searchResults.style.display = 'block';
+                mainContent.classList.add('hide-main');
             } else {
                 resultsTitle.textContent = `No results found for "${searchTerm}"`;
                 resultsList.innerHTML = '<div class="no-results">Try different keywords</div>';
@@ -1318,4 +1321,5 @@ container.addEventListener('touchcancel', () => {
 </script>
 </body>
 </html>
+
 
