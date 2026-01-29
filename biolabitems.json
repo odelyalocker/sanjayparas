@@ -3,9 +3,9 @@
     "name": "Compound Microscope",
     "category": "Biology Lab",
     "image": "/sanjayparas/bioimg/bio1.jpg",
-    "bestBuyPrice": "19,000",
     "mrpPrice": "20,000",
     "discount": "-5%",
+    "bestBuyPrice": "19,000",
     "warranty": "2 Years Manufacturer Warranty",
     "specifications": [
       "Magnification: 40x to 1000x",
