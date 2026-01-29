@@ -43,5 +43,37 @@
       "For All"
     ],
     "keywords": ["microscope", "biology", "compound", "magnification", "lab equipment"]
-  }
+  },
+
+  {
+  "name": "Binocular Microscope",
+  "category": "Biology Lab",
+  "image": "sanjayparas/bioimg /bio3.jpg",
+  "bestBuyPrice": "65000",
+  "mrpPrice": "70000",
+  "discount": "-10%",
+  "warranty": "Nothing",
+  "specifications": [
+    "Mechanical Stage",
+    "Condenser",
+    "Focusing",
+    "Illumination",
+    "Electrical"
+  ],
+  "description": [
+    "Light Source Type",
+    "Real Angle Of View",
+    "Magnification Maximum",
+    "Voltage",
+    "Objective Lens Description"
+  ],
+  "keywords": [
+    "microscope",
+    "medical",
+    "physics",
+    "biology"
+  ]
+},
+
+
 ]
