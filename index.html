@@ -1029,497 +1029,174 @@
         <div class="mobile-zoom-hint">Touch and drag to zoom • Tap anywhere to close</div>
     </div>
 
-    <script>
-        // Global variables
-        let allItems = [];
-        let searchTimeout;
-        
-        // Function to load JSON files with better error handling
-        async function loadJSONFiles() {
-            console.log('🚀 Starting JSON file loading...');
+<script>
+    // 1. GLOBAL VARIABLES & LOADING
+    let allItems = [];
+    let searchTimeout;
+
+    async function loadJSONFiles() {
+        console.log('🚀 Loading Lab Data...');
+        try {
+            const files = ['biolabitems.json', 'physlabitems.json', 'chemlabitems.json', 'scientificlabitems.json'];
+            const responses = await Promise.all(files.map(file => 
+                fetch(file).then(res => res.ok ? res.json() : [])
+            ));
             
-            try {
-                // Load all JSON files
-                const [biolab, physlab, chemlab, scientific] = await Promise.all([
-                    fetch('biolabitems.json').then(response => {
-                        if (!response.ok) throw new Error(`biolabitems.json: ${response.status}`);
-                        return response.json();
-                    }).catch(error => {
-                        console.error('Failed to load biolabitems.json:', error);
-                        return [];
-                    }),
-                    
-                    fetch('physlabitems.json').then(response => {
-                        if (!response.ok) throw new Error(`physlabitems.json: ${response.status}`);
-                        return response.json();
-                    }).catch(error => {
-                        console.error('Failed to load physlabitems.json:', error);
-                        return [];
-                    }),
-                    
-                    fetch('chemlabitems.json').then(response => {
-                        if (!response.ok) throw new Error(`chemlabitems.json: ${response.status}`);
-                        return response.json();
-                    }).catch(error => {
-                        console.error('Failed to load chemlabitems.json:', error);
-                        return [];
-                    }),
-                    
-                    fetch('scientificlabitems.json').then(response => {
-                        if (!response.ok) throw new Error(`scientificlabitems.json: ${response.status}`);
-                        return response.json();
-                    }).catch(error => {
-                        console.error('Failed to load scientificlabitems.json:', error);
-                        return [];
-                    })
-                ]);
-                
-                // Combine all items
-                allItems = [...biolab, ...physlab, ...chemlab, ...scientific];
-                
-                // Clean up discount values (remove % sign)
-                allItems = allItems.map(item => {
-                    if (item.discount) {
-                        // Remove % sign if present
-                        item.discount = item.discount.toString().replace('%', '');
-                    }
-                    return item;
-                });
-                
-                console.log('✅ JSON files loaded successfully');
-                console.log(`📊 Total items loaded: ${allItems.length}`);
-                
-                if (allItems.length > 0) {
-                    console.log('📝 First item:', allItems[0].name);
-                }
-                
-            } catch (error) {
-                console.error('❌ Error loading JSON files:', error);
-                allItems = []; // Set to empty array on error
-            }
+            // Combine and clean discount data
+            allItems = [].concat(...responses).map(item => {
+                if (item.discount) item.discount = item.discount.toString().replace('%', '');
+                return item;
+            });
+
+            console.log(`✅ Loaded ${allItems.length} items.`);
+        } catch (error) {
+            console.error('❌ Load Error:', error);
         }
-        
-        // Simplified search function with only specified scoring
-        function searchItems() {
-            clearTimeout(searchTimeout);
-            
-            searchTimeout = setTimeout(() => {
-                const searchTerm = document.querySelector('.search-box').value.toLowerCase().trim();
-                const resultsList = document.getElementById('resultsList');
-                const searchResults = document.getElementById('searchResults');
-                const resultsTitle = document.getElementById('resultsTitle');
+    }
+
+    // 2. SEARCH & RENDER
+    function searchItems() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            const searchTerm = document.querySelector('.search-box').value.toLowerCase().trim();
+            const resultsList = document.getElementById('resultsList');
+            const searchResults = document.getElementById('searchResults');
+            const resultsTitle = document.getElementById('resultsTitle');
+
+            resultsList.innerHTML = '';
+
+            if (searchTerm.length < 2) {
+                searchResults.style.display = 'none';
+                return;
+            }
+
+            // Calculate Scoring
+            const matchedItems = allItems.map(item => {
+                let score = 0;
+                const name = item.name.toLowerCase();
                 
-                console.log('🔍 Searching for:', searchTerm);
-                
-                // Clear previous results
-                resultsList.innerHTML = '';
-                
-                // Hide results if search term is too short
-                if (searchTerm.length < 2) {
-                    searchResults.style.display = 'none';
-                    return;
-                }
-                
-                // Calculate relevance score using ONLY the specified criteria
-                const scoredItems = allItems.map(item => {
-                    let score = 0;
-                    
-                    // Get item name in lowercase
-                    const name = item.name.toLowerCase();
-                    
-                    // 1. Exact name match: +100 points
-                    if (name === searchTerm) {
-                        score += 100;
-                    }
-                    
-                    // 2. Name starts with term: +50 points
-                    if (name.startsWith(searchTerm)) {
-                        score += 50;
-                    }
-                    
-                    // 3. Name contains term: +30 points
-                    if (name.includes(searchTerm)) {
-                        score += 30;
-                    }
-                    
-                    // 4. Exact word match: +40 points
-                    // Split both search term and name into words
-                    const searchWords = searchTerm.split(/[\s\-_.,;]+/).filter(word => word.length > 0);
-                    const nameWords = name.split(/[\s\-_.,;]+/).filter(word => word.length > 0);
-                    
-                    // Check for exact word matches
-                    searchWords.forEach(searchWord => {
-                        nameWords.forEach(nameWord => {
-                            if (nameWord === searchWord) {
-                                score += 40;
-                            }
-                        });
+                if (name === searchTerm) score += 100;
+                if (name.startsWith(searchTerm)) score += 50;
+                if (name.includes(searchTerm)) score += 30;
+
+                const searchWords = searchTerm.split(/[\s\-_.,;]+/).filter(w => w.length > 0);
+                const nameWords = name.split(/[\s\-_.,;]+/).filter(w => w.length > 0);
+
+                searchWords.forEach(sw => {
+                    nameWords.forEach(nw => {
+                        if (nw === sw) score += 40;
+                        else if (nw.includes(sw) && sw.length >= 3) score += 20;
                     });
-                    
-                    // 5. Partial word match: +20 points
-                    searchWords.forEach(searchWord => {
-                        if (searchWord.length >= 3) { // Only consider partial matches for words of length 3 or more
-                            nameWords.forEach(nameWord => {
-                                if (nameWord.includes(searchWord) && nameWord !== searchWord) {
-                                    score += 20;
-                                }
-                            });
-                        }
-                    });
-             
-// Inside your search results loop...
-filteredItems.forEach(item => {
-    const div = document.createElement('div');
-    div.className = 'result-item';
-    div.innerHTML = `... your existing HTML ...`;
-    
-    resultsList.appendChild(div); // First, add it to the page
-    setupZoom(div);               // Then, tell the zoom code to watch this specific item
-});       
-                    return {
-                        ...item,
-                        relevanceScore: score
-                    };
                 });
+
+                return { ...item, relevanceScore: score };
+            })
+            .filter(item => item.relevanceScore > 0)
+            .sort((a, b) => b.relevanceScore - a.relevanceScore);
+
+            // Render Results
+            if (matchedItems.length > 0) {
+                resultsTitle.textContent = `Found ${matchedItems.length} items for "${searchTerm}"`;
                 
-                // Filter items with minimum score and sort by relevance
-                const matchedItems = scoredItems
-                    .filter(item => item.relevanceScore > 0)
-                    .sort((a, b) => b.relevanceScore - a.relevanceScore);
-                
-                console.log('🎯 Found relevant items:', matchedItems.length);
-                
-                // Display results
-                if (matchedItems.length > 0) {
-                    resultsTitle.textContent = `Found ${matchedItems.length} relevant item(s) for "${searchTerm}"`;
+                matchedItems.forEach(item => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'result-item';
                     
-                    matchedItems.forEach((item) => {
-                        const resultItem = document.createElement('div');
-                        resultItem.className = 'result-item';
-                        
-                        // Create description HTML as bullet points
-                        const descriptionHTML = Array.isArray(item.description) 
-                            ? item.description.map(point => `<li>${point}</li>`).join('')
-                            : `<li>${item.description || ''}</li>`;
-                        
-                        // Create specifications HTML as bullet points
-                        const specsHTML = item.specifications && Array.isArray(item.specifications)
-                            ? item.specifications.map(spec => `<li>${spec}</li>`).join('')
-                            : '';
-                        
-                        resultItem.innerHTML = `
-                            <div class="result-content">
-                                <!-- Left: Image + Price -->
-                                <div class="result-left">
-                                    <div class="result-image">
-                                        <img src="${item.image || 'placeholder.jpg'}" alt="${item.name}" onerror="this.src='placeholder.jpg'">
-                                    </div>
-                                    <div class="price-box">
-                                        <div class="mrp-line">
-                                            <span class="mrp-label">M.R.P.</span>
-                                            <span class="mrp-price">INR ${item.mrpPrice || '0'}/-</span>
-                                        </div>
-                                        <div class="bestbuy-line">
-                                            <span class="bestbuy-label">Buy</span>
-                                            <span class="bestbuy-price" style="font-size: 17px;">INR ${item.bestBuyPrice || '0'}/-</span>
-                                        </div>
-                                    </div>
+                    const specsHTML = Array.isArray(item.specifications) ? item.specifications.map(s => `<li>${s}</li>`).join('') : '';
+                    const descHTML = Array.isArray(item.description) ? item.description.map(d => `<li>${d}</li>`).join('') : `<li>${item.description || ''}</li>`;
+
+                    resultItem.innerHTML = `
+                        <div class="result-content">
+                            <div class="result-left">
+                                <div class="result-image">
+                                    <img src="${item.image || 'placeholder.jpg'}" alt="${item.name}">
                                 </div>
-                                
-                                <!-- Center: Name + Specs + Warranty -->
-                                <div class="result-center">
-                                    <h4 class="item-name">${item.name}</h4>
-                                    <div class="specs-section">
-                                        ${specsHTML ? `
-                                        <strong>Specifications:</strong>
-                                        <ul>${specsHTML}</ul>` : ''}
-                                        <strong>Warranty:</strong> ${item.warranty || 'Not specified'}
-                                    </div>
-                                </div>
-                                
-                                <!-- Right: Description -->
-                                <div class="result-right">
-                                    <div class="description-section">
-                                        <strong>Descriptions:</strong>
-                                        <ul>${descriptionHTML}</ul>
-                                    </div>
+                                <div class="price-box">
+                                    <div class="mrp-line"><span class="mrp-label">M.R.P.</span> <span class="mrp-price">INR ${item.mrpPrice || '0'}/-</span></div>
+                                    <div class="bestbuy-line"><span class="bestbuy-label">Buy</span> <span class="bestbuy-price">INR ${item.bestBuyPrice || '0'}/-</span></div>
                                 </div>
                             </div>
-                        `;
-                        resultsList.appendChild(resultItem);
-                    });
+                            <div class="result-center">
+                                <h4 class="item-name">${item.name}</h4>
+                                <div class="specs-section">
+                                    ${specsHTML ? `<strong>Specifications:</strong><ul>${specsHTML}</ul>` : ''}
+                                    <strong>Warranty:</strong> ${item.warranty || 'Not specified'}
+                                </div>
+                            </div>
+                            <div class="result-right">
+                                <div class="description-section">
+                                    <strong>Descriptions:</strong>
+                                    <ul>${descHTML}</ul>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    resultsList.appendChild(resultItem);
                     
-                    searchResults.style.display = 'block';
-                    // Initialize image zoom for new results
-                    setTimeout(initializeAmazonStyleZoom, 100);
-                } else {
-                    resultsTitle.textContent = `No results found for "${searchTerm}"`;
-                    resultsList.innerHTML = '<div class="no-results">Try different keywords or check spelling</div>';
-                    searchResults.style.display = 'block';
-                }
-                
-                // Debug: Show top scores
-                if (matchedItems.length > 0) {
-                    console.log('Top 5 matches:');
-                    matchedItems.slice(0, 5).forEach((item, index) => {
-                        console.log(`${index + 1}. ${item.name} - Score: ${item.relevanceScore}`);
-                    });
-                }
-            }, 300);
-        }
-        
-        // WORKING Amazon/Flipkart style hover zoom functionality
-        function initializeAmazonStyleZoom() {
-            const resultImages = document.querySelectorAll('.result-image');
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            const mobileZoomOverlay = document.getElementById('mobileZoomOverlay');
-            const mobileZoomImage = document.getElementById('mobileZoomImage');
-            
-            resultImages.forEach((resultImageDiv, index) => {
-                const img = resultImageDiv.querySelector('img');
-                if (!img) return;
-                
-                // Create zoom elements
-                const zoomContainer = document.createElement('div');
-                zoomContainer.className = 'zoom-container';
-                zoomContainer.id = `zoom-container-${index}`;
-                
-                const zoomedImg = document.createElement('img');
-                zoomedImg.className = 'zoomed-image';
-                zoomedImg.src = img.src;
-                zoomedImg.alt = img.alt;
-                
-                const zoomLens = document.createElement('div');
-                zoomLens.className = 'zoom-lens';
-                zoomLens.id = `zoom-lens-${index}`;
-                
-                zoomContainer.appendChild(zoomedImg);
-                resultImageDiv.appendChild(zoomContainer);
-                resultImageDiv.appendChild(zoomLens);
-                
-                // Set zoom level (2.5x for better view)
-                const zoomLevel = 2.5;
-                
-                // Preload the image to get its natural dimensions
-                const preloadImg = new Image();
-                preloadImg.src = img.src;
-                
-                preloadImg.onload = function() {
-                    const naturalWidth = preloadImg.naturalWidth;
-                    const naturalHeight = preloadImg.naturalHeight;
-                    
-                    // Set zoomed image size
-                    zoomedImg.style.width = (naturalWidth * zoomLevel) + 'px';
-                    zoomedImg.style.height = (naturalHeight * zoomLevel) + 'px';
-                    
-                    // For desktop hover zoom
-                    if (!isMobile) {
-                        let isHovering = false;
-                        
-                        resultImageDiv.addEventListener('mouseenter', function() {
-                            isHovering = true;
-                            const rect = this.getBoundingClientRect();
-                            zoomContainer.style.display = 'block';
-                            zoomLens.style.display = 'block';
-                            
-                            // Position zoom container to the right of the image
-                            zoomContainer.style.left = (rect.width + 20) + 'px';
-                            zoomContainer.style.top = '0px';
-                            
-                            // Ensure zoom container stays visible
-                            const zoomRect = zoomContainer.getBoundingClientRect();
-                            const viewportWidth = window.innerWidth;
-                            
-                            if (zoomRect.right > viewportWidth - 10) {
-                                zoomContainer.style.left = (-zoomRect.width - 20) + 'px';
-                            }
-                        });
-                        
-                        resultImageDiv.addEventListener('mouseleave', function() {
-                            isHovering = false;
-                            zoomContainer.style.display = 'none';
-                            zoomLens.style.display = 'none';
-                        });
-                        
-                        resultImageDiv.addEventListener('mousemove', function(e) {
-                            if (!isHovering) return;
-                            
-                            const rect = this.getBoundingClientRect();
-                            const x = e.clientX - rect.left;
-                            const y = e.clientY - rect.top;
-                            
-                            // Lens size
-                            const lensWidth = 150;
-                            const lensHeight = 150;
-                            
-                            // Calculate lens position (centered on cursor)
-                            let lensX = x - (lensWidth / 2);
-                            let lensY = y - (lensHeight / 2);
-                            
-                            // Keep lens within image bounds
-                            lensX = Math.max(0, Math.min(lensX, rect.width - lensWidth));
-                            lensY = Math.max(0, Math.min(lensY, rect.height - lensHeight));
-                            
-                            // Position the lens
-                            zoomLens.style.left = lensX + 'px';
-                            zoomLens.style.top = lensY + 'px';
-                            
-                            // Calculate zoomed image position (inverse movement)
-                            const zoomX = -(lensX * zoomLevel * (naturalWidth / rect.width));
-                            const zoomY = -(lensY * zoomLevel * (naturalHeight / rect.height));
-                            
-                            // Position the zoomed image
-                            zoomedImg.style.left = zoomX + 'px';
-                            zoomedImg.style.top = zoomY + 'px';
-                        });
-                    }
-                };
-                
-                // For mobile touch zoom
-                if (isMobile) {
-                    let isZooming = false;
-                    
-                    resultImageDiv.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        
-                        if (isZooming) {
-                            mobileZoomOverlay.style.display = 'none';
-                            isZooming = false;
-                        } else {
-                            mobileZoomImage.src = img.src;
-                            mobileZoomImage.alt = img.alt;
-                            mobileZoomOverlay.style.display = 'flex';
-                            isZooming = true;
-                            
-                            // Reset zoom position
-                            mobileZoomImage.style.transform = 'none';
-                            mobileZoomImage.style.transformOrigin = 'center center';
-                        }
-                    });
-                    
-                    // Close overlay when clicking outside
-                    mobileZoomOverlay.addEventListener('click', function(e) {
-                        if (e.target === this || e.target.classList.contains('mobile-zoom-hint')) {
-                            this.style.display = 'none';
-                            isZooming = false;
-                        }
-                    });
-                    
-                    // Touch move for panning zoomed image
-                    let startX, startY;
-                    let currentX = 0, currentY = 0;
-                    let scale = 2;
-                    
-                    mobileZoomImage.addEventListener('touchstart', function(e) {
-                        if (e.touches.length === 1) {
-                            startX = e.touches[0].clientX - currentX;
-                            startY = e.touches[0].clientY - currentY;
-                        }
-                    });
-                    
-                    mobileZoomImage.addEventListener('touchmove', function(e) {
-                        e.preventDefault();
-                        
-                        if (e.touches.length === 1) {
-                            currentX = e.touches[0].clientX - startX;
-                            currentY = e.touches[0].clientY - startY;
-                            
-                            this.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale})`;
-                        }
-                    });
-                }
-            });
-        }
-        
-        // Keep the existing event listeners
-        document.querySelector('.search-box').addEventListener('input', searchItems);
-        document.getElementById('closeResults').addEventListener('click', function() {
-            document.getElementById('searchResults').style.display = 'none';
-            document.querySelector('.search-box').value = '';
-        });
-        
-        document.addEventListener('click', function(event) {
-            const searchResults = document.getElementById('searchResults');
-            const searchBox = document.querySelector('.search-box');
-            
-            if (searchResults.style.display === 'block' && 
-                !searchResults.contains(event.target) && 
-                !searchBox.contains(event.target)) {
-                searchResults.style.display = 'none';
+                    // ATTACH ZOOM TO EACH ITEM
+                    setupZoom(resultItem); 
+                });
+                searchResults.style.display = 'block';
+            } else {
+                resultsTitle.textContent = `No results found for "${searchTerm}"`;
+                resultsList.innerHTML = '<div class="no-results">Try different keywords</div>';
+                searchResults.style.display = 'block';
             }
-        });
+        }, 300);
+    }
+
+    // 3. ZOOM ENGINE
+    function setupZoom(resultItem) {
+        const container = resultItem.querySelector('.result-image');
+        const img = container.querySelector('img');
         
-        document.querySelector('.search-box').addEventListener('keydown', function(event) {
-            const searchResults = document.getElementById('searchResults');
-            
-            if (event.key === 'Escape' && searchResults.style.display === 'block') {
-                searchResults.style.display = 'none';
-            }
-            
-            if (event.key === 'Enter') {
-                searchItems();
-            }
-        });
+        const lens = document.createElement('div');
+        lens.className = 'zoom-lens';
+        const zoomWin = document.createElement('div');
+        zoomWin.className = 'zoom-container';
+        const zImg = document.createElement('img');
+        zImg.className = 'zoomed-image';
+        zImg.src = img.src;
         
-        // Load JSON files when page loads
-        window.addEventListener('DOMContentLoaded', function() {
-            loadJSONFiles();
-            // Initialize image zoom for any existing results
-            setTimeout(initializeAmazonStyleZoom, 1000);
+        zoomWin.appendChild(zImg);
+        container.appendChild(lens);
+        container.appendChild(zoomWin);
+
+        container.addEventListener('mousemove', (e) => {
+            lens.style.display = 'block';
+            zoomWin.style.display = 'block';
+            const rect = container.getBoundingClientRect();
+            let x = e.clientX - rect.left - (lens.offsetWidth / 2);
+            let y = e.clientY - rect.top - (lens.offsetHeight / 2);
+
+            x = Math.max(0, Math.min(x, rect.width - lens.offsetWidth));
+            y = Math.max(0, Math.min(y, rect.height - lens.offsetHeight));
+
+            lens.style.left = x + 'px';
+            lens.style.top = y + 'px';
+
+            const cx = zoomWin.offsetWidth / lens.offsetWidth;
+            const cy = zoomWin.offsetHeight / lens.offsetHeight;
+
+            zImg.style.width = (rect.width * cx) + 'px';
+            zImg.style.height = (rect.height * cy) + 'px';
+            zImg.style.left = `-${x * cx}px`;
+            zImg.style.top = `-${y * cy}px`;
         });
-        
-        // Handle window resize to reposition zoom containers
-        window.addEventListener('resize', function() {
-            setTimeout(initializeAmazonStyleZoom, 100);
+
+        container.addEventListener('mouseleave', () => {
+            lens.style.display = 'none';
+            zoomWin.style.display = 'none';
         });
+    }
 
-        function setupZoom(resultItem) {
-    const container = resultItem.querySelector('.result-image');
-    const img = container.querySelector('img');
-    const lens = document.createElement('div');
-    lens.className = 'zoom-lens';
-    container.appendChild(lens);
+    // 4. EVENT LISTENERS
+    document.querySelector('.search-box').addEventListener('input', searchItems);
+    document.getElementById('closeResults').onclick = () => {
+        document.getElementById('searchResults').style.display = 'none';
+    };
 
-    const zoomWindow = document.createElement('div');
-    zoomWindow.className = 'zoom-container';
-    const zoomedImg = document.createElement('img');
-    zoomedImg.className = 'zoomed-image';
-    zoomedImg.src = img.src; // Uses the product's specific image
-    zoomWindow.appendChild(zoomedImg);
-    container.appendChild(zoomWindow);
-
-    container.addEventListener('mousemove', (e) => {
-        lens.style.display = 'block';
-        zoomWindow.style.display = 'block';
-        const rect = container.getBoundingClientRect();
-        let x = e.clientX - rect.left;
-        let y = e.clientY - rect.top;
-
-        x = Math.max(0, Math.min(x - lens.offsetWidth / 2, container.offsetWidth - lens.offsetWidth));
-        y = Math.max(0, Math.min(y - lens.offsetHeight / 2, container.offsetHeight - lens.offsetHeight));
-
-        lens.style.left = x + 'px';
-        lens.style.top = y + 'px';
-
-        const cx = zoomWindow.offsetWidth / lens.offsetWidth;
-        const cy = zoomWindow.offsetHeight / lens.offsetHeight;
-
-        zoomedImg.style.width = (container.offsetWidth * cx) + 'px';
-        zoomedImg.style.height = (container.offsetHeight * cy) + 'px';
-        zoomedImg.style.left = `-${x * cx}px`;
-        zoomedImg.style.top = `-${y * cy}px`;
-    });
-
-    container.addEventListener('mouseleave', () => {
-        lens.style.display = 'none';
-        zoomWindow.style.display = 'none';
-    });
-}
-        
-    </script>
+    window.addEventListener('DOMContentLoaded', loadJSONFiles);
+</script>
 </body>
 </html>
-
-
-
