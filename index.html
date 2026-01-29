@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanjay Paras Website</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -35,46 +35,46 @@
             z-index: 1000;
             min-height: 85px;
         }
-               
-/* Company name container with white background */
-.company-name-container {
-    background-color: #FFFFFF;
-    border-radius: 8px;
-    padding: 7px 25px;
-    margin-right: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 80%; 
-    min-height: 56px;
-}
+        
+        /* Company name container with white background */
+        .company-name-container {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            padding: 7px 25px;
+            margin-right: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80%; 
+            min-height: 56px;
+        }
 
-/* Company name in two lines */
-.company-name {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
+        /* Company name in two lines */
+        .company-name {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
 
-.company-name h1 {
-    font-size: 28px;
-    font-weight: 800;
-    color: #1565c0;
-    line-height: 1;
-    margin: 0;
-    padding: 0;
-    white-space: nowrap;
-}
+        .company-name h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1565c0;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+            white-space: nowrap;
+        }
 
-.company-name .international {
-    color: #1565c0;
-    font-size: 24px;
-    margin-top: 2px;
-}
+        .company-name .international {
+            color: #1565c0;
+            font-size: 24px;
+            margin-top: 2px;
+        }
 
-/* Center content */
+        /* Center content */
         .header-center {
             flex-grow: 1;
             display: flex;
@@ -94,17 +94,17 @@
             line-height: 1.3;
         }
         
-		/* Second tagline */
-.trusted-tagline {
-    font-size: 16px;
-    color: #FFFFFF;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    text-align: center;
-    line-height: 1.3;
-    margin-top: 5px;
-}
-		
+        /* Second tagline */
+        .trusted-tagline {
+            font-size: 16px;
+            color: #FFFFFF;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-align: center;
+            line-height: 1.3;
+            margin-top: 5px;
+        }
+        
         /* Cart Button */
         .cart-button {
             background-color: #FFFFFF;
@@ -242,34 +242,34 @@
             color: #FFFFFF;
         }
         
-/* Search Results Section - FIXED */
-.search-results {
-    position: fixed;
-    top: 155px; 
-    left: 0;
-    width: 100%;
-    background: white;
-    z-index: 998;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    display: none;
-    border-top: 2px solid #d32f2f;
-    max-height: calc(100vh - 160px);
-    overflow-y: auto;
-}
+        /* Search Results Section - FIXED */
+        .search-results {
+            position: fixed;
+            top: 155px; 
+            left: 0;
+            width: 100%;
+            background: white;
+            z-index: 998;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: none;
+            border-top: 2px solid #d32f2f;
+            max-height: calc(100vh - 160px);
+            overflow-y: auto;
+        }
 
-.results-container {
-    padding: 20px;
-    width: 95%;
-    margin: 0 auto;
-}
+        .results-container {
+            padding: 20px;
+            width: 95%;
+            margin: 0 auto;
+        }
 
-/* Ensure results container doesn't add extra padding */
-.search-results > .results-container {
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px 30px;
-}
+        /* Ensure results container doesn't add extra padding */
+        .search-results > .results-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 30px;
+        }
         
         .results-header {
             display: flex;
@@ -361,215 +361,364 @@
             color: #FFFFFF;
         }
 
-/* ===== SEARCH RESULTS LAYOUT ===== */
-.result-item {
-    background: white;
-    padding: 25px;
-    border-radius: 8px;
-    border: 2px solid #000000;
-    margin-bottom: 20px;
-    width: 100%;
-}
+        /* ===== SEARCH RESULTS LAYOUT ===== */
+        .result-item {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border: 2px solid #000000;
+            margin-bottom: 20px;
+            width: 100%;
+        }
 
-.result-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 30px;
-    align-items: start;
-}
+        .result-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
 
-/* Left Column: Image + Price */
-.result-left {
-    grid-column: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
+        /* Left Column: Image + Price */
+        .result-left {
+            grid-column: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-.result-image {
-    margin-bottom: 15px;
-}
+        .result-image {
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
 
-.result-image img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 3/2;
-	object-fit: cover;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-}
+        .result-image img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 3/2;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            will-change: transform;
+        }
 
-.price-box {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-}
+        .price-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
 
-.mrp-line {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    padding-bottom: 10px;
-    border-bottom: 1px dashed #ccc;
-}
+        .mrp-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ccc;
+        }
 
-.mrp-label {
-    color: #666;
-    font-size: 14px;
-    font-weight: 500;
-}
+        .mrp-label {
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+        }
 
-.mrp-price {
-    color: #888;
-    text-decoration: line-through;
-    font-size: 16px;
-}
+        .mrp-price {
+            color: #888;
+            text-decoration: line-through;
+            font-size: 16px;
+        }
 
-.bestbuy-line {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .bestbuy-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.bestbuy-label {
-    color: #d32f2f;
-    font-weight: bold;
-    font-size: 16px;
-}
+        .bestbuy-label {
+            color: #d32f2f;
+            font-weight: bold;
+            font-size: 16px;
+        }
 
-.bestbuy-price {
-    color: #d32f2f;
-    font-size: 17px;
-    font-weight: bold;
-}
+        .bestbuy-price {
+            color: #d32f2f;
+            font-size: 17px;
+            font-weight: bold;
+        }
 
-/* Search Suggestions */
-.search-suggestions {
-    max-height: 200px;
-    overflow-y: auto;
-}
+        /* Search Suggestions */
+        .search-suggestions {
+            max-height: 200px;
+            overflow-y: auto;
+        }
 
-.search-suggestions div:last-child {
-    border-bottom: none;
-}
+        .search-suggestions div:last-child {
+            border-bottom: none;
+        }
 
-.search-suggestions div:hover {
-    background-color: #f0f0f0;
-}
-	
-/* Center Column: Name + Specifications + Warranty */
-.result-center {
-    grid-column: 2;
-    min-width: 0;
-}
+        .search-suggestions div:hover {
+            background-color: #f0f0f0;
+        }
+        
+        /* Center Column: Name + Specifications + Warranty */
+        .result-center {
+            grid-column: 2;
+            min-width: 0;
+        }
 
-.item-name {
-    color: #1565c0;
-    font-size: 24px;
-    font-weight: 800;
-    margin: 0 0 15px 0;
-    line-height: 1.2;
-}
+        .item-name {
+            color: #1565c0;
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0 0 15px 0;
+            line-height: 1.2;
+        }
 
-.specs-section {
-    margin-bottom: 0; /* Changed from 20px to 0 */
-}
+        .specs-section {
+            margin-bottom: 0; /* Changed from 20px to 0 */
+        }
 
-.specs-section strong {
-    display: block;
-    margin-bottom: 8px;
-    color: #333;
-    font-size: 16px;
-}
+        .specs-section strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 16px;
+        }
 
-.specs-section ul {
-    margin: 5px 0 5px 20px;
-    color: #555;
-}
+        .specs-section ul {
+            margin: 5px 0 5px 20px;
+            color: #555;
+        }
 
-.specs-section li {
-    margin-bottom: 6px;
-    line-height: 1.4;
-}
+        .specs-section li {
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
 
-/* Right Column: Description */
-.result-right {
-    grid-column: 3;
-    min-width: 0;
-    margin-top: 35px; /* Added to align with specifications */
-}
+        /* Right Column: Description */
+        .result-right {
+            grid-column: 3;
+            min-width: 0;
+            margin-top: 35px; /* Added to align with specifications */
+        }
 
-.description-section {
-    margin-top: 0;
-}
+        .description-section {
+            margin-top: 0;
+        }
 
-.description-section strong {
-    display: block;
-    margin-bottom: 10px;
-    color: #333;
-    font-size: 16px;
-}
+        .description-section strong {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 16px;
+        }
 
-.description-section ul {
-    margin: 5px 0 5px 20px;
-    color: #555;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
+        .description-section ul {
+            margin: 5px 0 5px 20px;
+            color: #555;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
 
-.description-section li {
-    margin-bottom: 8px;
-    line-height: 1.5;
-    word-break: break-word;
-}
+        .description-section li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+            word-break: break-word;
+        }
 
-/* Hide category */
-.category {
-    display: none !important;
-}
-	
-.description-section ul {
-    margin: 5px 0 5px 20px;
-    color: #555;
-    word-wrap: break-word; /* Break long words */
-    overflow-wrap: break-word; /* Modern property */
-}
+        /* Hide category */
+        .category {
+            display: none !important;
+        }
+        
+        .description-section ul {
+            margin: 5px 0 5px 20px;
+            color: #555;
+            word-wrap: break-word; /* Break long words */
+            overflow-wrap: break-word; /* Modern property */
+        }
 
-.description-section li {
-    margin-bottom: 8px;
-    line-height: 1.5;
-    word-break: break-word; /* Break words if needed */
-}
+        .description-section li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+            word-break: break-word; /* Break words if needed */
+        }
+
+        /* ===== IMAGE ZOOM FUNCTIONALITY ===== */
+        /* Desktop hover effect */
+        @media (hover: hover) and (pointer: fine) {
+            .result-image:hover img {
+                transform: scale(1.2);
+                opacity: 0.9;
+            }
+            
+            .result-image:hover::after {
+                content: "🔍 Hover to zoom";
+                position: absolute;
+                bottom: 10px;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.7);
+                color: white;
+                padding: 5px;
+                font-size: 12px;
+                text-align: center;
+                border-radius: 0 0 8px 8px;
+                z-index: 1;
+            }
+        }
+
+        /* Mobile tap indicator */
+        @media (max-width: 768px) {
+            .result-image::after {
+                content: "👆 Tap to enlarge";
+                position: absolute;
+                bottom: 10px;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.7);
+                color: white;
+                padding: 5px;
+                font-size: 12px;
+                text-align: center;
+                border-radius: 0 0 8px 8px;
+                opacity: 0.8;
+                z-index: 1;
+            }
+        }
+
+        /* Image modal overlay */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            text-align: center;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Modal close button */
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: -10px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2001;
+        }
+
+        .close-modal:hover {
+            color: #ff5555;
+        }
+
+        /* Mobile back button indicator */
+        .mobile-back-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+            font-size: 14px;
+            opacity: 0.8;
+            display: none;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            margin: 0 20px;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-back-hint {
+                display: block;
+            }
+            
+            .close-modal {
+                top: 20px;
+                right: 20px;
+                background: rgba(0, 0, 0, 0.7);
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                font-size: 35px;
+            }
+            
+            .modal-content {
+                max-width: 95%;
+                max-height: 95%;
+            }
+            
+            .modal-content img {
+                max-height: 75vh;
+            }
+        }
+
         /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 1024px) {
             .result-content {
-        grid-template-columns: 1fr 1fr; /* Two columns on tablet */
-        gap: 20px;
-    }
-    
-    .result-left {
-        grid-column: 1 / span 2; /* Span full width */
-        display: flex;
-        gap: 20px;
-    }
-    
-    .result-image {
-        flex: 0 0 200px;
-    }
-    
-    .price-box {
-        flex: 1;
-    }
-    
-    .result-center {
-        grid-column: 1;
-    }
-    
-    .result-right {
-        grid-column: 2;
-    }
-           
+                grid-template-columns: 1fr 1fr; /* Two columns on tablet */
+                gap: 20px;
+            }
+            
+            .result-left {
+                grid-column: 1 / span 2; /* Span full width */
+                display: flex;
+                gap: 20px;
+            }
+            
+            .result-image {
+                flex: 0 0 200px;
+            }
+            
+            .price-box {
+                flex: 1;
+            }
+            
+            .result-center {
+                grid-column: 1;
+            }
+            
+            .result-right {
+                grid-column: 2;
+            }
         }
 
         @media (max-width: 768px) {
@@ -675,32 +824,33 @@
                 width: 95%;
                 padding: 15px;
             }
- .result-content {
-        grid-template-columns: 1fr; /* Single column on mobile */
-        gap: 20px;
-    }
-    
-    .result-left {
-        grid-column: 1;
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    .result-image {
-        flex: 0 0 auto;
-        text-align: center;
-    }
-    
-    .result-image img {
-        width: 300px;
-        height: 200px;
-        margin: 0 auto;
-    }
-    
-    .result-center,
-    .result-right {
-        grid-column: 1;
-    }            
+            
+            .result-content {
+                grid-template-columns: 1fr; /* Single column on mobile */
+                gap: 20px;
+            }
+            
+            .result-left {
+                grid-column: 1;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .result-image {
+                flex: 0 0 auto;
+                text-align: center;
+            }
+            
+            .result-image img {
+                width: 300px;
+                height: 200px;
+                margin: 0 auto;
+            }
+            
+            .result-center,
+            .result-right {
+                grid-column: 1;
+            }
         }
         
         @media (max-width: 480px) {
@@ -787,6 +937,11 @@
             .item-name {
                 font-size: 20px;
             }
+            
+            .mobile-back-hint {
+                font-size: 12px;
+                bottom: 10px;
+            }
         }
     </style>
 </head>
@@ -795,19 +950,19 @@
     <header>
         <!-- Left section with company name and left tagline -->
         <div class="company-name-container">
-			<div class="company-name">
-				<h1>Paras</h1>
-				<h1 class="international">Nternational</h1>
-			</div>
-		</div>
+            <div class="company-name">
+                <h1>Paras</h1>
+                <h1 class="international">Nternational</h1>
+            </div>
+        </div>
         
         <!-- Center content with centered tagline -->
         <div class="header-center">
-			<!-- First Tagline -->
-			<div class="center-tagline">Physics, Chemistry, Biology and all Scientific Laboratory Equipments Retailer in West Bengal</div>
-			<!-- Second Tagline -->
-			<div class="trusted-tagline">Buy Genuine Trusted Laboratory Equipment at Retail Price</div>
-		</div>
+            <!-- First Tagline -->
+            <div class="center-tagline">Physics, Chemistry, Biology and all Scientific Laboratory Equipments Retailer in West Bengal</div>
+            <!-- Second Tagline -->
+            <div class="trusted-tagline">Buy Genuine Trusted Laboratory Equipment at Retail Price</div>
+        </div>
         
         <!-- Cart Button -->
         <a href="cart.html" class="cart-button">
@@ -830,7 +985,7 @@
                        class="search-box" 
                        placeholder="Type your items here ..."
                        aria-label="Search products"
-					   maxlength="30">
+                       maxlength="30">
             </div>
         </div>
         
@@ -870,269 +1025,395 @@
             <div class="copyright">© 2023 All rights reserved.</div>
         </div>
     </footer>
-
-<script>
-// Global variables
-let allItems = [];
-let searchTimeout;
-
-// Function to load JSON files with better error handling
-async function loadJSONFiles() {
-    console.log('🚀 Starting JSON file loading...');
     
-    try {
-        // Load all JSON files
-        const [biolab, physlab, chemlab, scientific] = await Promise.all([
-            fetch('biolabitems.json').then(response => {
-                if (!response.ok) throw new Error(`biolabitems.json: ${response.status}`);
-                return response.json();
-            }).catch(error => {
-                console.error('Failed to load biolabitems.json:', error);
-                return [];
-            }),
-            
-            fetch('physlabitems.json').then(response => {
-                if (!response.ok) throw new Error(`physlabitems.json: ${response.status}`);
-                return response.json();
-            }).catch(error => {
-                console.error('Failed to load physlabitems.json:', error);
-                return [];
-            }),
-            
-            fetch('chemlabitems.json').then(response => {
-                if (!response.ok) throw new Error(`chemlabitems.json: ${response.status}`);
-                return response.json();
-            }).catch(error => {
-                console.error('Failed to load chemlabitems.json:', error);
-                return [];
-            }),
-            
-            fetch('scientificlabitems.json').then(response => {
-                if (!response.ok) throw new Error(`scientificlabitems.json: ${response.status}`);
-                return response.json();
-            }).catch(error => {
-                console.error('Failed to load scientificlabitems.json:', error);
-                return [];
-            })
-        ]);
-        
-        // Combine all items
-        allItems = [...biolab, ...physlab, ...chemlab, ...scientific];
-   // Clean up discount values (remove % sign)
-        allItems = allItems.map(item => {
-            if (item.discount) {
-                // Remove % sign if present
-                item.discount = item.discount.toString().replace('%', '');
-            }
-            return item;
-        });
+    <!-- Image Zoom Modal -->
+    <div class="image-modal" id="imageModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <img id="modalImage" src="" alt="Zoomed Image">
+            <div class="mobile-back-hint">Press back button or tap anywhere to close</div>
+        </div>
+    </div>
 
-	
-        console.log('✅ JSON files loaded successfully');
-        console.log(`📊 Total items loaded: ${allItems.length}`);
+    <script>
+        // Global variables
+        let allItems = [];
+        let searchTimeout;
         
-        if (allItems.length > 0) {
-            console.log('📝 First item:', allItems[0].name);
-        }
-        
-    } catch (error) {
-        console.error('❌ Error loading JSON files:', error);
-        allItems = []; // Set to empty array on error
-    }
-}
-
-// Simplified search function with only specified scoring
-function searchItems() {
-    clearTimeout(searchTimeout);
-    
-    searchTimeout = setTimeout(() => {
-        const searchTerm = document.querySelector('.search-box').value.toLowerCase().trim();
-        const resultsList = document.getElementById('resultsList');
-        const searchResults = document.getElementById('searchResults');
-        const resultsTitle = document.getElementById('resultsTitle');
-        
-        console.log('🔍 Searching for:', searchTerm);
-        
-        // Clear previous results
-        resultsList.innerHTML = '';
-        
-        // Hide results if search term is too short
-        if (searchTerm.length < 2) {
-            searchResults.style.display = 'none';
-            return;
-        }
-        
-        // Calculate relevance score using ONLY the specified criteria
-        const scoredItems = allItems.map(item => {
-            let score = 0;
+        // Function to load JSON files with better error handling
+        async function loadJSONFiles() {
+            console.log('🚀 Starting JSON file loading...');
             
-            // Get item name in lowercase
-            const name = item.name.toLowerCase();
-            
-            // 1. Exact name match: +100 points
-            if (name === searchTerm) {
-                score += 100;
-            }
-            
-            // 2. Name starts with term: +50 points
-            if (name.startsWith(searchTerm)) {
-                score += 50;
-            }
-            
-            // 3. Name contains term: +30 points
-            if (name.includes(searchTerm)) {
-                score += 30;
-            }
-            
-            // 4. Exact word match: +40 points
-            // Split both search term and name into words
-            const searchWords = searchTerm.split(/[\s\-_.,;]+/).filter(word => word.length > 0);
-            const nameWords = name.split(/[\s\-_.,;]+/).filter(word => word.length > 0);
-            
-            // Check for exact word matches
-            searchWords.forEach(searchWord => {
-                nameWords.forEach(nameWord => {
-                    if (nameWord === searchWord) {
-                        score += 40;
+            try {
+                // Load all JSON files
+                const [biolab, physlab, chemlab, scientific] = await Promise.all([
+                    fetch('biolabitems.json').then(response => {
+                        if (!response.ok) throw new Error(`biolabitems.json: ${response.status}`);
+                        return response.json();
+                    }).catch(error => {
+                        console.error('Failed to load biolabitems.json:', error);
+                        return [];
+                    }),
+                    
+                    fetch('physlabitems.json').then(response => {
+                        if (!response.ok) throw new Error(`physlabitems.json: ${response.status}`);
+                        return response.json();
+                    }).catch(error => {
+                        console.error('Failed to load physlabitems.json:', error);
+                        return [];
+                    }),
+                    
+                    fetch('chemlabitems.json').then(response => {
+                        if (!response.ok) throw new Error(`chemlabitems.json: ${response.status}`);
+                        return response.json();
+                    }).catch(error => {
+                        console.error('Failed to load chemlabitems.json:', error);
+                        return [];
+                    }),
+                    
+                    fetch('scientificlabitems.json').then(response => {
+                        if (!response.ok) throw new Error(`scientificlabitems.json: ${response.status}`);
+                        return response.json();
+                    }).catch(error => {
+                        console.error('Failed to load scientificlabitems.json:', error);
+                        return [];
+                    })
+                ]);
+                
+                // Combine all items
+                allItems = [...biolab, ...physlab, ...chemlab, ...scientific];
+                
+                // Clean up discount values (remove % sign)
+                allItems = allItems.map(item => {
+                    if (item.discount) {
+                        // Remove % sign if present
+                        item.discount = item.discount.toString().replace('%', '');
                     }
+                    return item;
                 });
+                
+                console.log('✅ JSON files loaded successfully');
+                console.log(`📊 Total items loaded: ${allItems.length}`);
+                
+                if (allItems.length > 0) {
+                    console.log('📝 First item:', allItems[0].name);
+                }
+                
+            } catch (error) {
+                console.error('❌ Error loading JSON files:', error);
+                allItems = []; // Set to empty array on error
+            }
+        }
+        
+        // Simplified search function with only specified scoring
+        function searchItems() {
+            clearTimeout(searchTimeout);
+            
+            searchTimeout = setTimeout(() => {
+                const searchTerm = document.querySelector('.search-box').value.toLowerCase().trim();
+                const resultsList = document.getElementById('resultsList');
+                const searchResults = document.getElementById('searchResults');
+                const resultsTitle = document.getElementById('resultsTitle');
+                
+                console.log('🔍 Searching for:', searchTerm);
+                
+                // Clear previous results
+                resultsList.innerHTML = '';
+                
+                // Hide results if search term is too short
+                if (searchTerm.length < 2) {
+                    searchResults.style.display = 'none';
+                    return;
+                }
+                
+                // Calculate relevance score using ONLY the specified criteria
+                const scoredItems = allItems.map(item => {
+                    let score = 0;
+                    
+                    // Get item name in lowercase
+                    const name = item.name.toLowerCase();
+                    
+                    // 1. Exact name match: +100 points
+                    if (name === searchTerm) {
+                        score += 100;
+                    }
+                    
+                    // 2. Name starts with term: +50 points
+                    if (name.startsWith(searchTerm)) {
+                        score += 50;
+                    }
+                    
+                    // 3. Name contains term: +30 points
+                    if (name.includes(searchTerm)) {
+                        score += 30;
+                    }
+                    
+                    // 4. Exact word match: +40 points
+                    // Split both search term and name into words
+                    const searchWords = searchTerm.split(/[\s\-_.,;]+/).filter(word => word.length > 0);
+                    const nameWords = name.split(/[\s\-_.,;]+/).filter(word => word.length > 0);
+                    
+                    // Check for exact word matches
+                    searchWords.forEach(searchWord => {
+                        nameWords.forEach(nameWord => {
+                            if (nameWord === searchWord) {
+                                score += 40;
+                            }
+                        });
+                    });
+                    
+                    // 5. Partial word match: +20 points
+                    searchWords.forEach(searchWord => {
+                        if (searchWord.length >= 3) { // Only consider partial matches for words of length 3 or more
+                            nameWords.forEach(nameWord => {
+                                if (nameWord.includes(searchWord) && nameWord !== searchWord) {
+                                    score += 20;
+                                }
+                            });
+                        }
+                    });
+                    
+                    return {
+                        ...item,
+                        relevanceScore: score
+                    };
+                });
+                
+                // Filter items with minimum score and sort by relevance
+                const matchedItems = scoredItems
+                    .filter(item => item.relevanceScore > 0)
+                    .sort((a, b) => b.relevanceScore - a.relevanceScore);
+                
+                console.log('🎯 Found relevant items:', matchedItems.length);
+                
+                // Display results
+                if (matchedItems.length > 0) {
+                    resultsTitle.textContent = `Found ${matchedItems.length} relevant item(s) for "${searchTerm}"`;
+                    
+                    matchedItems.forEach((item) => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'result-item';
+                        
+                        // Create description HTML as bullet points
+                        const descriptionHTML = Array.isArray(item.description) 
+                            ? item.description.map(point => `<li>${point}</li>`).join('')
+                            : `<li>${item.description || ''}</li>`;
+                        
+                        // Create specifications HTML as bullet points
+                        const specsHTML = item.specifications && Array.isArray(item.specifications)
+                            ? item.specifications.map(spec => `<li>${spec}</li>`).join('')
+                            : '';
+                        
+                        resultItem.innerHTML = `
+                            <div class="result-content">
+                                <!-- Left: Image + Price -->
+                                <div class="result-left">
+                                    <div class="result-image">
+                                        <img src="${item.image || 'placeholder.jpg'}" alt="${item.name}" onerror="this.src='placeholder.jpg'">
+                                    </div>
+                                    <div class="price-box">
+                                        <div class="mrp-line">
+                                            <span class="mrp-label">M.R.P.</span>
+                                            <span class="mrp-price">INR ${item.mrpPrice || '0'}/-</span>
+                                        </div>
+                                        <div class="bestbuy-line">
+                                            <span class="bestbuy-label">Buy</span>
+                                            <span class="bestbuy-price" style="font-size: 17px;">INR ${item.bestBuyPrice || '0'}/-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Center: Name + Specs + Warranty -->
+                                <div class="result-center">
+                                    <h4 class="item-name">${item.name}</h4>
+                                    <div class="specs-section">
+                                        ${specsHTML ? `
+                                        <strong>Specifications:</strong>
+                                        <ul>${specsHTML}</ul>` : ''}
+                                        <strong>Warranty:</strong> ${item.warranty || 'Not specified'}
+                                    </div>
+                                </div>
+                                
+                                <!-- Right: Description -->
+                                <div class="result-right">
+                                    <div class="description-section">
+                                        <strong>Descriptions:</strong>
+                                        <ul>${descriptionHTML}</ul>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        resultsList.appendChild(resultItem);
+                    });
+                    
+                    searchResults.style.display = 'block';
+                    // Initialize image zoom for new results
+                    setTimeout(initializeImageZoomForResults, 100);
+                } else {
+                    resultsTitle.textContent = `No results found for "${searchTerm}"`;
+                    resultsList.innerHTML = '<div class="no-results">Try different keywords or check spelling</div>';
+                    searchResults.style.display = 'block';
+                }
+                
+                // Debug: Show top scores
+                if (matchedItems.length > 0) {
+                    console.log('Top 5 matches:');
+                    matchedItems.slice(0, 5).forEach((item, index) => {
+                        console.log(`${index + 1}. ${item.name} - Score: ${item.relevanceScore}`);
+                    });
+                }
+            }, 300);
+        }
+        
+        // Image zoom functionality
+        function initializeImageZoomForResults() {
+            const imageModal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const closeModal = document.getElementById('closeModal');
+            
+            // Check if device is mobile/tablet
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            // Function to open modal
+            function openModal(imgSrc, altText) {
+                modalImage.src = imgSrc;
+                modalImage.alt = altText;
+                imageModal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+                
+                // Push state for back button on mobile
+                if (isMobile) {
+                    history.pushState({ modalOpen: true }, '');
+                }
+            }
+            
+            // Function to close modal
+            function closeModalFunc() {
+                imageModal.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+            
+            // Close modal when clicking X
+            closeModal.addEventListener('click', closeModalFunc);
+            
+            // Close modal when clicking outside image
+            imageModal.addEventListener('click', function(e) {
+                if (e.target === imageModal || e.target.classList.contains('mobile-back-hint')) {
+                    closeModalFunc();
+                    if (isMobile && history.state && history.state.modalOpen) {
+                        history.back();
+                    }
+                }
             });
             
-            // 5. Partial word match: +20 points
-            searchWords.forEach(searchWord => {
-                if (searchWord.length >= 3) { // Only consider partial matches for words of length 3 or more
-                    nameWords.forEach(nameWord => {
-                        if (nameWord.includes(searchWord) && nameWord !== searchWord) {
-                            score += 20;
-                        }
+            // Handle back button on mobile
+            window.addEventListener('popstate', function(e) {
+                if (imageModal.classList.contains('active')) {
+                    closeModalFunc();
+                }
+            });
+            
+            // Set up image click events
+            const resultImages = document.querySelectorAll('.result-image img');
+            
+            resultImages.forEach(img => {
+                // Remove any existing event listeners by cloning
+                const newImg = img.cloneNode(true);
+                img.parentNode.replaceChild(newImg, img);
+                
+                // Add click/tap event for all devices
+                newImg.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    openModal(this.src, this.alt);
+                });
+                
+                // Add hover effect for desktop
+                if (!isMobile) {
+                    const resultImageDiv = newImg.closest('.result-image');
+                    
+                    resultImageDiv.addEventListener('mouseenter', function() {
+                        this.style.transform = 'scale(1.02)';
+                        newImg.style.transform = 'scale(1.1)';
+                    });
+                    
+                    resultImageDiv.addEventListener('mouseleave', function() {
+                        this.style.transform = 'scale(1)';
+                        newImg.style.transform = 'scale(1)';
                     });
                 }
             });
             
-            return {
-                ...item,
-                relevanceScore: score
-            };
+            // Set up keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (imageModal.classList.contains('active')) {
+                    if (e.key === 'Escape' || e.key === 'Backspace') {
+                        closeModalFunc();
+                        if (isMobile && history.state && history.state.modalOpen) {
+                            history.back();
+                        }
+                    }
+                }
+            });
+            
+            // Close modal on swipe down (mobile)
+            let startY;
+            imageModal.addEventListener('touchstart', function(e) {
+                startY = e.touches[0].clientY;
+            });
+            
+            imageModal.addEventListener('touchmove', function(e) {
+                if (!startY) return;
+                
+                const currentY = e.touches[0].clientY;
+                const diffY = currentY - startY;
+                
+                // If swiping down more than 50px, close modal
+                if (diffY > 50) {
+                    closeModalFunc();
+                    if (isMobile && history.state && history.state.modalOpen) {
+                        history.back();
+                    }
+                    startY = null;
+                }
+            });
+        }
+        
+        // Keep the existing event listeners
+        document.querySelector('.search-box').addEventListener('input', searchItems);
+        document.getElementById('closeResults').addEventListener('click', function() {
+            document.getElementById('searchResults').style.display = 'none';
+            document.querySelector('.search-box').value = '';
         });
         
-        // Filter items with minimum score and sort by relevance
-        const matchedItems = scoredItems
-            .filter(item => item.relevanceScore > 0)
-            .sort((a, b) => b.relevanceScore - a.relevanceScore);
-        
-        console.log('🎯 Found relevant items:', matchedItems.length);
-        
-        // Display results
-        if (matchedItems.length > 0) {
-            resultsTitle.textContent = `Found ${matchedItems.length} relevant item(s) for "${searchTerm}"`;
+        document.addEventListener('click', function(event) {
+            const searchResults = document.getElementById('searchResults');
+            const searchBox = document.querySelector('.search-box');
             
-            matchedItems.forEach((item) => {
-                const resultItem = document.createElement('div');
-                resultItem.className = 'result-item';
-                
-                // Create description HTML as bullet points
-                const descriptionHTML = Array.isArray(item.description) 
-                    ? item.description.map(point => `<li>${point}</li>`).join('')
-                    : `<li>${item.description || ''}</li>`;
-                
-                // Create specifications HTML as bullet points
-                const specsHTML = item.specifications && Array.isArray(item.specifications)
-                    ? item.specifications.map(spec => `<li>${spec}</li>`).join('')
-                    : '';
-                
-                resultItem.innerHTML = `
-                    <div class="result-content">
-                        <!-- Left: Image + Price -->
-                        <div class="result-left">
-                            <div class="result-image">
-                                <img src="${item.image || 'placeholder.jpg'}" alt="${item.name}" onerror="this.src='placeholder.jpg'">
-                            </div>
-                            <div class="price-box">
-                                <div class="mrp-line">
-                                    <span class="mrp-label">M.R.P.</span>
-                                    <span class="mrp-price">INR ${item.mrpPrice || '0'}/-</span>
-                                </div>
-                                <div class="bestbuy-line">
-                                    <span class="bestbuy-label">Buy</span>
-                                    <span class="bestbuy-price" style="font-size: 17px;">INR ${item.bestBuyPrice || '0'}/-</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Center: Name + Specs + Warranty -->
-                        <div class="result-center">
-                            <h4 class="item-name">${item.name}</h4>
-                            <div class="specs-section">
-                                ${specsHTML ? `
-                                <strong>Specifications:</strong>
-                                <ul>${specsHTML}</ul>` : ''}
-                                <strong>Warranty:</strong> ${item.warranty || 'Not specified'}
-                            </div>
-                        </div>
-                        
-                        <!-- Right: Description -->
-                        <div class="result-right">
-                            <div class="description-section">
-                                <strong>Descriptions:</strong>
-                                <ul>${descriptionHTML}</ul>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                resultsList.appendChild(resultItem);
-            });
-            
-            searchResults.style.display = 'block';
-        } else {
-            resultsTitle.textContent = `No results found for "${searchTerm}"`;
-            resultsList.innerHTML = '<div class="no-results">Try different keywords or check spelling</div>';
-            searchResults.style.display = 'block';
-        }
+            if (searchResults.style.display === 'block' && 
+                !searchResults.contains(event.target) && 
+                !searchBox.contains(event.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
         
-        // Debug: Show top scores
-        if (matchedItems.length > 0) {
-            console.log('Top 5 matches:');
-            matchedItems.slice(0, 5).forEach((item, index) => {
-                console.log(`${index + 1}. ${item.name} - Score: ${item.relevanceScore}`);
-            });
-        }
-    }, 300);
-}
-
-// Keep the existing event listeners
-document.querySelector('.search-box').addEventListener('input', searchItems);
-document.getElementById('closeResults').addEventListener('click', function() {
-    document.getElementById('searchResults').style.display = 'none';
-    document.querySelector('.search-box').value = '';
-});
-
-document.addEventListener('click', function(event) {
-    const searchResults = document.getElementById('searchResults');
-    const searchBox = document.querySelector('.search-box');
-    
-    if (searchResults.style.display === 'block' && 
-        !searchResults.contains(event.target) && 
-        !searchBox.contains(event.target)) {
-        searchResults.style.display = 'none';
-    }
-});
-
-document.querySelector('.search-box').addEventListener('keydown', function(event) {
-    const searchResults = document.getElementById('searchResults');
-    
-    if (event.key === 'Escape' && searchResults.style.display === 'block') {
-        searchResults.style.display = 'none';
-    }
-    
-    if (event.key === 'Enter') {
-        searchItems();
-    }
-});
-
-// Load JSON files when page loads
-window.addEventListener('DOMContentLoaded', loadJSONFiles);
-	
-</script>	
-
+        document.querySelector('.search-box').addEventListener('keydown', function(event) {
+            const searchResults = document.getElementById('searchResults');
+            
+            if (event.key === 'Escape' && searchResults.style.display === 'block') {
+                searchResults.style.display = 'none';
+            }
+            
+            if (event.key === 'Enter') {
+                searchItems();
+            }
+        });
+        
+        // Load JSON files when page loads
+        window.addEventListener('DOMContentLoaded', function() {
+            loadJSONFiles();
+            // Initialize image zoom for any existing results
+            setTimeout(initializeImageZoomForResults, 1000);
+        });
+    </script>
 </body>
 </html>
