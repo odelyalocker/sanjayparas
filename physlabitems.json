@@ -1,18 +1,71 @@
 [
   {
-    "id": 1,
-    "name": "Laser Optics Kit",
-    "category": "Physics",
-    "price": "₹9,800",
-    "description": "Complete laser and optics experiment set",
-    "keywords": ["laser", "optics", "physics", "light", "experiment"]
+    "name": "Optical Spectrometer",
+    "category": "Physics Lab",
+    "image": "/sanjayparas/physimg/phys1.jpg",
+    "mrpPrice": "42,500",
+    "discount": "8%",
+    "bestBuyPrice": "39,100",
+    "warranty": "2 Years Manufacturer Warranty",
+    "specifications": [
+      "Prism type: Constant deviation",
+      "Collimator: Adjustable slit 0-2mm",
+      "Telescope: Ramsden eyepiece 10x",
+      "Vernier scale: Least count 1 minute",
+      "Table: Graduated 0-360° with locking"
+    ],
+    "description": [
+      "Precision spectrometer for wavelength measurement",
+      "Ideal for Newton's rings, diffraction grating experiments",
+      "Sturdy cast iron base with leveling screws",
+      "Includes prism, spirit level, and mercury vapor lamp socket"
+    ],
+    "keywords": ["spectrometer", "optics", "physics", "wavelength", "prism", "lab equipment"]
   },
   {
-    "id": 2,
-    "name": "Magnet Set",
-    "category": "Physics",
-    "price": "₹2,500",
-    "description": "Assorted magnets for physics experiments",
-    "keywords": ["magnet", "physics", "magnetic", "experiment"]
+    "name": "Digital Multimeter",
+    "category": "Physics Lab",
+    "image": "/sanjayparas/physimg/phys2.jpg",
+    "mrpPrice": "3,200",
+    "discount": "15%",
+    "bestBuyPrice": "2,720",
+    "warranty": "1 Year Manufacturer Warranty",
+    "specifications": [
+      "DC Voltage: 200mV to 1000V",
+      "AC Voltage: 200V to 750V",
+      "Current: 200μA to 10A",
+      "Resistance: 200Ω to 20MΩ",
+      "Display: 3½ digit LCD with backlight"
+    ],
+    "description": [
+      "Auto-ranging digital multimeter for electrical measurements",
+      "Diode test and continuity buzzer included",
+      "Overload protection on all ranges",
+      "Comes with test leads, battery, and manual"
+    ],
+    "keywords": ["multimeter", "digital", "electrical", "physics", "measurement", "lab equipment"]
+  },
+  {
+    "name": "Laser Light Kit",
+    "category": "Physics Lab",
+    "image": "/sanjayparas/physimg/phys3.jpg",
+    "mrpPrice": "18,000",
+    "discount": "10%",
+    "bestBuyPrice": "16,200",
+    "warranty": "1 Year Manufacturer Warranty",
+    "specifications": [
+      "Laser: He-Ne, 632.8nm, 2mW output",
+      "Power supply: 230V AC input",
+      "Optical bench: 1 meter with scale",
+      "Accessories: Slits, gratings, lenses set",
+      "Safety: Class II laser product"
+    ],
+    "description": [
+      "Complete laser optics demonstration kit",
+      "For interference, diffraction, and polarization experiments",
+      "Includes multiple optical components on magnetic mounts",
+      "Ideal for college and university physics labs"
+    ],
+    "keywords": ["laser", "optics", "physics", "light", "interference", "lab equipment"]
   }
 ]
