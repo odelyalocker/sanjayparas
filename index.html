@@ -276,6 +276,7 @@ filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
 /* About button */
 .about-button {
     margin-left: 10px;
+    margin-right: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1124,13 +1125,13 @@ filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
         z-index: 999;
         min-height: 65px;
         box-sizing: border-box; /* Ensure padding included in height */
+        justify-content: space-between;
     }
     
     /* Home and Contact buttons - FIXED */
     .home-button {
         margin-right: 10px;
         order: 1;
-        white-space: nowrap;
         flex-shrink: 0;
     }
     
@@ -1141,16 +1142,21 @@ filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
         margin-top: 0;
         min-width: 0;
     }
-    
-    .search-container {
-        width: 60%;
+    .about-button {
+    order: 3;
+    margin-left: 5px;
+    margin-right: 5px; /* ADD for mobile */
+    flex-shrink: 0;
     }
     
     .contact-button {
-        margin-left: 10px;
-        order: 3;
-        white-space: nowrap;
+        margin-left: 5px;
+        order: 4;
         flex-shrink: 0;
+    }
+    
+    .search-container {
+        width: 60%;
     }
     
     .home-button a,
@@ -1173,9 +1179,7 @@ filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
         min-width: 50px;
         height: 45px;
     }
-    .about-button {
-        margin-left: 5px;
-    }
+    
     /* Search Results Section - FIXED SCROLLING */
     .search-results {
         position: relative !important;
@@ -1327,7 +1331,27 @@ filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
         min-height: 60px;
         flex-wrap: nowrap;
     }
-    
+    /* Mobile layout order */
+.home-button {
+    order: 1;
+    margin-right: 5px; /* Reduced for mobile */
+}
+
+.black-header-search {
+    order: 2;
+    flex-grow: 1;
+}
+
+.about-button {
+    order: 3;
+    margin-left: 5px;
+    margin-right: 5px; /* Consistent spacing */
+}
+
+.contact-button {
+    order: 4;
+    margin-left: 0; /* No left margin since About has right margin */
+}
     .home-button a,
     .contact-button a {
         font-size: 15px;
@@ -1421,7 +1445,27 @@ filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
         padding: 6px 8px;
         flex-wrap: nowrap;
     }
-    
+    /* Mobile layout order */
+.home-button {
+    order: 1;
+    margin-right: 5px; /* Reduced for mobile */
+}
+
+.black-header-search {
+    order: 2;
+    flex-grow: 1;
+}
+
+.about-button {
+    order: 3;
+    margin-left: 5px;
+    margin-right: 5px; /* Consistent spacing */
+}
+
+.contact-button {
+    order: 4;
+    margin-left: 0; /* No left margin since About has right margin */
+}
     .home-button a,
     .contact-button a {
         font-size: 14px;
@@ -2115,6 +2159,7 @@ function determineSection(item) {
 </script>
 </body>
 </html>
+
 
 
 
