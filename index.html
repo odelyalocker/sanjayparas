@@ -149,12 +149,13 @@
             top: 70px;
         }
         
-        /* Home button on left */
+ /* Home button on left */
+.home-button {
     margin-right: 10px; /* Reduced from 20px */
     display: flex;
     align-items: center;
     gap: 5px;
-        }
+    }
         
         .home-button a {
             color: #FFFFFF;
@@ -181,11 +182,14 @@
 }
 
 .home-button a:hover i,
+.hamburger-menu:hover i,
+.about-button a:hover i,
 .contact-button a:hover i {
-    color: #FFFFFF;
-    transform: scale(1.1); /* Slight zoom on hover */
-    filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
+color: #FFFFFF;
+transform: scale(1.1); /* Slight zoom on hover */
+filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
 }
+        
 /* Hamburger menu styling - ADD THIS */
 .hamburger-menu i {
     color: #FFFFFF;
@@ -281,6 +285,7 @@
 
 .about-button a:hover i {
     color: #FFFFFF;
+    font-size: 26px; 
     transform: scale(1.1);
     filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
 }
@@ -2110,6 +2115,7 @@ function determineSection(item) {
 </script>
 </body>
 </html>
+
 
 
 
