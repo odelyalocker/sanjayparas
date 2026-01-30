@@ -2,7 +2,7 @@
   {
     "name": "Digital pH Meter",
     "category": "Chemistry Lab",
-    "image": "/sanjayparas/chemimg/chem1.jpg",
+    "image": "/sparrowinstruments/chemimg/chem1.jpg",
     "mrpPrice": "9,800",
     "discount": "12%",
     "bestBuyPrice": "8,624",
@@ -25,7 +25,7 @@
   {
     "name": "Magnetic Stirrer with Hot Plate",
     "category": "Chemistry Lab",
-    "image": "/sanjayparas/chemimg/chem2.jpg",
+    "image": "/sparrowinstruments/chemimg/chem2.jpg",
     "mrpPrice": "12,500",
     "discount": "10%",
     "bestBuyPrice": "11,250",
@@ -48,7 +48,7 @@
   {
     "name": "Analytical Balance 0.1mg",
     "category": "Chemistry Lab",
-    "image": "/sanjayparas/chemimg/chem3.jpg",
+    "image": "/sparrowinstruments/chemimg/chem3.jpg",
     "mrpPrice": "45,000",
     "discount": "8%",
     "bestBuyPrice": "41,400",
