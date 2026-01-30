@@ -1716,42 +1716,106 @@ function parsePrice(priceStr) {
 }
     
     async function loadJSONFiles() {
-        console.log('🚀 Loading Lab Data...');
-        try {
-            const files = ['biolabitems.json', 'physlabitems.json', 'chemlabitems.json', 'scientificlabitems.json'];
-            const responses = await Promise.all(files.map(file => 
-                fetch(file).then(res => res.ok ? res.json() : [])
-            ));
-            
-            // Combine and clean discount data
-            allItems = [].concat(...responses).map(item => {
-                if (item.discount) item.discount = item.discount.toString().replace('%', '');
-                return item;
-            });
+    console.log('🚀 Loading Lab Data...');
+    try {
+        const files = ['biolabitems.json', 'physlabitems.json', 'chemlabitems.json', 'scientificlabitems.json', 'medilabitems.json']; // Added medilabitems.json
+        const responses = await Promise.all(files.map(file => 
+            fetch(file).then(res => res.ok ? res.json() : [])
+        ));
+        
+        // Combine and clean discount data
+        allItems = [].concat(...responses).map(item => {
+            if (item.discount) item.discount = item.discount.toString().replace('%', '');
+            return item;
+        });
 
-            console.log(`✅ Loaded ${allItems.length} items.`);
-        } catch (error) {
-            console.error('❌ Load Error:', error);
-        }
+        console.log(`✅ Loaded ${allItems.length} items.`);
+        
+        // NEW: Show all items on page load
+        showAllItems();
+        
+    } catch (error) {
+        console.error('❌ Load Error:', error);
     }
+}
 
+// Function to display all items on page load
+function showAllItems() {
+    const resultsList = document.getElementById('resultsList');
+    const searchResults = document.getElementById('searchResults');
+    const resultsTitle = document.getElementById('resultsTitle');
+    const mainContent = document.querySelector('.main-content');
+    
+    resultsList.innerHTML = '';
+    resultsTitle.textContent = `All Products (${allItems.length} items)`;
+    
+    // Shuffle/mix the items (optional - for random order)
+    const shuffledItems = [...allItems].sort(() => Math.random() - 0.5);
+    
+    // Or for sequential mixing: You can implement a round-robin mixing
+    // For simple sequential: just use allItems as is
+    
+    shuffledItems.forEach(item => {
+        const resultItem = document.createElement('div');
+        resultItem.className = 'result-item';
+        
+        const specsHTML = Array.isArray(item.specifications) ? item.specifications.map(s => `<li>${s}</li>`).join('') : '';
+        const descHTML = Array.isArray(item.description) ? item.description.map(d => `<li>${d}</li>`).join('') : `<li>${item.description || ''}</li>`;
+
+        resultItem.innerHTML = `
+            <div class="result-content">
+                <div class="result-left">
+                    <div class="result-image">
+                        <img src="${item.image || 'placeholder.jpg'}" alt="${item.name}">
+                    </div>
+                    <div class="price-box">
+                        <div class="mrp-line"><span class="mrp-label">M.R.P.</span> <span class="mrp-price">INR ${item.mrpPrice || '0'}/-</span></div>
+                        <div class="bestbuy-line"><span class="bestbuy-label">Buy</span> <span class="bestbuy-price">INR ${item.bestBuyPrice || '0'}/-</span></div>
+                    </div>
+                </div>
+                <div class="result-center">
+                    <h4 class="item-name">${item.name}</h4>
+                    <div class="specs-section">
+                        ${specsHTML ? `<strong>Specifications:</strong><ul>${specsHTML}</ul>` : ''}
+                        <strong>Warranty:</strong> ${item.warranty || 'Not specified'}
+                    </div>
+                </div>
+                <div class="result-right">
+                    <div class="description-section">
+                        <strong>Descriptions:</strong>
+                        <ul>${descHTML}</ul>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add data attributes for filtering
+        resultItem.dataset.price = parsePrice(item.bestBuyPrice || item.mrpPrice);
+        resultItem.dataset.section = determineSection(item);
+        
+        resultsList.appendChild(resultItem);
+        setupZoom(resultItem);
+    });
+    
+    searchResults.style.display = 'block';
+    mainContent.classList.add('hide-main');
+}
+    
     // 2. SEARCH & RENDER
     function searchItems() {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => {
-            const searchTerm = document.querySelector('.search-box').value.toLowerCase().trim();
-            const resultsList = document.getElementById('resultsList');
-            const mainContent = document.querySelector('.main-content');
-            const searchResults = document.getElementById('searchResults');
-            const resultsTitle = document.getElementById('resultsTitle');
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        const searchTerm = document.querySelector('.search-box').value.toLowerCase().trim();
+        const resultsList = document.getElementById('resultsList');
+        const mainContent = document.querySelector('.main-content');
+        const searchResults = document.getElementById('searchResults');
+        const resultsTitle = document.getElementById('resultsTitle');
 
-            resultsList.innerHTML = '';
-
-            if (searchTerm.length < 2) {
-                searchResults.style.display = 'none';
-                mainContent.classList.remove('hide-main');
-                return;
-            }
+        // NEW: If search box is empty, show all items
+        if (searchTerm === '') {
+            showAllItems();
+            return;
+        }
 
             // Calculate Scoring
             const matchedItems = allItems.map(item => {
@@ -2174,6 +2238,7 @@ function determineSection(item) {
 </script>
 </body>
 </html>
+
 
 
 
