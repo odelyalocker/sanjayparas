@@ -814,7 +814,10 @@
     }
     .home-button a i,
     .contact-button a i {
-        font-size: 24px; /* Slightly smaller on mobile */
+        font-size: 22px; /* Slightly smaller on mobile */
+    }
+    .dropdown-arrow i {
+        font-size: 16px; /* For mobile */
     }
     .search-box {
         padding: 10px 15px;
@@ -983,7 +986,10 @@
     }
     .home-button a i,
     .contact-button a i {
-        font-size: 22px;
+        font-size: 20px;
+    }
+     .dropdown-arrow i {
+        font-size: 14px; /* For small mobile */
     }
     .search-container {
         width: 60%; /* Further reduced on small mobile */
@@ -1072,7 +1078,10 @@
     }
     .home-button a i,
     .contact-button a i {
-        font-size: 20px;
+        font-size: 18px;
+    }
+    .dropdown-arrow i {
+        font-size: 12px; /* For very small mobile */
     }
     .search-container {
         width: 55%; /* Minimum width */
@@ -1096,6 +1105,37 @@
     .hide-main {
         display: none !important;
     }
+/* Dropdown arrow styling - ADD THIS */
+.dropdown-arrow i {
+    color: #FFFFFF;
+    font-size: 20px; /* Smaller than home icon */
+    transition: all 0.3s ease;
+}
+
+/* Hover effect for dropdown arrow - ADD THIS */
+.dropdown-arrow:hover i {
+    color: #FFFFFF;
+    transform: scale(1.1);
+    filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
+}
+
+/* Adjust contact button container - UPDATE THIS */
+.contact-button {
+    margin-left: 10px; /* Changed from 20px to 10px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Reduce icon sizes slightly on desktop - UPDATE THIS */
+.home-button a i,
+.contact-button a i {
+    color: #FFFFFF;
+    font-size: 26px; /* Reduced from 28px to 26px */
+    transition: all 0.3s ease;
+    display: block;
+}
+
 }
         
     </style>
@@ -1408,6 +1448,7 @@ container.addEventListener('touchcancel', () => {
 </script>
 </body>
 </html>
+
 
 
 
