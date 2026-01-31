@@ -150,7 +150,7 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
-        /* Black Header Section */
+        /* Black Header Section - UPDATED */
         .black-header {
             position: fixed;
             left: 0;
@@ -160,6 +160,7 @@
             padding: 10px 20px;
             display: flex;
             align-items: center;
+            justify-content: space-between; /* Changed to space-between */
             z-index: 999;
             min-height: 70px;
             top: 70px;
@@ -167,10 +168,8 @@
         
         /* Home button on left */
         .home-button {
-            margin-right: 10px;
             display: flex;
             align-items: center;
-            gap: 5px;
         }
         
         .home-button a {
@@ -188,9 +187,7 @@
 
         /* Icon styles */
         .home-button a i,
-        .contact-button a i,
-        .about-button a i,
-        .hamburger-menu i {
+        .contact-button a i {
             color: #FFFFFF;
             font-size: 26px;
             transition: all 0.3s ease;
@@ -198,73 +195,28 @@
         }
 
         .home-button a:hover i,
-        .hamburger-menu:hover i,
-        .about-button a:hover i,
         .contact-button a:hover i {
             color: #FFFFFF;
             transform: scale(1.1);
             filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
         }
-        
-        /* Hamburger menu styling */
-        .hamburger-menu i {
-            color: #FFFFFF;
-            transition: all 0.3s ease;
-            margin-left: 15px;
-        }
 
-        /* Adjust button containers */
-        .home-button,
-        .contact-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* Search box in center */
-        .black-header-search {
+        /* Center title in black header */
+        .black-header-center {
             flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0 20px;
+            text-align: center;
         }
         
-        .search-container {
-            width: 50%;
+        .center-title {
+            font-size: 22px;
+            color: #FFFFFF;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
         }
         
-        .search-box {
-            width: 100%;
-            padding: 10px 20px;
-            font-size: 18px;
-            border: 2px solid #444;
-            border-radius: 25px;
-            outline: none;
-            transition: all 0.3s ease;
-            background-color: #fff;
-            color: #333;
-        }
-        
-        .search-box::placeholder {
-            color: #888;
-            font-style: italic;
-        }
-        
-        .search-box:focus {
-            border-color: #d32f2f;
-            background-color: #fff;
-            box-shadow: 0 0 8px rgba(211, 47, 47, 0.5);
-        }
-        
-        .search-box:hover {
-            border-color: #999;
-            background-color: #fff;
-        }
-        
-        /* Contact button */
+        /* Contact button on right */
         .contact-button {
-            margin-left: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -281,15 +233,6 @@
         
         .contact-button a:hover {
             color: #FFFFFF;
-        }
-        
-        /* About button */
-        .about-button {
-            margin-left: 10px;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         /* Items Display Section */
@@ -328,11 +271,7 @@
             font-weight: 700;
         }
         
-        .items-count {
-            color: #d32f2f;
-            font-weight: bold;
-            font-size: 18px;
-        }
+        /* REMOVED: .items-count class */
         
         .items-list {
             display: block;
@@ -490,20 +429,12 @@
                 min-height: 65px;
             }
             
-            .search-container {
-                width: 60%;
-            }
-            
-            .search-box {
-                padding: 10px 15px;
-                font-size: 16px;
-                height: 45px;
+            .center-title {
+                font-size: 18px;
             }
             
             .home-button a i,
-            .contact-button a i,
-            .about-button a i,
-            .hamburger-menu i {
+            .contact-button a i {
                 font-size: 22px;
             }
             
@@ -527,6 +458,17 @@
             
             .clean-content-subtitle {
                 font-size: 16px;
+            }
+            
+            .clean-content-actions {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
             }
         }
         
@@ -573,14 +515,8 @@
                 min-height: 60px;
             }
             
-            .search-container {
-                width: 60%;
-            }
-            
-            .search-box {
-                padding: 8px 12px;
-                font-size: 15px;
-                height: 40px;
+            .center-title {
+                font-size: 16px;
             }
             
             .items-section {
@@ -590,6 +526,13 @@
             .clean-content {
                 margin-top: 120px;
                 min-height: calc(100vh - 120px - 50px);
+            }
+            
+            .center-title {
+                font-size: 16px;
+                white-space: normal;
+                line-height: 1.2;
+                padding: 0 10px;
             }
         }
         
@@ -637,14 +580,8 @@
                 padding: 6px 8px;
             }
             
-            .search-container {
-                width: 55%;
-            }
-            
-            .search-box {
-                padding: 6px 10px;
+            .center-title {
                 font-size: 14px;
-                height: 35px;
             }
             
             .items-section {
@@ -684,35 +621,18 @@
         </div>
     </header>
     
-    <!-- Black Header Section -->
+    <!-- Black Header Section - UPDATED -->
     <div class="black-header">
-        <!-- Home button with hamburger menu on left -->
+        <!-- Home button on left -->
         <div class="home-button">
             <a href="index.html">
                 <i class="fas fa-home"></i>
             </a>
-            <div class="hamburger-menu">
-                <i class="fas fa-bars"></i>
-            </div>
         </div>
         
-        <!-- Search box in center -->
-        <div class="black-header-search">
-            <div class="search-container">
-                <input type="text" 
-                       class="search-box" 
-                       placeholder="Search your added items ..."
-                       aria-label="Search items"
-                       maxlength="30"
-                       id="searchBox">
-            </div>
-        </div>
-        
-        <!-- About button -->
-        <div class="about-button">
-            <a href="/sparrowinstruments/about.html">
-                <i class="fas fa-info-circle"></i>
-            </a>
+        <!-- Center title -->
+        <div class="black-header-center">
+            <div class="center-title">Quotation for Added Items</div>
         </div>
         
         <!-- Contact button on right -->
@@ -728,7 +648,7 @@
         <div class="items-container">
             <div class="items-header">
                 <h2 id="itemsTitle">Your Added Items (<span id="itemsCount">0</span>)</h2>
-                <div class="items-count" id="totalPrice">Total: ₹0</div>
+                <!-- REMOVED: Total price display -->
             </div>
             <div class="items-list" id="itemsList">
                 <!-- Items will appear here -->
@@ -773,7 +693,6 @@
         const savedItems = localStorage.getItem('sparrowQuoteItems');
         const itemsList = document.getElementById('itemsList');
         const itemsCount = document.getElementById('itemsCount');
-        const totalPrice = document.getElementById('totalPrice');
         const itemsSection = document.getElementById('itemsSection');
         const cleanContent = document.getElementById('cleanContent');
         const itemsTitle = document.getElementById('itemsTitle');
@@ -805,8 +724,6 @@
                     // Clear existing items
                     itemsList.innerHTML = '';
                     
-                    let total = 0;
-                    
                     // Load product data to get full item details
                     loadProductData().then(allProducts => {
                         items.forEach(itemId => {
@@ -815,15 +732,8 @@
                             if (product) {
                                 const itemElement = createItemElement(product);
                                 itemsList.appendChild(itemElement);
-                                
-                                // Calculate total price
-                                const price = parsePrice(product.bestBuyPrice || product.mrpPrice || '0');
-                                total += price;
                             }
                         });
-                        
-                        // Update total price
-                        totalPrice.textContent = `Total: ₹${total.toLocaleString()}`;
                     });
                 } else {
                     // No items, show clean content
@@ -961,14 +871,6 @@
         }
     }
     
-    // Helper function to parse price
-    function parsePrice(priceStr) {
-        if (!priceStr) return 0;
-        // Remove commas and convert to number
-        const numericStr = priceStr.toString().replace(/[^0-9]/g, '');
-        return parseInt(numericStr) || 0;
-    }
-    
     // Show toast notification
     function showToast(message, type = 'info') {
         // Remove existing toast
@@ -1015,54 +917,9 @@
         document.body.appendChild(toast);
     }
     
-    // Search functionality for added items
-    function setupSearch() {
-        const searchBox = document.getElementById('searchBox');
-        searchBox.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase().trim();
-            const items = document.querySelectorAll('.result-item');
-            
-            if (searchTerm.length < 2) {
-                // Show all items if search term is too short
-                items.forEach(item => {
-                    item.style.display = 'block';
-                });
-                return;
-            }
-            
-            let visibleCount = 0;
-            items.forEach(item => {
-                const itemName = item.querySelector('.item-name').textContent.toLowerCase();
-                if (itemName.includes(searchTerm)) {
-                    item.style.display = 'block';
-                    visibleCount++;
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-            
-            // Update title with search results count
-            const itemsTitle = document.getElementById('itemsTitle');
-            const totalCount = parseInt(document.getElementById('itemsCount').textContent);
-            
-            if (searchTerm) {
-                itemsTitle.textContent = `Search Results (${visibleCount} of ${totalCount})`;
-            } else {
-                itemsTitle.textContent = `Your Added Items (${totalCount})`;
-            }
-        });
-    }
-    
     // Initialize when page loads
     window.addEventListener('DOMContentLoaded', function() {
         loadAddedItems();
-        setupSearch();
-        
-        // Update search placeholder based on screen size
-        const searchBox = document.getElementById('searchBox');
-        if (window.innerWidth <= 768) {
-            searchBox.placeholder = 'Search items ...';
-        }
     });
 </script>
 </body>
