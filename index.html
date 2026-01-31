@@ -91,21 +91,21 @@
             margin-top: 5px;
         }
         
-        /* Cart Image Container - REDUCED SIZE BY 10px */
-        .cart-image-container {
+        /* Quote Image Container - CHANGED from cart to quote, MATCHED SIZE with logo-container */
+        .quote-image-container {
             margin-left: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 50px; /* Reduced from 60px */
-            width: 50px; /* Reduced from 60px */
+            height: 55px; /* CHANGED: Matched with logo-container (55px) */
+            width: 55px; /* CHANGED: Matched with logo-container (55px) */
             overflow: hidden;
             border-radius: 50%;
             background: transparent;
             flex-shrink: 0;
         }
 
-        .cart-image-container a {
+        .quote-image-container a {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -113,7 +113,7 @@
             width: 100%;
         }
 
-        .cart-image-container img {
+        .quote-image-container img {
             height: 100%;
             width: 100%;
             object-fit: contain;
@@ -124,7 +124,7 @@
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
         }
 
-        .cart-image-container img:hover {
+        .quote-image-container img:hover {
             transform: scale(1.08);
             filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3)) brightness(1.05);
         }
@@ -1067,11 +1067,11 @@ filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
         transform: none;
     }
     
-    /* Cart container */
-    .cart-image-container {
+    /* Quote container - CHANGED from cart to quote */
+    .quote-image-container {
         margin-left: 15px;
-        height: 40px;
-        width: 40px;
+        height: 40px; /* CHANGED: Matched with logo-container (40px) */
+        width: 40px; /* CHANGED: Matched with logo-container (40px) */
         order: 3;
         flex-shrink: 0;
         position: static;
@@ -1310,9 +1310,9 @@ filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
         margin-right: 10px;
     }
     
-    .cart-image-container {
-        height: 35px;
-        width: 35px;
+    .quote-image-container {
+        height: 35px; /* CHANGED: Matched with logo-container (35px) */
+        width: 35px; /* CHANGED: Matched with logo-container (35px) */
         margin-left: 10px;
     }
     
@@ -1420,7 +1420,7 @@ filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
     }
     
     .logo-container,
-    .cart-image-container {
+    .quote-image-container {
         height: 30px;
         width: 30px;
     }
@@ -1429,7 +1429,7 @@ filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
         margin-right: 8px;
     }
     
-    .cart-image-container {
+    .quote-image-container {
         margin-left: 8px;
     }
     
@@ -1535,10 +1535,10 @@ filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
             <div class="trusted-tagline">Authorized Dealer for Medical and Scientific Laboratory Equipment</div>
         </div>
         
-        <!-- Cart Image in top-right corner -->
-        <div class="cart-image-container">
-            <a href="cart.html">
-                <img src="/sparrowinstruments/images/quote.jpg" alt="Shopping Cart" style="background: transparent;">
+        <!-- Quote Image in top-right corner - CHANGED from cart to quote -->
+        <div class="quote-image-container">
+            <a href="#">
+                <img src="/sparrowinstruments/images/quote.jpg" alt="Request Quote" style="background: transparent;">
             </a>
         </div>
     </header>
@@ -1859,8 +1859,8 @@ function showAllItems() {
                     <img src="${item.image || 'placeholder.jpg'}" alt="${item.name}">
                 </div>
                 <div class="price-box">
-                    <div class="mrp-line"><span class="mrp-label">M.R.P.</span> <span class="mrp-price">INR ${item.mrpPrice || '0'}/-</span></div>
-                    <div class="bestbuy-line"><span class="bestbuy-label">Buy</span> <span class="bestbuy-price">INR ${item.bestBuyPrice || '0'}/-</span></div>
+                    <div class="mrp-line"><span class="mrp-label">M.R.P.</span> <span class="mrp-price">INR ${item.mrpPrice || '0'}/–</span></div>
+                    <div class="bestbuy-line"><span class="bestbuy-label">Buy</span> <span class="bestbuy-price">INR ${item.bestBuyPrice || '0'}/–</span></div>
                 </div>
             </div>
             <div class="result-center">
@@ -2178,4 +2178,3 @@ initializePriceSlider();
 </script>
 </body>
 </html>
-
