@@ -319,7 +319,7 @@ filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
         }
         
         .results-header {
-            display: flex;
+            display: block;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
@@ -330,17 +330,9 @@ filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
         .results-header h3 {
             color: #333;
             font-size: 18px;
+            margin: 0;
         }
         
-        .close-results {
-            background: #d32f2f;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
         
         .results-list {
             display: block;
@@ -1680,7 +1672,7 @@ filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
         <div class="results-container">
             <div class="results-header">
                 <h3 id="resultsTitle">Search Results</h3>
-                <button class="close-results" id="closeResults">Close</button>
+                
             </div>
             <div class="results-list" id="resultsList">
                 <!-- Results will appear here -->
@@ -2000,20 +1992,9 @@ container.addEventListener('touchcancel', () => {
 
     // 4. EVENT LISTENERS
     document.querySelector('.search-box').addEventListener('input', searchItems);
-    document.getElementById('closeResults').onclick = () => {
-        document.getElementById('searchResults').style.display = 'none';
-    };
-
     window.addEventListener('DOMContentLoaded', loadJSONFiles);
 
-    // Add this inside your <script> to handle the close button
-    document.getElementById('closeResults').addEventListener('click', function() {
-    document.getElementById('searchResults').style.display = 'none';
-    document.querySelector('.search-box').value = '';
-    // Ensure scroll returns to top
-    window.scrollTo(0, 0);
-});
-
+    
 // ===== FILTER SIDEBAR FUNCTIONALITY =====
 
 // DOM Elements
@@ -2197,23 +2178,3 @@ initializePriceSlider();
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
