@@ -2048,9 +2048,6 @@ const isGuaranteedCompetitive =
     buyPriceText.toString().toLowerCase().includes('guaranteed competitive') ||
     buyLabelText.toString().toLowerCase().includes('guaranteed competitive');
     
-const cartButtonClass = isGuaranteedCompetitive ? 'add-to-cart-btn inactive' : 'add-to-cart-btn';
-const cartButtonDisabled = isGuaranteedCompetitive ? 'disabled' : '';
-
 // DEBUG: Check what's in the fields
 console.log('🔍 Debug: Item:', item.name, 
     '| Price:', item.bestBuyPrice, 
@@ -2555,6 +2552,7 @@ initializePriceSlider();
 </script>
 </body>
 </html>
+
 
 
 
