@@ -1839,6 +1839,10 @@ filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
     // 1. GLOBAL VARIABLES & LOADING
     let allItems = [];
     let searchTimeout;
+
+    // ADD THESE LINES BACK:
+    let quoteItems = new Set();
+    let quoteCount = 0;
     
     // ===== CLEANUP FUNCTION FOR CORRUPTED DATA =====
 function fixCorruptedQuoteData() {
@@ -1886,11 +1890,12 @@ function parsePrice(priceStr) {
         });
 
         console.log(`✅ Loaded ${allItems.length} items.`);
-        
-        // NEW: Load saved quote items
-        
-        // Show all items on page load
-        showAllItems();
+
+// NEW: Load saved quote items
+loadSavedQuotes(); // ADD THIS LINE BACK
+
+// Show all items on page load
+showAllItems();
         
     } catch (error) {
         console.error('❌ Load Error:', error);
@@ -2082,7 +2087,7 @@ function handleQuoteClick(itemId, button) {
         // Remove from quote
         quoteItemsArray.splice(existingIndex, 1);
         quoteItems.delete(itemId);
-        
+        quoteCount = quoteItemsArray.length; // ADD THIS LINE BACK
         
         // Update button
         button.innerHTML = '<i class="fas fa-file-alt"></i> Get Quote';
@@ -2108,7 +2113,7 @@ function handleQuoteClick(itemId, button) {
         
         quoteItemsArray.push(itemToSave);
         quoteItems.add(itemId);
-        
+        quoteCount = quoteItemsArray.length; // ADD THIS LINE BACK
         
         // Update button
         button.innerHTML = '<i class="fas fa-check"></i> Added to Quote';
@@ -2120,11 +2125,8 @@ function handleQuoteClick(itemId, button) {
     
     // Save to localStorage
     quoteData.items = quoteItemsArray;
-    quoteData.count = quoteCount;
+    quoteData.count = quoteCount; // This should now work
     localStorage.setItem('sparrowQuoteItems', JSON.stringify(quoteData));
-    
-    // Update counter display
-
 }
 
 // NEW: HANDLE CART BUTTON CLICK
@@ -2454,5 +2456,6 @@ function applyFilters() {
 </script>
 </body>
 </html>
+
 
 
