@@ -238,7 +238,7 @@
         }
         
         .empty-message {
-            display: flex; /* Changed to flex - will show when there are no items */
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -248,7 +248,7 @@
         }
         
         .empty-text {
-            color: #1565c0; /* Deep blue font */
+            color: #1565c0;
             font-size: 22px;
             font-weight: 500;
             line-height: 1.5;
@@ -257,11 +257,11 @@
         }
         
         .items-list {
-            display: none; /* Start hidden, will show when there are items */
+            display: none;
             gap: 20px;
         }
         
-        /* Result item styling */
+        /* Result item styling - MATCHING index.html STYLE */
         .result-item {
             background: white;
             padding: 25px;
@@ -275,10 +275,10 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 30px;
-            align-items: end;
+            align-items: start;
         }
 
-        /* Left Column: Image + Price */
+        /* Left Column: Image + Price - MATCHING index.html */
         .result-left {
             grid-column: 1;
             display: flex;
@@ -290,12 +290,13 @@
             margin-bottom: 15px;
             position: relative;
             overflow: visible;
-            cursor: crosshair;
             border: 1px solid #ddd;
             border-radius: 8px;
             background: #fff;
-            cursor: crosshair;
             height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .result-image img {
@@ -352,12 +353,135 @@
             font-weight: bold;
         }
         
-        /* Button container */
-        .button-container {
-            margin-top: 20px;
+        /* Center Column: Name + Specifications + Warranty */
+        .result-center {
+            grid-column: 2;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-name {
+            color: #1565c0;
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0 0 15px 0;
+            line-height: 1.2;
+        }
+
+        .specs-section {
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .specs-section strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .specs-section ul {
+            margin: 5px 0 5px 20px;
+            color: #555;
+        }
+
+        .specs-section li {
+            margin-bottom: 6px;
+            line-height: 1.4;
         }
         
-        /* Remove button */
+        /* Quantity Selector - Green Section */
+        .quantity-section {
+            margin-top: auto;
+            padding: 15px;
+            background: #28a745; /* Green background */
+            border-radius: 8px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .quantity-label {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quantity-btn {
+            background: white;
+            color: #28a745;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .quantity-btn:hover {
+            background: #f8f9fa;
+            transform: scale(1.1);
+        }
+        
+        .quantity-value {
+            font-size: 18px;
+            font-weight: bold;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        /* Right Column: Description + Remove Button */
+        .result-right {
+            grid-column: 3;
+            min-width: 0;
+            margin-top: 35px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .description-section {
+            margin-top: 0;
+            flex-grow: 1;
+            margin-bottom: 20px;
+        }
+
+        .description-section strong {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .description-section ul {
+            margin: 5px 0 5px 20px;
+            color: #555;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .description-section li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+        
+        /* Remove button - moved to third column */
+        .remove-btn-container {
+            margin-top: auto;
+        }
+        
         .remove-btn {
             background: #dc3545;
             color: white;
@@ -379,78 +503,6 @@
             background: #c82333;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* Center Column: Name + Specifications + Warranty */
-        .result-center {
-            grid-column: 2;
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .item-name {
-            color: #1565c0;
-            font-size: 24px;
-            font-weight: 800;
-            margin: 0 0 15px 0;
-            line-height: 1.2;
-        }
-
-        .specs-section {
-            margin-bottom: 0;
-            flex-grow: 1;
-        }
-
-        .specs-section strong {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-size: 16px;
-        }
-
-        .specs-section ul {
-            margin: 5px 0 5px 20px;
-            color: #555;
-        }
-
-        .specs-section li {
-            margin-bottom: 6px;
-            line-height: 1.4;
-        }
-
-        /* Right Column: Description */
-        .result-right {
-            grid-column: 3;
-            min-width: 0;
-            margin-top: 35px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .description-section {
-            margin-top: 0;
-            flex-grow: 1;
-        }
-
-        .description-section strong {
-            display: block;
-            margin-bottom: 10px;
-            color: #333;
-            font-size: 16px;
-        }
-
-        .description-section ul {
-            margin: 5px 0 5px 20px;
-            color: #555;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        .description-section li {
-            margin-bottom: 8px;
-            line-height: 1.5;
-            word-break: break-word;
         }
 
         /* Footer Styles */
@@ -505,6 +557,11 @@
             
             .result-right {
                 grid-column: 2;
+                margin-top: 0;
+            }
+            
+            .quantity-section {
+                margin-top: 20px;
             }
         }
 
@@ -597,6 +654,7 @@
             .result-center,
             .result-right {
                 grid-column: 1;
+                margin-top: 0;
             }
             
             .remove-btn {
@@ -611,6 +669,10 @@
             
             .empty-text {
                 font-size: 18px;
+            }
+            
+            .quantity-section {
+                margin-top: 20px;
             }
         }
         
@@ -670,6 +732,16 @@
             .empty-text {
                 font-size: 16px;
             }
+            
+            .quantity-section {
+                padding: 12px;
+            }
+            
+            .quantity-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 16px;
+            }
         }
         
         @media (max-width: 360px) {
@@ -721,6 +793,12 @@
             
             .empty-text {
                 font-size: 15px;
+            }
+            
+            .quantity-btn {
+                width: 26px;
+                height: 26px;
+                font-size: 14px;
             }
         }
     </style>
@@ -819,14 +897,14 @@
                     itemsList.style.display = 'block';
                     emptyMessage.style.display = 'none';
                     
-                    // Display items directly from localStorage
+                    // Display items with full product data
                     items.forEach((itemData, index) => {
-                        // If itemData is an object with full product data
+                        // itemData should be the full product object from index.html
                         if (typeof itemData === 'object') {
-                            const itemElement = createItemElement(itemData);
+                            const itemElement = createItemElement(itemData, index);
                             itemsList.appendChild(itemElement);
                         } 
-                        // If it's just an ID string, create a basic item
+                        // Fallback for old format (just IDs)
                         else {
                             const basicItem = {
                                 id: itemData,
@@ -839,7 +917,7 @@
                                 specifications: ['Specifications not available'],
                                 description: ['Please go back to the main catalog to see full details.']
                             };
-                            const itemElement = createItemElement(basicItem);
+                            const itemElement = createItemElement(basicItem, index);
                             itemsList.appendChild(itemElement);
                         }
                     });
@@ -855,58 +933,79 @@
     }
     
     // Create item element for display
-    function createItemElement(product) {
+    function createItemElement(product, index) {
         const itemElement = document.createElement('div');
         itemElement.className = 'result-item';
-        itemElement.dataset.itemId = product.id;
+        itemElement.dataset.itemId = product.id || `item_${index}`;
+        itemElement.dataset.quantity = product.quantity || 1;
         
-        const specsHTML = Array.isArray(product.specifications) ? 
-            product.specifications.map(s => `<li>${s}</li>`).join('') : 
-            `<li>${product.specifications || 'Not specified'}</li>`;
+        // Format specifications
+        let specsHTML = '';
+        if (Array.isArray(product.specifications)) {
+            specsHTML = product.specifications.map(s => `<li>${s}</li>`).join('');
+        } else if (product.specifications) {
+            specsHTML = `<li>${product.specifications}</li>`;
+        } else {
+            specsHTML = '<li>Specifications not specified</li>';
+        }
         
-        const descHTML = Array.isArray(product.description) ? 
-            product.description.map(d => `<li>${d}</li>`).join('') : 
-            `<li>${product.description || 'Description not available'}</li>`;
+        // Format description
+        let descHTML = '';
+        if (Array.isArray(product.description)) {
+            descHTML = product.description.map(d => `<li>${d}</li>`).join('');
+        } else if (product.description) {
+            descHTML = `<li>${product.description}</li>`;
+        } else {
+            descHTML = '<li>Description not available</li>';
+        }
         
-        // Check price display
-        const buyPriceText = product.bestBuyPrice || '';
-        const buyLabelText = product.bestBuyLabel || 'Buy';
+        // Format prices
+        const mrpPrice = product.mrpPrice || product.mrp || 'Price on request';
+        const bestBuyPrice = product.bestBuyPrice || product.price || 'Price on request';
+        const bestBuyLabel = product.bestBuyLabel || 'Buy';
+        
+        // Check for guaranteed competitive pricing
         const isGuaranteedCompetitive = 
-            buyPriceText.toString().toLowerCase().includes('guaranteed competitive') ||
-            buyLabelText.toString().toLowerCase().includes('guaranteed competitive');
+            bestBuyPrice.toString().toLowerCase().includes('guaranteed competitive') ||
+            bestBuyLabel.toString().toLowerCase().includes('guaranteed competitive');
         
         const priceDisplay = isGuaranteedCompetitive ? 
             'Guaranteed Competitive' : 
-            (product.bestBuyPrice ? `INR ${product.bestBuyPrice}/-` : 'Price on request');
+            (bestBuyPrice ? `INR ${bestBuyPrice}/-` : 'Price on request');
+        
+        const mrpDisplay = mrpPrice ? `INR ${mrpPrice}/-` : 'Price on request';
         
         itemElement.innerHTML = `
             <div class="result-content">
                 <div class="result-left">
                     <div class="result-image">
-                        <img src="${product.image || 'placeholder.jpg'}" alt="${product.name}">
+                        <img src="${product.image || product.img || 'placeholder.jpg'}" alt="${product.name}" onerror="this.src='placeholder.jpg'">
                     </div>
                     <div class="price-box">
                         <div class="mrp-line">
                             <span class="mrp-label">M.R.P.</span> 
-                            <span class="mrp-price">${product.mrpPrice ? 'INR ' + product.mrpPrice + '/-' : 'Price on request'}</span>
+                            <span class="mrp-price">${mrpDisplay}</span>
                         </div>
                         <div class="bestbuy-line">
-                            <span class="bestbuy-label">${buyLabelText}</span> 
+                            <span class="bestbuy-label">${bestBuyLabel}</span> 
                             <span class="bestbuy-price">${priceDisplay}</span>
                         </div>
                     </div>
                 </div>
                 <div class="result-center">
-                    <h4 class="item-name">${product.name}</h4>
+                    <h4 class="item-name">${product.name || 'Product Name'}</h4>
                     <div class="specs-section">
-                        ${specsHTML ? `<strong>Specifications:</strong><ul>${specsHTML}</ul>` : ''}
+                        <strong>Specifications:</strong>
+                        <ul>${specsHTML}</ul>
                         <strong>Warranty:</strong> ${product.warranty || 'Not specified'}
                     </div>
-                    <div class="button-container">
-                        <button class="remove-btn" data-item-id="${product.id}">
-                            <i class="fas fa-trash"></i>
-                            Remove Item
-                        </button>
+                    <div class="quantity-section">
+                        <span class="quantity-label">No. of Items</span>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn minus-btn" data-item-id="${product.id || index}">-</button>
+                            <span class="quantity-value">${product.quantity || 1}</span>
+                            <button class="quantity-btn plus-btn" data-item-id="${product.id || index}">+</button>
+                        </div>
                     </div>
                 </div>
                 <div class="result-right">
@@ -914,17 +1013,87 @@
                         <strong>Descriptions:</strong>
                         <ul>${descHTML}</ul>
                     </div>
+                    <div class="remove-btn-container">
+                        <button class="remove-btn" data-item-id="${product.id || index}">
+                            <i class="fas fa-trash"></i>
+                            Remove Item
+                        </button>
+                    </div>
                 </div>
             </div>
         `;
         
-        // Add event listener to remove button
+        // Add event listeners
         const removeBtn = itemElement.querySelector('.remove-btn');
         removeBtn.addEventListener('click', function() {
-            removeItem(product.id);
+            removeItem(product.id || index);
+        });
+        
+        const minusBtn = itemElement.querySelector('.minus-btn');
+        const plusBtn = itemElement.querySelector('.plus-btn');
+        const quantityValue = itemElement.querySelector('.quantity-value');
+        
+        minusBtn.addEventListener('click', function() {
+            updateQuantity(product.id || index, -1, quantityValue);
+        });
+        
+        plusBtn.addEventListener('click', function() {
+            updateQuantity(product.id || index, 1, quantityValue);
         });
         
         return itemElement;
+    }
+    
+    // Update quantity function
+    function updateQuantity(itemId, change, quantityElement) {
+        const savedItems = localStorage.getItem('sparrowQuoteItems');
+        if (savedItems) {
+            try {
+                const quoteData = JSON.parse(savedItems);
+                const items = quoteData.items || [];
+                
+                // Find the item index
+                const itemIndex = items.findIndex(item => 
+                    (typeof item === 'object' ? item.id : item) === itemId
+                );
+                
+                if (itemIndex !== -1) {
+                    // Get current quantity
+                    let currentItem = items[itemIndex];
+                    let currentQuantity = 1;
+                    
+                    if (typeof currentItem === 'object') {
+                        currentQuantity = currentItem.quantity || 1;
+                    }
+                    
+                    // Calculate new quantity (minimum 1)
+                    let newQuantity = Math.max(1, currentQuantity + change);
+                    
+                    // Update the item
+                    if (typeof currentItem === 'object') {
+                        items[itemIndex].quantity = newQuantity;
+                    } else {
+                        // Convert to object if it's just an ID
+                        items[itemIndex] = {
+                            id: currentItem,
+                            quantity: newQuantity
+                        };
+                    }
+                    
+                    // Update localStorage
+                    quoteData.items = items;
+                    localStorage.setItem('sparrowQuoteItems', JSON.stringify(quoteData));
+                    
+                    // Update display
+                    quantityElement.textContent = newQuantity;
+                    
+                    // Show toast
+                    showToast(`Quantity updated to ${newQuantity}`, 'success');
+                }
+            } catch (e) {
+                console.error('Error updating quantity:', e);
+            }
+        }
     }
     
     // Remove item from list
@@ -934,7 +1103,15 @@
             try {
                 const quoteData = JSON.parse(savedItems);
                 const items = quoteData.items || [];
-                const updatedItems = items.filter(id => id !== itemId);
+                
+                // Filter out the item to remove
+                const updatedItems = items.filter(item => {
+                    if (typeof item === 'object') {
+                        return item.id !== itemId;
+                    } else {
+                        return item !== itemId;
+                    }
+                });
                 
                 quoteData.items = updatedItems;
                 quoteData.count = updatedItems.length;
