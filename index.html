@@ -1910,7 +1910,7 @@ function loadSavedQuotes() {
             const quoteData = JSON.parse(savedQuotes);
             quoteItems = new Set(quoteData.items || []);
             quoteCount = quoteData.count || 0;
-            updateQuoteCounter();
+
         } catch (e) {
             console.error('Error loading saved quotes:', e);
         }
@@ -2456,6 +2456,7 @@ function applyFilters() {
 </script>
 </body>
 </html>
+
 
 
 
