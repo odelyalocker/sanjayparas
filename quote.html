@@ -226,8 +226,8 @@
             border-top: 2px solid #d32f2f;
             overflow-y: auto;
             margin-top: 140px;
-            min-height: 200px;
-            display: none;
+            min-height: calc(100vh - 190px); /* Adjusted to fill remaining space */
+            display: block; /* Always show, but content changes */
         }
 
         .items-container {
@@ -235,9 +235,77 @@
             width: 95%;
             margin: 0 auto;
             max-width: 1400px;
+            min-height: 100%; /* Ensure it fills the section */
         }
         
-        /* REMOVED: .items-header class completely */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: calc(100vh - 300px); /* Adjusted height */
+            padding: 40px 20px;
+        }
+        
+        .empty-icon {
+            font-size: 80px;
+            color: #d32f2f;
+            margin-bottom: 25px;
+            opacity: 0.7;
+        }
+        
+        .empty-title {
+            color: #333;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .empty-subtitle {
+            color: #666;
+            font-size: 18px;
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .empty-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            padding: 12px 25px;
+            background: #d32f2f;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .action-btn:hover {
+            background: #b71c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+        }
+        
+        .action-btn.secondary {
+            background: #0056b3;
+        }
+        
+        .action-btn.secondary:hover {
+            background: #004494;
+        }
+        
+        /* REMOVED: items-header class completely */
         
         .items-list {
             display: block;
@@ -435,77 +503,6 @@
             line-height: 1.5;
             word-break: break-word;
         }
-        
-        /* Clean Content Area */
-        .clean-content {
-            flex: 1;
-            margin-top: 140px;
-            background: white;
-            padding: 60px 20px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: calc(100vh - 140px - 50px);
-        }
-        
-        .clean-content-icon {
-            font-size: 80px;
-            color: #d32f2f;
-            margin-bottom: 25px;
-            opacity: 0.7;
-        }
-        
-        .clean-content-title {
-            color: #333;
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-        
-        .clean-content-subtitle {
-            color: #666;
-            font-size: 18px;
-            max-width: 600px;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-        
-        .clean-content-actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .action-btn {
-            padding: 12px 25px;
-            background: #d32f2f;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .action-btn:hover {
-            background: #b71c1c;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
-        }
-        
-        .action-btn.secondary {
-            background: #0056b3;
-        }
-        
-        .action-btn.secondary:hover {
-            background: #004494;
-        }
 
         /* Footer Styles */
         footer {
@@ -622,6 +619,7 @@
             /* Items Section Mobile */
             .items-section {
                 margin-top: 130px;
+                min-height: calc(100vh - 180px);
             }
             
             .result-content {
@@ -657,24 +655,24 @@
                 font-size: 14px;
             }
             
-            .clean-content {
-                margin-top: 130px;
-                min-height: calc(100vh - 130px - 50px);
+            .empty-state {
+                height: calc(100vh - 280px);
+                padding: 30px 15px;
             }
             
-            .clean-content-icon {
+            .empty-icon {
                 font-size: 60px;
             }
             
-            .clean-content-title {
+            .empty-title {
                 font-size: 26px;
             }
             
-            .clean-content-subtitle {
+            .empty-subtitle {
                 font-size: 16px;
             }
             
-            .clean-content-actions {
+            .empty-actions {
                 flex-direction: column;
                 width: 100%;
                 max-width: 300px;
@@ -725,22 +723,18 @@
             
             .center-title {
                 font-size: 16px;
+                white-space: normal;
+                line-height: 1.2;
+                padding: 0 10px;
             }
             
             .items-section {
                 margin-top: 120px;
+                min-height: calc(100vh - 170px);
             }
             
-            .clean-content {
-                margin-top: 120px;
-                min-height: calc(100vh - 120px - 50px);
-            }
-            
-            .center-title {
-                font-size: 16px;
-                white-space: normal;
-                line-height: 1.2;
-                padding: 0 10px;
+            .empty-state {
+                height: calc(100vh - 260px);
             }
         }
         
@@ -782,17 +776,13 @@
                 padding: 6px 8px;
             }
             
-            .center-title {
-                font-size: 14px;
-            }
-            
             .items-section {
                 margin-top: 110px;
+                min-height: calc(100vh - 160px);
             }
             
-            .clean-content {
-                margin-top: 110px;
-                min-height: calc(100vh - 110px - 50px);
+            .empty-state {
+                height: calc(100vh - 240px);
             }
         }
     </style>
@@ -817,7 +807,6 @@
         <div class="quote-image-container">
             <a href="/sparrowinstruments/quote.html">
                 <img src="/sparrowinstruments/images/quote.jpg" alt="Request Quote" style="background: transparent;">
-                <!-- Quote counter badge REMOVED -->
             </a>
         </div>
     </header>
@@ -844,36 +833,35 @@
         </div>
     </div>
     
-    <!-- Items Display Section -->
+    <!-- Items Display Section - Now always visible -->
     <div class="items-section" id="itemsSection">
         <div class="items-container">
-            <!-- REMOVED: items-header section completely -->
+            <!-- Items will appear here when available -->
             <div class="items-list" id="itemsList">
-                <!-- Items will appear here -->
+                <!-- Items will be dynamically inserted here -->
+            </div>
+            <!-- Empty state - shown when no items -->
+            <div class="empty-state" id="emptyState">
+                <div class="empty-icon">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <h1 class="empty-title">Your Quotation Items</h1>
+                <p class="empty-subtitle">
+                    Items you've added for quotation will appear here. Start by adding products to your quote list from the main catalog.
+                </p>
+                <div class="empty-actions">
+                    <button class="action-btn" onclick="window.location.href='index.html'">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Catalog
+                    </button>
+                    <button class="action-btn secondary" onclick="window.location.href='contact.html'">
+                        <i class="fas fa-phone"></i>
+                        Request Quote
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-    
-    <!-- Clean Content Area -->
-    <main class="clean-content" id="cleanContent">
-        <div class="clean-content-icon">
-            <i class="fas fa-clipboard-list"></i>
-        </div>
-        <h1 class="clean-content-title">Your Quotation Items</h1>
-        <p class="clean-content-subtitle">
-            Items you've added for quotation will appear here. Start by adding products to your quote list from the main catalog.
-        </p>
-        <div class="clean-content-actions">
-            <button class="action-btn" onclick="window.location.href='index.html'">
-                <i class="fas fa-arrow-left"></i>
-                Back to Catalog
-            </button>
-            <button class="action-btn secondary" onclick="window.location.href='contact.html'">
-                <i class="fas fa-phone"></i>
-                Request Quote
-            </button>
-        </div>
-    </main>
     
     <!-- Footer -->
     <footer>
@@ -891,7 +879,7 @@
         const savedItems = localStorage.getItem('sparrowQuoteItems');
         const itemsList = document.getElementById('itemsList');
         const itemsSection = document.getElementById('itemsSection');
-        const cleanContent = document.getElementById('cleanContent');
+        const emptyState = document.getElementById('emptyState');
         
         if (savedItems) {
             try {
@@ -899,9 +887,9 @@
                 const items = quoteData.items || [];
                 
                 if (items.length > 0) {
-                    // Show items section, hide clean content
-                    itemsSection.style.display = 'block';
-                    cleanContent.style.display = 'none';
+                    // Show items, hide empty state
+                    itemsList.style.display = 'block';
+                    emptyState.style.display = 'none';
                     
                     // Clear existing items
                     itemsList.innerHTML = '';
@@ -918,19 +906,19 @@
                         });
                     });
                 } else {
-                    // No items, show clean content
-                    itemsSection.style.display = 'none';
-                    cleanContent.style.display = 'flex';
+                    // No items, show empty state
+                    itemsList.style.display = 'none';
+                    emptyState.style.display = 'flex';
                 }
             } catch (e) {
                 console.error('Error loading saved items:', e);
-                itemsSection.style.display = 'none';
-                cleanContent.style.display = 'flex';
+                itemsList.style.display = 'none';
+                emptyState.style.display = 'flex';
             }
         } else {
-            // No saved items, show clean content
-            itemsSection.style.display = 'none';
-            cleanContent.style.display = 'flex';
+            // No saved items, show empty state
+            itemsList.style.display = 'none';
+            emptyState.style.display = 'flex';
         }
     }
     
