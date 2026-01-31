@@ -804,6 +804,10 @@
         const itemsList = document.getElementById('itemsList');
         const emptyMessage = document.getElementById('emptyMessage');
         
+        // Start with both hidden
+        itemsList.style.display = 'none';
+        emptyMessage.style.display = 'none';
+        
         if (savedItems) {
             try {
                 const quoteData = JSON.parse(savedItems);
@@ -817,16 +821,29 @@
                     // Clear existing items
                     itemsList.innerHTML = '';
                     
-                    // Load product data to get full item details
-                    loadProductData().then(allProducts => {
-                        items.forEach(itemId => {
-                            // Find the full product details
-                            const product = allProducts.find(p => p.id === itemId);
-                            if (product) {
-                                const itemElement = createItemElement(product);
-                                itemsList.appendChild(itemElement);
-                            }
-                        });
+                    // Display items directly from localStorage
+                    items.forEach((itemData, index) => {
+                        // If itemData is an object with full product data
+                        if (typeof itemData === 'object') {
+                            const itemElement = createItemElement(itemData);
+                            itemsList.appendChild(itemElement);
+                        } 
+                        // If it's just an ID string, create a basic item
+                        else {
+                            const basicItem = {
+                                id: itemData,
+                                name: `Item ${index + 1}`,
+                                image: 'placeholder.jpg',
+                                mrpPrice: 'Price on request',
+                                bestBuyPrice: 'Price on request',
+                                bestBuyLabel: 'Buy',
+                                warranty: 'Not specified',
+                                specifications: ['Specifications not available'],
+                                description: ['Please go back to the main catalog to see full details.']
+                            };
+                            const itemElement = createItemElement(basicItem);
+                            itemsList.appendChild(itemElement);
+                        }
                     });
                 } else {
                     // No items, show empty message
@@ -835,6 +852,7 @@
                 }
             } catch (e) {
                 console.error('Error loading saved items:', e);
+                // If there's an error, show empty message
                 itemsList.style.display = 'none';
                 emptyMessage.style.display = 'flex';
             }
@@ -845,30 +863,6 @@
         }
     }
     
-    // Load product data from JSON files
-    async function loadProductData() {
-        try {
-            const files = ['biolabitems.json', 'physlabitems.json', 'chemlabitems.json', 'scientificlabitems.json', 'medilabitems.json'];
-            const responses = await Promise.all(files.map(file => 
-                fetch(file).then(res => res.ok ? res.json() : []).catch(() => [])
-            ));
-            
-            // Combine all responses and add IDs if missing
-            let allProducts = [].concat(...responses);
-            allProducts = allProducts.map((item, index) => {
-                if (!item.id) {
-                    item.id = 'item_' + index + '_' + Math.random().toString(36).substr(2, 9);
-                }
-                return item;
-            });
-            
-            return allProducts;
-        } catch (error) {
-            console.error('Error loading product data:', error);
-            return [];
-        }
-    }
-    
     // Create item element for display
     function createItemElement(product) {
         const itemElement = document.createElement('div');
@@ -876,9 +870,12 @@
         itemElement.dataset.itemId = product.id;
         
         const specsHTML = Array.isArray(product.specifications) ? 
-            product.specifications.map(s => `<li>${s}</li>`).join('') : '';
+            product.specifications.map(s => `<li>${s}</li>`).join('') : 
+            `<li>${product.specifications || 'Not specified'}</li>`;
+        
         const descHTML = Array.isArray(product.description) ? 
-            product.description.map(d => `<li>${d}</li>`).join('') : `<li>${product.description || ''}</li>`;
+            product.description.map(d => `<li>${d}</li>`).join('') : 
+            `<li>${product.description || 'Description not available'}</li>`;
         
         // Check price display
         const buyPriceText = product.bestBuyPrice || '';
@@ -1015,9 +1012,6 @@
         // Run immediately to prevent flashing
         loadAddedItems();
     });
-    
-    // Also run on page load to catch any edge cases
-    window.onload = loadAddedItems;
 </script>
 </body>
 </html>
