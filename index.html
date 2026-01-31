@@ -1898,37 +1898,6 @@ function parsePrice(priceStr) {
     // Remove commas and convert to number
     return parseInt(priceStr.toString().replace(/,/g, ''));
 }
-
-// ===== NEW: CLEANUP FUNCTION FOR CORRUPTED QUOTE DATA =====
-function fixQuoteData() {
-    const savedQuotes = localStorage.getItem('sparrowQuoteItems');
-    if (savedQuotes) {
-        try {
-            const quoteData = JSON.parse(savedQuotes);
-            
-            // If items array is empty but count > 0, reset count to 0
-            if ((!quoteData.items || quoteData.items.length === 0) && quoteData.count > 0) {
-                console.log('🛠️ Fixing corrupted quote data');
-                quoteData.count = 0;
-                localStorage.setItem('sparrowQuoteItems', JSON.stringify(quoteData));
-            }
-            
-            // Ensure items is an array
-            if (!Array.isArray(quoteData.items)) {
-                quoteData.items = [];
-                localStorage.setItem('sparrowQuoteItems', JSON.stringify(quoteData));
-            }
-        } catch (e) {
-            console.error('Error fixing quote data:', e);
-        }
-    }
-}
-// ===== END OF CLEANUP FUNCTION =====
-
-// Existing function continues here:
-async function loadJSONFiles() {
-    console.log('🚀 Loading Lab Data...');
-    // ... rest of your existing code
     
     async function loadJSONFiles() {
     console.log('🚀 Loading Lab Data...');
@@ -1961,51 +1930,17 @@ async function loadJSONFiles() {
     }
 }
 
-// NEW: LOAD SAVED QUOTES FROM LOCALSTORAGE - FIXED
+// NEW: LOAD SAVED QUOTES FROM LOCALSTORAGE
 function loadSavedQuotes() {
     const savedQuotes = localStorage.getItem('sparrowQuoteItems');
     if (savedQuotes) {
         try {
             const quoteData = JSON.parse(savedQuotes);
-            
-            // Debug log
-            console.log('📋 Loaded quote data:', {
-                itemCount: quoteData.items ? quoteData.items.length : 0,
-                storedCount: quoteData.count,
-                items: quoteData.items ? quoteData.items.map(i => i.name) : []
-            });
-            
-            // Create a Set of item IDs for quick lookup
-            quoteItems = new Set();
-            if (quoteData.items && Array.isArray(quoteData.items)) {
-                quoteData.items.forEach(item => {
-                    if (item && item.id) {
-                        quoteItems.add(item.id);
-                    }
-                });
-            }
-            
-            // Use actual item count, not stored count
-            quoteCount = quoteData.items ? quoteData.items.length : 0;
-            
-            // If counts don't match, fix it
-            if (quoteCount !== quoteData.count) {
-                console.warn('⚠️ Count mismatch! Fixing...', {
-                    actualItems: quoteCount,
-                    storedCount: quoteData.count
-                });
-                quoteData.count = quoteCount;
-                localStorage.setItem('sparrowQuoteItems', JSON.stringify(quoteData));
-            }
-            
+            quoteItems = new Set(quoteData.items || []);
+            quoteCount = quoteData.count || 0;
             updateQuoteCounter();
         } catch (e) {
             console.error('Error loading saved quotes:', e);
-            // Reset corrupted data
-            localStorage.removeItem('sparrowQuoteItems');
-            quoteItems = new Set();
-            quoteCount = 0;
-            updateQuoteCounter();
         }
     }
 }
@@ -2179,30 +2114,12 @@ if (!isGuaranteedCompetitive) { // CHANGED: Check the actual condition, not just
     resultItem.dataset.section = determineSection(item);
 }
 
-// NEW: HANDLE QUOTE BUTTON CLICK - FIXED VERSION
+// NEW: HANDLE QUOTE BUTTON CLICK
 function handleQuoteClick(itemId, button) {
-    // Find the full item object
-    const item = allItems.find(i => i.id === itemId);
-    if (!item) {
-        console.error('❌ Item not found:', itemId);
-        return;
-    }
-    
-    console.log('📝 Handling quote click for item:', item.name);
-    
-    // Load existing quotes
-    const savedQuotes = localStorage.getItem('sparrowQuoteItems');
-    let quoteData = savedQuotes ? JSON.parse(savedQuotes) : { items: [], count: 0 };
-    let quoteItems = quoteData.items || [];
-    
-    // Check if item already exists in quote
-    const existingIndex = quoteItems.findIndex(i => i.id === itemId);
-    
-    if (existingIndex !== -1) {
+    if (quoteItems.has(itemId)) {
         // Remove from quote
-        console.log('➖ Removing item from quote:', item.name);
-        quoteItems.splice(existingIndex, 1);
-        quoteData.count = Math.max(0, quoteData.count - 1);
+        quoteItems.delete(itemId);
+        quoteCount--;
         
         // Update button
         button.innerHTML = '<i class="fas fa-file-alt"></i> Get Quote';
@@ -2211,24 +2128,9 @@ function handleQuoteClick(itemId, button) {
         // Show confirmation
         showToast('Item removed from quote', 'info');
     } else {
-        // Add full item to quote
-        console.log('➕ Adding item to quote:', item.name);
-        const itemToSave = {
-            id: item.id,
-            name: item.name,
-            image: item.image || item.img || 'placeholder.jpg',
-            mrpPrice: item.mrpPrice || item.mrp || 'Price on request',
-            bestBuyPrice: item.bestBuyPrice || item.price || 'Price on request',
-            bestBuyLabel: item.bestBuyLabel || 'Buy',
-            warranty: item.warranty || 'Not specified',
-            specifications: item.specifications || [],
-            description: item.description || [],
-            category: item.category || '',
-            quantity: 1 // Default quantity
-        };
-        
-        quoteItems.push(itemToSave);
-        quoteData.count = quoteItems.length; // Use actual length, not increment
+        // Add to quote
+        quoteItems.add(itemId);
+        quoteCount++;
         
         // Update button
         button.innerHTML = '<i class="fas fa-check"></i> Added to Quote';
@@ -2238,20 +2140,7 @@ function handleQuoteClick(itemId, button) {
         showToast('Item added to quote!', 'success');
     }
     
-    // Update the items array
-    quoteData.items = quoteItems;
-    
-    // Debug: Show what we're saving
-    console.log('💾 Saving to localStorage:', {
-        itemsCount: quoteItems.length,
-        items: quoteItems.map(i => ({ name: i.name, id: i.id })),
-        count: quoteData.count
-    });
-    
-    // Save to localStorage
-    localStorage.setItem('sparrowQuoteItems', JSON.stringify(quoteData));
-    
-    // Update counter display
+    // Update counter
     updateQuoteCounter();
 }
 
@@ -2453,10 +2342,7 @@ container.addEventListener('touchcancel', () => {
 
     // 4. EVENT LISTENERS
     document.querySelector('.search-box').addEventListener('input', searchItems);
-    window.addEventListener('DOMContentLoaded', function() {
-    fixQuoteData(); // Add this line
-    loadJSONFiles(); // Then load JSON files
-});
+    window.addEventListener('DOMContentLoaded', loadJSONFiles);
 
     
 // ===== FILTER SIDEBAR FUNCTIONALITY =====
@@ -2582,5 +2468,3 @@ function applyFilters() {
 </script>
 </body>
 </html>
-
-
